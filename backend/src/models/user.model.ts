@@ -2,6 +2,7 @@ import sequelize from '../configs/mysql.connect';
 import { DataTypes, Model } from 'sequelize';
 import Manga from './manga.model';
 import MangaReaded from './manga_readed.model';
+import Comment from './comment.model';
 
 interface UserAttributes {
   id: number,
@@ -36,6 +37,16 @@ class User extends Model<UserAttributes> implements UserAttributes {
   public readonly readed?: Manga;
 
   static associate() {
+    User.hasMany(Comment, { 
+      as: 'comments', 
+      foreignKey: {
+        name: 'user_id',
+        allowNull: true,
+        defaultValue: null
+      },
+      onDelete: 'SET NULL',
+      onUpdate: 'CASCADE'
+   })
     User.belongsToMany(Manga, {through: 'manga_user', as: 'mangas', timestamps: false});
     User.belongsToMany(Manga, {through: MangaReaded, as: 'readed'});
   }
@@ -76,7 +87,8 @@ User.init({
   },
   roleId: {
     field: 'role_id',
-    type: DataTypes.INTEGER.UNSIGNED
+    type: DataTypes.INTEGER.UNSIGNED,
+    defaultValue: 2
   },
   status: {
     field: 'status',
