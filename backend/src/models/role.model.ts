@@ -18,7 +18,11 @@ class Role extends Model<RoleAttributes> implements RoleAttributes {
   public allowDelete!: boolean;
 
   static associate() {
-    Role.hasMany(User, { as: 'users' })
+    Role.hasMany(User, { 
+      as: 'users', 
+      onDelete: 'SET NULL',
+      onUpdate: 'CASCADE'
+    })
   }
 
   static defineScope() {

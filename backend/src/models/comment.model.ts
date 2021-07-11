@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import sequelize from '../configs/mysql.connect';
 import { Model, DataTypes } from 'sequelize';
 import Manga from './manga.model';
@@ -49,7 +50,59 @@ class Comment extends Model<CommentAttributes> implements CommentAttributes {
   }
 
   static defineScope() {
-    
+    Comment.addScope('includeManga', {
+      include: 'manga'
+    });
+    Comment.addScope('includeUser', {
+      include: 'user'
+    });
+    Comment.addScope('includeReply', {
+      include: 'replies',
+      order: [['replies', 'createdAt', 'DESC']]
+    });
+    Comment.addScope('sortQuery', (orders: string | string[]) => {
+      if (typeof orders === 'string') orders = orders.split(',')
+      let order: [string, string][] = []
+      for (let value of orders) {
+        if (!/^(\-|\+)[a-zA-Z0-9_-]+$/g.test(value)) continue;
+        let orderType = value.substr(0, 1) == '+' ? 'ASC' : 'DESC';
+        let orderName = value.substr(1);
+        order.push([orderName, orderType]);
+      }
+      return { order }
+    });
+    Comment.addScope('searchQuery', (search: string) => {
+      search = search.replace(/\+/, ' ');
+      let searchRegex = search.replace(/\+/, ' ').split(' ').map(i => '('+i+')').join('|');
+      return {
+        where: {
+          [Op.or]: {
+            name: { [Op.regexp]: searchRegex },
+            email: { [Op.like]: '%'+search+'%' },
+            content: { [Op.regexp]: searchRegex }
+          }
+        }
+      }
+    });
+    Comment.addScope('filterQuery', (filter: string | string[]) => {
+      if (typeof filter === 'string') filter = [filter];
+      let s = Op;
+      let filterObj: any = {};
+      for (let filterItem of filter) {
+        if (!/^[a-zA-Z0-9]+\:[a-zA-Z]{2,10}\:[^\:]+$/g.test(filterItem)) continue;
+        let [field, operator, value] = filterItem.split(':');
+        filterObj[field] = { [Op[operator as keyof typeof Op]]: value };
+      }
+      return {
+        where: filterObj
+      }
+    });
+    Comment.addScope('paging', (page: number, pageSize: number) => {
+      return {
+        limit: pageSize,
+        offset: (page-1)*pageSize
+      }
+    })
   }
 }
 
