@@ -1,5 +1,6 @@
 import { Application, Router, Request, Response } from 'express';
 import { RoutesConfig } from '../configs/routes.config';
+import ChapterController from '../controllers/chapter.controller';
 
 export class ChapterRoutes extends RoutesConfig {
   constructor(app: Application) {
@@ -7,9 +8,13 @@ export class ChapterRoutes extends RoutesConfig {
   }
 
   configureRoutes(router: Router) {
-    router.get('', (req, res) => {
-      res.send('abc');
-    })
+    
+    // router.get('', ChapterController.fetchList);
+    router.get('/:id', ChapterController.fetchById);
+    router.post('', ChapterController.create);
+    router.put('/:id', ChapterController.update);
+    router.delete('/:id', ChapterController.delete);
+
     return router;
   }
 }

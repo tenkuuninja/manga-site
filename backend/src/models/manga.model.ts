@@ -99,7 +99,7 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
   public countComments!: HasManyCountAssociationsMixin;
 
   public getGenres!: BelongsToManyGetAssociationsMixin<Genre>;
-  public setGenres!: BelongsToManySetAssociationsMixin<Genre, undefined>;
+  public setGenres!: BelongsToManySetAssociationsMixin<Genre, number>;
   public countGenres!: BelongsToManyCountAssociationsMixin;
 
   public countUsers!: BelongsToManyCountAssociationsMixin;
