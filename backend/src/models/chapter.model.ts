@@ -1,5 +1,11 @@
 import sequelize from '../configs/mysql.connect';
-import { Model, DataTypes } from 'sequelize';
+import { 
+  Model, 
+  DataTypes,
+  Op,
+  BelongsToGetAssociationMixin,
+  BelongsToSetAssociationMixin,
+} from 'sequelize';
 import Manga from './manga.model';
 
 interface ChapterAttributes {
@@ -23,6 +29,9 @@ class Chapter extends Model<ChapterAttributes> implements ChapterAttributes {
 
   public readonly manga?: Manga;
 
+  public getManga!: BelongsToGetAssociationMixin<Manga>;
+  public setManga!: BelongsToSetAssociationMixin<Manga, number>;
+
   static associate() {
     Chapter.belongsTo(Manga, { as: 'manga' });
   }
@@ -45,9 +54,7 @@ class Chapter extends Model<ChapterAttributes> implements ChapterAttributes {
   }
 
   static defineHook() {
-    Chapter.addHook('afterFind', (result: Chapter) => {
-      console.log(result);
-    });
+    
   }
 }
 

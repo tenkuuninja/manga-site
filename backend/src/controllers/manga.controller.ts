@@ -13,9 +13,6 @@ class MangaController {
   fetchList = async (req: Request, res: Response) => {
     let scope: any[] = ['includeGenre', 'showTotalFollowing', 'hideSrcLeech'];
     let scopeCount: any[] = [];
-    if (req.query.sort) {
-      scope.push({ method: ['sortQuery', req.query.sort] })
-    }
     if (req.query.search) {
       scope.push({ method: ['searchQuery', req.query.search] })
       scopeCount.push({ method: ['searchQuery', req.query.search] })
@@ -109,7 +106,7 @@ class MangaController {
         });
         await manga?.setGenres(genres);
       }
-      res.status(201).json(manga)
+      res.status(200).json(manga)
     } catch (error) {
       res.status(500).json({})
     }
@@ -122,7 +119,7 @@ class MangaController {
           id: +req.params.id
         }
       });
-      res.status(201).json(result)
+      res.status(200).json(result)
     } catch (error) {
       res.status(500).json({})
     }
