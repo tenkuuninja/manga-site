@@ -14,6 +14,8 @@ export class MangaRoutes extends RoutesConfig {
     router.post('', MangaController.create);
     router.put('/:id', MangaController.update);
     router.delete('/:id', MangaController.delete);
+
+    router.patch('/:id/rate', MangaController.addRate);
     
     return router;
   }
