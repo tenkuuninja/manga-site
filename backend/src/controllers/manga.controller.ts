@@ -95,7 +95,8 @@ class MangaController {
     try {
       req.body.titleSlug = changeToSlug(req.body.title);
       await Manga.update(req.body, {
-        where: { id: +req.params.id }
+        where: { id: +req.params.id },
+        silent: true
       });
       const manga = await Manga.scope(['includeGenre']).findByPk(+req.params.id);
       if (req.body.genres instanceof Array) {
@@ -126,6 +127,23 @@ class MangaController {
       res.status(500).json({})
     }
   }
+
+  addRate = async (req: Request, res: Response) => {
+    try {
+      const manga = await Manga.findByPk(+req.params.id);
+      let rate: any = manga?.rate;
+      const star = +req.body.star;
+      if (1<=star && star>=5) {
+        rate[star] = rate[star] + 1;
+        await manga?.update({ rate });
+        res.status(200).send(true)
+      }
+      res.status(200).send(false)
+    } catch (error) {
+      res.status(500).send(false)
+    }
+  }
+  
 }
 
 export default new MangaController();
