@@ -6,12 +6,12 @@ require('dotenv').config()
 const app = express();
 const PORT = process.env.APP_PORT || 5000;
 
-sequelize.authenticate()
+sequelize.authenticate({ logging: false })
   .then(() => console.log('Connection has been established successfully.'))
   .catch((error: any) => console.log('Unable to connect to the database:', error))
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 
 routes(app);
 

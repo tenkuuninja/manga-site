@@ -133,7 +133,14 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
       include: 'genres'
     });
     Manga.addScope('includeUser', {
-      include: 'users'
+      include: {
+        model: User,
+        as: 'users',
+        attributes: {
+          exclude: ['password', 'verify_token', 'reset_token', 'setting']
+        }
+      }
+      
     });
     Manga.addScope('includeChapter', {
       include: 'chapters',
