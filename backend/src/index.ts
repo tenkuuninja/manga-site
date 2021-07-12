@@ -11,7 +11,7 @@ sequelize.authenticate({ logging: false })
   .catch((error: any) => console.log('Unable to connect to the database:', error))
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 
 routes(app);
 
