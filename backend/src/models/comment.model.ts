@@ -54,7 +54,10 @@ class Comment extends Model<CommentAttributes> implements CommentAttributes {
       include: 'manga'
     });
     Comment.addScope('includeUser', {
-      include: 'user'
+      include: 'user',
+      attributes: {
+        exclude: ['password', 'verify_token', 'reset_token', 'setting']
+      }
     });
     Comment.addScope('includeReply', {
       include: 'replies',
