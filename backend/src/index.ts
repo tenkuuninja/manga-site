@@ -14,6 +14,7 @@ sequelize.authenticate({ logging: false })
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// routes
 routes(app);
 
 app.get('/', (req, res) => res.send('Express + TypeScript Server'));
