@@ -1,5 +1,6 @@
 import { Application, Router } from 'express';
 import { RoutesConfig } from '../configs/routes.config';
+import AuthController from '../controllers/auth.controller';
 
 export class AuthRoutes extends RoutesConfig {
   constructor(app: Application) {
@@ -7,9 +8,11 @@ export class AuthRoutes extends RoutesConfig {
   }
 
   configureRoutes(router: Router) {
-    router.get('', (req, res) => {
-      res.send('abc');
-    })
+    
+    router.post('/register', AuthController.register);
+    router.post('/login', AuthController.loginWithPassword);
+    router.post('/token-login', AuthController.loginWithAccessToken);
+
     return router;
   }
 }
