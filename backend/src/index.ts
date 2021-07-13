@@ -10,6 +10,7 @@ sequelize.authenticate({ logging: false })
   .then(() => console.log('Connection has been established successfully.'))
   .catch((error: any) => console.log('Unable to connect to the database:', error))
 
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
