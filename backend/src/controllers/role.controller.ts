@@ -45,7 +45,7 @@ class RoleController {
       const role = await Role.findOne({
         where: {
           id: +req.body.id,
-          allowDelete: true
+          allowDelete: true 
         }
       });
       await role?.update(req.body);
