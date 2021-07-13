@@ -150,11 +150,11 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
       include: 'comments',
       order: [['chapters', 'updatedAt', 'DESC']]
     });
-    Manga.addScope('showTotalFollowing', {
+    Manga.addScope('showTotalFollowingById', (id) => ({
       attributes: {
-        include: [[seq.literal("(SELECT COUNT(`User`.`id`) AS `count` FROM `user` AS `User` INNER JOIN `manga_user` AS `manga_user` ON `User`.`id` = `manga_user`.`user_id` AND `manga_user`.`manga_id` = `Manga`.`id`)"), 'totalFollowing']]
+        include: [[seq.literal("(SELECT COUNT(`User`.`id`) AS `count` FROM `user` AS `User` INNER JOIN `manga_user` AS `manga_user` ON `User`.`id` = `manga_user`.`user_id` AND `manga_user`.`manga_id` = "+id+")"), 'totalFollowing']]
       }
-    });
+    }));
     Manga.addScope('hideSrcLeech', {
       attributes: {
         exclude: ['leechType', 'leechUrl']
@@ -236,6 +236,7 @@ Manga.init({
   titleSynonym: {
     field: 'title_synonym',
     type: DataTypes.STRING,
+    defaultValue: '',
     get() {
       const rawValue = this.getDataValue('titleSynonym');
       return rawValue.split(',').filter(e => e.length > 0);
@@ -247,20 +248,23 @@ Manga.init({
   },
   imageUrl: {
     field: 'image_url',
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    defaultValue: '',
   },
   description: {
     field: 'description',
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    defaultValue: '',
   },
   country: {
     field: 'country',
     type: DataTypes.ENUM('jp', 'cn', 'kr'),
-    defaultValue: null
+    defaultValue: 'jp'
   },
   author: {
     field: 'author',
     type: DataTypes.STRING,
+    defaultValue: '',
     get() {
       const rawValue = this.getDataValue('author');
       return rawValue.split(',').filter(e => e.length > 0);

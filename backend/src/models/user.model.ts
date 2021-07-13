@@ -145,7 +145,8 @@ User.init({
   },
   avatar: {
     field: 'avatar',
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    defaultValue: ''
   },
   roleId: {
     field: 'role_id',

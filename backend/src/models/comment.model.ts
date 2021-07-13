@@ -133,20 +133,23 @@ Comment.init({
   },
   chapter: {
     field: 'chapter',
-    type: DataTypes.FLOAT.UNSIGNED,
-    allowNull: false
+    type: DataTypes.FLOAT.UNSIGNED
   },
   name: {
     field: 'name',
     type: DataTypes.STRING,
+    defaultValue: '',
   },
   email: {
     field: 'email',
     type: DataTypes.STRING,
+    defaultValue: '',
   },
   content: {
     field: 'content',
     type: DataTypes.TEXT,
+    allowNull: false,
+    defaultValue: '',
   },
   point: {
     field: 'point',

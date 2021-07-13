@@ -1,6 +1,8 @@
 import { Application, Router } from 'express';
 import { RoutesConfig } from '../configs/routes.config';
 import CommentController from '../controllers/comment.controller';
+import Validatior from '../middlewares/validation';
+
 
 export class CommentRoutes extends RoutesConfig {
   constructor(app: Application) {
@@ -11,8 +13,14 @@ export class CommentRoutes extends RoutesConfig {
     
     router.get('', CommentController.fetchList);
     router.get('/:id', CommentController.fetchById);
-    router.post('', CommentController.create);
-    router.put('/:id', CommentController.update);
+    router.post('', 
+      Validatior.commentValid(),
+      Validatior.verify,
+      CommentController.create);
+    router.put('/:id', 
+      Validatior.commentValid(),
+      Validatior.verify,
+      CommentController.update);
     router.delete('/:id', CommentController.delete);
 
     return router;

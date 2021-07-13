@@ -7,6 +7,7 @@ import {
   BelongsToSetAssociationMixin,
 } from 'sequelize';
 import Manga from './manga.model';
+import Genre from './genre.model';
 
 interface ChapterAttributes {
   id: number,
@@ -38,7 +39,13 @@ class Chapter extends Model<ChapterAttributes> implements ChapterAttributes {
 
   static defineScope() {
     Chapter.addScope('includeManga', {
-      include: 'manga'
+      include: {
+        model: Manga,
+        as: 'manga',
+        attributes: {
+          exclude: ['leechType', 'leechUrl']
+        }
+      }
     });
     Chapter.addScope('sortQuery', (orders: string | string[]) => {
       if (typeof orders === 'string') orders = orders.split(',')
@@ -74,6 +81,7 @@ Chapter.init({
   title: {
     field: 'title',
     type: DataTypes.STRING,
+    defaultValue: '',
     get() {
       return this.getDataValue('title').replace(/^\:\s/, '');
     },
@@ -86,7 +94,8 @@ Chapter.init({
   },
   content: {
     field: 'content',
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
+    defaultValue: '',
     get() {
       const rawValue = this.getDataValue('content');
       return rawValue.split(',').filter(e => e.length > 0);

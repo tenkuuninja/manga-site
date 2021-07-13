@@ -45,7 +45,7 @@ class ChapterController {
 
   create = async (req: Request, res: Response) => {
     try {
-      req.body.totalPage = req.body.content.length;
+      req.body.totalPage = req.body.content?.length || 0;
       req.body.manga_id = req.body.mangaId;
       const chapter = await Chapter.create(req.body);
       const result = await Chapter.scope(['includeManga']).findByPk(chapter.id);

@@ -1,6 +1,7 @@
-import { Application, Router, Request, Response } from 'express';
+import { Application, Router } from 'express';
 import { RoutesConfig } from '../configs/routes.config';
 import ChapterController from '../controllers/chapter.controller';
+import Validatior from '../middlewares/validation';
 
 export class ChapterRoutes extends RoutesConfig {
   constructor(app: Application) {
@@ -11,8 +12,14 @@ export class ChapterRoutes extends RoutesConfig {
     
     // router.get('', ChapterController.fetchList);
     router.get('/:id', ChapterController.fetchById);
-    router.post('', ChapterController.create);
-    router.put('/:id', ChapterController.update);
+    router.post('', 
+      Validatior.chapterValid(),
+      Validatior.verify,
+      ChapterController.create);
+    router.put('/:id', 
+      Validatior.chapterValid(),
+      Validatior.verify,
+      ChapterController.update);
     router.delete('/:id', ChapterController.delete);
 
     return router;

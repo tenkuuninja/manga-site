@@ -55,11 +55,12 @@ class MangaController {
       const result = await Manga.scope([
         'includeGenre', 
         'includeChapter', 
-        'showTotalFollowing', 
+        { method: ['showTotalFollowingById', +req.params.id] }, 
         'hideSrcLeech'
       ]).findByPk(+req.params.id);
       res.status(200).json(result);
     } catch (error) {
+      console.log('manga controller fetch error >>', error)
       res.status(500).json({
         errorMessage: "Đã xảy ra lỗi"
       });
