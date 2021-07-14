@@ -253,7 +253,7 @@ Manga.init({
   },
   description: {
     field: 'description',
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     defaultValue: '',
   },
   country: {

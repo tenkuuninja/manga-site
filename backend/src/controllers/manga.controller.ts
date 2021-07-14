@@ -11,7 +11,7 @@ class MangaController {
   private readonly sortDefault: string = '-updated_at';
 
   fetchList = async (req: Request, res: Response) => {
-    let scope: any[] = ['includeGenre', 'showTotalFollowing', 'hideSrcLeech'];
+    let scope: any[] = ['includeGenre', 'hideSrcLeech'];
     let scopeCount: any[] = [];
     if (req.query.search) {
       scope.push({ method: ['searchQuery', req.query.search] })
@@ -44,6 +44,7 @@ class MangaController {
         totalPage: Math.ceil(count/+size)
       })
     } catch (error) {
+      console.log('manga controller fetch list error >>', error)
       res.status(500).json({
         errorMessage: "Tham số không hợp lệ"
       });

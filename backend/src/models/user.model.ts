@@ -1,5 +1,14 @@
 import sequelize from '../configs/mysql.connect';
-import { DataTypes, Model, Op } from 'sequelize';
+import { 
+  DataTypes, 
+  Model, 
+  Op ,
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyCountAssociationsMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManySetAssociationsMixin,
+  BelongsToManyRemoveAssociationMixin
+} from 'sequelize';
 import bcrypt from 'bcrypt';
 import Manga from './manga.model';
 import MangaReaded from './manga_readed.model';
@@ -37,6 +46,12 @@ class User extends Model<UserAttributes> implements UserAttributes {
 
   public readonly mangas?: Manga;
   public readonly readed?: Manga;
+
+  getMangas!: BelongsToManyGetAssociationsMixin<Manga>;
+  setMangas!: BelongsToManySetAssociationsMixin<Manga, number>;
+  addManga!: BelongsToManyAddAssociationMixin<Manga, number>;
+  removeManga!: BelongsToManyRemoveAssociationMixin<Manga, number>;
+  countMangas!: BelongsToManyCountAssociationsMixin;
 
   static associate() {
     User.hasMany(Comment, { 

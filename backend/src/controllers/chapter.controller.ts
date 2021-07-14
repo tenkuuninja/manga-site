@@ -69,6 +69,7 @@ class ChapterController {
       const result = await Chapter.scope(['includeManga']).findByPk(+req.params.id);
       res.status(200).json(result)
     } catch (error) {
+      console.log('chapter controller update error >>', error)
       res.status(500).json({})
     }
   }
