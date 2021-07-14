@@ -1,12 +1,12 @@
 import { IRole } from './role';
 
 export interface IUser {
-  id: number;
+  id?: number;
   username: string;
   password?: string;
   email: string;
-  avatar: string;
-  roleId: number;
+  avatar?: string;
+  roleId?: number;
   status?: string;
   verifyToken?: string;
   resetToken?: string;

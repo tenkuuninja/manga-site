@@ -1,11 +1,11 @@
 import { IManga } from './manga';
 
 export interface IChapter {
-  id: number;
+  id?: number;
   mangaId: number;
-  title: string;
+  title?: string;
   number: number;
   content: string[];
-  totalPage: number;
+  totalPage?: number;
   manga?: IManga
 }

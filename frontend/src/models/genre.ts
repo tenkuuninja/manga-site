@@ -1,7 +1,7 @@
 export interface IGenre {
-  id: number,
+  id?: number,
   title: string,
-  titleSlug: string,
-  description: string,
-  imageUrl: string
+  titleSlug?: string,
+  description?: string,
+  imageUrl?: string
 }

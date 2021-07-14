@@ -1,7 +1,7 @@
 export interface IRole {
-  id: number;
+  id?: number;
   name: string;
-  color: string;
+  color?: string;
   permission?: any;
   allowDelete?: boolean;
 }

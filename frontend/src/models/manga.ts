@@ -10,23 +10,23 @@ interface IRate {
 }
 
 export interface IManga {
-  id: number;
+  id?: number;
   title: string;
-  titleSlug: string;
-  titleSynonym: string[];
-  imageUrl: string;
-  description: string;
-  country: 'jp' | 'cn' | 'kr' | null;
-  author: string[];
-  isFinish: boolean;
-  chapter: number;
-  favorite: number;
-  rate: IRate;
-  view: number;
-  viewDay: number;
-  viewWeek: number,
-  viewMonth: number;
-  totalFollowing? : number;
+  titleSlug?: string;
+  titleSynonym?: string[];
+  imageUrl?: string;
+  description?: string;
+  country?: 'jp' | 'cn' | 'kr' | null;
+  author?: string[];
+  isFinish?: boolean;
+  chapter?: number;
+  favorite?: number;
+  rate?: IRate;
+  view?: number;
+  viewDay?: number;
+  viewWeek?: number,
+  viewMonth?: number;
+  totalFollowing?: number;
   chapters?: IChapter;
   genres?: IGenre[];
 }
