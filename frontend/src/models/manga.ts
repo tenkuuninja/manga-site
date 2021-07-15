@@ -26,6 +26,9 @@ export interface IManga {
   viewDay?: number;
   viewWeek?: number,
   viewMonth?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date | null;
   totalFollowing?: number;
   chapters?: IChapter;
   genres?: IGenre[];

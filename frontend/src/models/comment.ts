@@ -11,6 +11,8 @@ export interface CommentAttributes {
   email?: string;
   content: string;
   point?: number;
+  updatedAt?: Date;
+  deletedAt?: Date | null;
   manga?: IManga;
   user?: IUser;
 }

@@ -7,5 +7,6 @@ export interface IChapter {
   number: number;
   content: string[];
   totalPage?: number;
+  updatedAt?: Date;
   manga?: IManga
 }

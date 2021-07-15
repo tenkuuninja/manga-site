@@ -11,5 +11,8 @@ export interface IUser {
   verifyToken?: string;
   resetToken?: string;
   setting?: any;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date | null;
   role?: IRole
 }
