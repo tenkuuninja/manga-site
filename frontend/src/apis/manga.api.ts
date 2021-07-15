@@ -26,12 +26,12 @@ export const fetchManga = (id: number, cancelToken?: CancelToken) => {
   return axios.get<IManga>(path+'/'+id, { cancelToken });
 }
 
-export const createManga = (manga: IManga, cancelToken?: CancelToken) => {
-  return axios.post<IManga>(path, manga, { cancelToken });
+export const createManga = (payload: IManga, cancelToken?: CancelToken) => {
+  return axios.post<IManga>(path, payload, { cancelToken });
 }
 
-export const updateManga = (id: number, manga: IManga, cancelToken?: CancelToken) => {
-  return axios.put<IManga>(path+'/'+id, manga, { cancelToken });
+export const updateManga = (id: number, payload: IManga, cancelToken?: CancelToken) => {
+  return axios.put<IManga>(path+'/'+id, payload, { cancelToken });
 }
 
 export const deleteManga = (id: number, cancelToken?: CancelToken) => {

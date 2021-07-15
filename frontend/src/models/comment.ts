@@ -1,7 +1,7 @@
 import { IManga } from './manga';
 import { IUser } from './user';
 
-export interface CommentAttributes {
+export interface IComment {
   id?: number;
   mangaId?: number | null;
   userId?: number | null;
