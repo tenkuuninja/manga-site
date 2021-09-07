@@ -13,6 +13,7 @@ export interface IComment {
   point?: number;
   updatedAt?: Date;
   deletedAt?: Date | null;
+  
   manga?: IManga;
   user?: IUser;
 }

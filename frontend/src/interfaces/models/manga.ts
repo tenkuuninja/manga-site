@@ -29,6 +29,7 @@ export interface IManga {
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date | null;
+  
   totalFollowing?: number;
   chapters?: IChapter;
   genres?: IGenre[];

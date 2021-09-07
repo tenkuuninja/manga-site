@@ -1,5 +1,5 @@
-import * as AuthApi from 'apis/auth.api';
-import { IUser } from 'models';
+import AuthApi from 'apis/auth.api';
+import { IUser } from 'interfaces';
 import { Dispatch } from 'redux';
 import {
   LOGIN_REQUEST,

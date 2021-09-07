@@ -1,12 +1,12 @@
 import { CancelToken } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
-import { IPage } from 'models';
-import { IManga } from 'models/manga';
+import { IPage } from 'interfaces';
+import { IManga } from 'interfaces/models/manga';
 
 const path = 'api/mangas';
 
-type IParamFetchMangaList = {
+export type IParamFetchMangaList = {
   search?: string;
   filter?: string | string[];
   genre?: string;
@@ -14,30 +14,34 @@ type IParamFetchMangaList = {
   sort?: string;
   page?: number;
   size?: number;
+  include?: string | string[]
 }
 
-export const fetchListManga = (options?: IParamFetchMangaList, cancelToken?: CancelToken) => {
-  if (typeof options === 'undefined') options = {}
-  const query: string = qs.stringify(options);
-  return axios.get<IPage<IManga>>(path+'?'+query, { cancelToken });
+const MangaApi = {
+  fetchList: (options?: IParamFetchMangaList, cancelToken?: CancelToken) => {
+    if (typeof options === 'undefined') options = {}
+    const query: string = qs.stringify(options);
+    return axios.get<IPage<IManga>>(path+'?'+query, { cancelToken });
+  },
+  create: (payload: IManga, cancelToken?: CancelToken) => {
+    return axios.post<IManga>(path, payload, { cancelToken });
+  },
+  byId: (id: number) => ({
+    fetch: (options?: IParamFetchMangaList, cancelToken?: CancelToken) => {
+      if (typeof options === 'undefined') options = {}
+      const query: string = qs.stringify(options);
+      return axios.get<IManga>(path+'/'+id+'?'+query, { cancelToken });
+    },
+    update: (payload: IManga, cancelToken?: CancelToken) => {
+      return axios.put<IManga>(path+'/'+id, payload, { cancelToken });
+    },
+    delete: (cancelToken?: CancelToken) => {
+      return axios.delete<number>(path+'/'+id, { cancelToken });
+    },
+    addRate: (cancelToken?: CancelToken) => {
+      return axios.patch<boolean>(path+'/'+id, { cancelToken });
+    }
+  })
 }
 
-export const fetchManga = (id: number, cancelToken?: CancelToken) => {
-  return axios.get<IManga>(path+'/'+id, { cancelToken });
-}
-
-export const createManga = (payload: IManga, cancelToken?: CancelToken) => {
-  return axios.post<IManga>(path, payload, { cancelToken });
-}
-
-export const updateManga = (id: number, payload: IManga, cancelToken?: CancelToken) => {
-  return axios.put<IManga>(path+'/'+id, payload, { cancelToken });
-}
-
-export const deleteManga = (id: number, cancelToken?: CancelToken) => {
-  return axios.delete<number>(path+'/'+id, { cancelToken });
-}
-
-export const addRateManga = (id: number, cancelToken?: CancelToken) => {
-  return axios.patch<boolean>(path+'/'+id, { cancelToken });
-}
+export default MangaApi;

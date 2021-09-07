@@ -1,12 +1,12 @@
 import { CancelToken } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
-import { IPage } from 'models';
-import { IComment } from 'models';
+import { IPage } from 'interfaces';
+import { IComment } from 'interfaces';
 
 const path = 'api/comments';
 
-type IParamFetchCommentList = {
+export interface IParamFetchCommentList {
   search?: string;
   filter?: string | string[];
   sort?: string;
@@ -14,18 +14,8 @@ type IParamFetchCommentList = {
   size?: number;
 }
 
-export const fetchListComment = (options?: IParamFetchCommentList, cancelToken?: CancelToken) => {
-  if (typeof options === 'undefined') options = {}
-  const query: string = qs.stringify(options);
-  return axios.get<IPage<IComment>>(path+'?'+query, { cancelToken });
-}
-
 export const fetchComment = (id: number, cancelToken?: CancelToken) => {
   return axios.get<IComment>(path+'/'+id, { cancelToken });
-}
-
-export const createComment = (payload: IComment, cancelToken?: CancelToken) => {
-  return axios.post<IComment>(path, payload, { cancelToken });
 }
 
 export const updateComment = (id: number, payload: IComment, cancelToken?: CancelToken) => {
@@ -39,3 +29,19 @@ export const deleteComment = (id: number, cancelToken?: CancelToken) => {
 export const addRateManga = (id: number, cancelToken?: CancelToken) => {
   return axios.patch<boolean>(path+'/'+id, { cancelToken });
 }
+
+const CommentApi = {
+  fetchList: (options?: IParamFetchCommentList, cancelToken?: CancelToken) => {
+    if (typeof options === 'undefined') options = {}
+    const query: string = qs.stringify(options);
+    return axios.get<IPage<IComment>>(path+'?'+query, { cancelToken });
+  },
+  createComment: (payload: IComment, cancelToken?: CancelToken) => {
+    return axios.post<IComment>(path, payload, { cancelToken });
+  },
+  byId: (id: number) => ({
+
+  })
+}
+
+export default CommentApi;

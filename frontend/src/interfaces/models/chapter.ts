@@ -1,5 +1,11 @@
 import { IManga } from './manga';
 
+interface NavigationChapter {
+  current: IChapter,
+  previous: IChapter,
+  next: IChapter
+}
+
 export interface IChapter {
   id?: number;
   mangaId: number;
@@ -8,5 +14,7 @@ export interface IChapter {
   content: string[];
   totalPage?: number;
   updatedAt?: Date;
-  manga?: IManga
+
+  manga?: IManga,
+  navigation?: NavigationChapter
 }

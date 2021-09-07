@@ -1,5 +1,4 @@
-import { IUser } from 'models';
-import { IAction } from 'models/action';
+import { IAction, IAuthStore } from 'interfaces';
 import { Reducer } from 'redux';
 import {
   LOGIN_REQUEST,
@@ -11,21 +10,14 @@ import {
   UPDATE_AVATAR_SUCCESS
 } from './constants';
 
-interface IAuthState {
-  isLoggedIn: boolean;
-  user: IUser | {} | null, 
-  isLoading: boolean, 
-  isError: boolean
-}
-
-let initialState: IAuthState = {
+let initialState: IAuthStore = {
   isLoggedIn: false, 
   user: {}, 
   isLoading: false, 
   isError: false
 }
 
-const authReducer: Reducer = (state: IAuthState = initialState, action: IAction): IAuthState => {
+const authReducer: Reducer = (state: IAuthStore = initialState, action: IAction): IAuthStore => {
   switch(action.type) {
     case LOGIN_REQUEST:
       return {
