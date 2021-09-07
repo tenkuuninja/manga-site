@@ -15,7 +15,8 @@ interface ChapterAttributes {
   title: string,
   number: number,
   content: string,
-  totalPage: number
+  totalPage: number,
+  navigation: any
 }
 
 class Chapter extends Model<ChapterAttributes> implements ChapterAttributes {
@@ -25,6 +26,7 @@ class Chapter extends Model<ChapterAttributes> implements ChapterAttributes {
   public number!: number;
   public content!: string;
   public totalPage!: number;
+  public navigation!: any;
 
   public readonly updatedAt!: Date;
 
@@ -111,6 +113,13 @@ Chapter.init({
     allowNull: false,
     defaultValue: 0
   },
+  navigation: {
+    type: DataTypes.VIRTUAL,
+    defaultValue: { previous: null, next: null },
+    set(value: any) {
+      this.setDataValue('navigation', value);
+    }
+  }
 }, {
   sequelize,
   tableName: 'chapter',

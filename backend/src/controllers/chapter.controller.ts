@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Op } from 'sequelize';
 import Chapter from '../models/chapter.model';
 import Manga from '../models/manga.model';
 
@@ -9,6 +10,13 @@ class ChapterController {
   fetchList = async (req: Request, res: Response) => {
     let scope: any[] = ['includeManga', { method: ['sortQuery', this.sortDefault] }];
     let scopeCount: any[] = [];
+    let include: string | string[] = req.query.include as string | string[] || '';
+    if (typeof include === 'string') {
+      include = [include];
+    }
+    if (include.includes('manga')) {
+      scope.push('includeManga');
+    }
     try {
       const result = await Chapter.scope(scope).findAll();
       const count = await Chapter.scope(scopeCount).count();
@@ -28,11 +36,34 @@ class ChapterController {
 
   fetchById = async (req: Request, res: Response) => {
     try {
-      const result = await Chapter.scope(['includeManga']).findByPk(+req.params.id);
+      let scope: any[] = ['includeManga'];
+      let include: string | string[] = req.query.include as string | string[] || '';
+      if (typeof include === 'string') {
+        include = [include];
+      }
+      const result = await Chapter.scope(scope).findByPk(+req.params.id);
+      if (include.includes('navigation') && result !== null) {
+        let [prevChapter, nextChapter] = await Promise.all([
+          Chapter.findOne({
+            where: { number: { [Op.lt]: result?.number}, mangaId: result?.mangaId },
+            // attributes: ['number', 'id'],
+            order: [['number', 'DESC']]
+          }),
+          Chapter.findOne({
+            where: { number: { [Op.gt]: result?.number}, mangaId: result?.mangaId },
+            // attributes: ['number', 'id'],
+            order: [['number', 'ASC']]
+          })
+        ]);
+        result.navigation = {
+          previous: prevChapter,
+          next: nextChapter
+        }
+      }
       res.status(200).json(result);
       await Manga.increment(['view', 'viewDay', 'viewWeek', 'viewMonth'], {
         where: {
-          id: result?.manga?.id
+          id: result?.mangaId
         },
         silent: true
       });
