@@ -1,9 +1,8 @@
 import { IManga } from './manga';
 
 interface NavigationChapter {
-  current: IChapter,
-  previous: IChapter,
-  next: IChapter
+  previous?: IChapter | null,
+  next?: IChapter | null
 }
 
 export interface IChapter {
