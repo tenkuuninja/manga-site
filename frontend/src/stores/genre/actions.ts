@@ -1,5 +1,4 @@
 import GenreApi from 'apis/genre.api';
-import { IManga } from 'interfaces';
 import { Dispatch } from 'redux';
 import { CancelToken } from 'axios';
 import {

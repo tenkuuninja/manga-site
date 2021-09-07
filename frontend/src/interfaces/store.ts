@@ -64,7 +64,7 @@ export interface IAppState {
   auth: IAuthStore,
   catalog: ICatalogStore,
   manga: IMangaStore,
-  similar: IMangaListStore,
+  // similar: IMangaListStore,
   chapter: IChapterStore,
   genre: IGenreStore,
   comment: ICommentStore
