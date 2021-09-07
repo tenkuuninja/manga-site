@@ -1,4 +1,5 @@
-import MangaApi, { IParamFetchMangaList } from 'apis/manga.api';
+import MangaApi from 'apis/manga.api';
+import { ISearchObject } from 'interfaces'
 import { Dispatch } from 'redux';
 import {
   FETCH_CATALOG_REQUEST,
@@ -6,7 +7,7 @@ import {
   FETCH_CATALOG_FAILURE
 } from './constants';
 
-export const fetchListManga = (filter?: IParamFetchMangaList) => async (dispatch: Dispatch) => {
+export const fetchListManga = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
   dispatch({ type: FETCH_CATALOG_REQUEST });
   try {
     let result = await MangaApi.fetchList(filter);

@@ -1,18 +1,11 @@
 import { CancelToken } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
-import { IPage } from 'interfaces';
+import { IPage, ISearchObject } from 'interfaces';
 import { IComment } from 'interfaces';
 
 const path = 'api/comments';
 
-export interface IParamFetchCommentList {
-  search?: string;
-  filter?: string | string[];
-  sort?: string;
-  page?: number;
-  size?: number;
-}
 
 export const fetchComment = (id: number, cancelToken?: CancelToken) => {
   return axios.get<IComment>(path+'/'+id, { cancelToken });
@@ -31,7 +24,7 @@ export const addRateManga = (id: number, cancelToken?: CancelToken) => {
 }
 
 const CommentApi = {
-  fetchList: (options?: IParamFetchCommentList, cancelToken?: CancelToken) => {
+  fetchList: (options?: ISearchObject, cancelToken?: CancelToken) => {
     if (typeof options === 'undefined') options = {}
     const query: string = qs.stringify(options);
     return axios.get<IPage<IComment>>(path+'?'+query, { cancelToken });

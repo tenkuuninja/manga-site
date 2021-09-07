@@ -1,4 +1,5 @@
-import CommentApi, { IParamFetchCommentList } from 'apis/comment.api';
+import CommentApi from 'apis/comment.api';
+import { ISearchObject } from 'interfaces'
 import { CancelToken } from 'axios';
 import { Dispatch } from 'redux';
 import {
@@ -7,7 +8,7 @@ import {
   FETCH_COMMENT_FAILURE
 } from './constants';
 
-export const fetchListComment = (filter?: IParamFetchCommentList, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+export const fetchListComment = (filter?: ISearchObject, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
   dispatch({ type: FETCH_COMMENT_REQUEST });
   try {
     let result = await CommentApi.fetchList(filter, cancelToken);

@@ -1,4 +1,5 @@
-import MangaApi, { IParamFetchMangaList } from 'apis/manga.api';
+import MangaApi from 'apis/manga.api';
+import { ISearchObject } from 'interfaces'
 import { CancelToken } from 'axios';
 import { Dispatch } from 'redux';
 import {
@@ -7,7 +8,7 @@ import {
   FETCH_CATALOG_FAILURE
 } from './constants';
 
-export const register = (id: number, option?: IParamFetchMangaList, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+export const register = (id: number, option?: ISearchObject, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
   dispatch({ type: FETCH_CATALOG_REQUEST });
   try {
     let result = await MangaApi.byId(id).fetch(option, cancelToken);

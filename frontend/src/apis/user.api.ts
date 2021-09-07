@@ -1,20 +1,13 @@
 import { CancelToken } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
-import { IPage, IUser } from 'interfaces';
+import { IPage, IUser, ISearchObject } from 'interfaces';
 
 const path = 'api/users';
 
-type IParamFetchUserList = {
-  search?: string;
-  filter?: string | string[];
-  sort?: string;
-  page?: number;
-  size?: number;
-}
 
 const UserApi = {
-  fetchList: (options?: IParamFetchUserList, cancelToken?: CancelToken) => {
+  fetchList: (options?: ISearchObject, cancelToken?: CancelToken) => {
     if (typeof options === 'undefined') options = {}
     const query: string = qs.stringify(options);
     return axios.get<IPage<IUser>>(path+'?'+query, { cancelToken });

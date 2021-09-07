@@ -1,24 +1,13 @@
 import { CancelToken } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
-import { IPage } from 'interfaces';
-import { IManga } from 'interfaces/models/manga';
+import { IPage, IManga, ISearchObject } from 'interfaces';
 
 const path = 'api/mangas';
 
-export type IParamFetchMangaList = {
-  search?: string;
-  filter?: string | string[];
-  genre?: string;
-  notgenre?: string;
-  sort?: string;
-  page?: number;
-  size?: number;
-  include?: string | string[]
-}
 
 const MangaApi = {
-  fetchList: (options?: IParamFetchMangaList, cancelToken?: CancelToken) => {
+  fetchList: (options?: ISearchObject, cancelToken?: CancelToken) => {
     if (typeof options === 'undefined') options = {}
     const query: string = qs.stringify(options);
     return axios.get<IPage<IManga>>(path+'?'+query, { cancelToken });
@@ -27,7 +16,7 @@ const MangaApi = {
     return axios.post<IManga>(path, payload, { cancelToken });
   },
   byId: (id: number) => ({
-    fetch: (options?: IParamFetchMangaList, cancelToken?: CancelToken) => {
+    fetch: (options?: ISearchObject, cancelToken?: CancelToken) => {
       if (typeof options === 'undefined') options = {}
       const query: string = qs.stringify(options);
       return axios.get<IManga>(path+'/'+id+'?'+query, { cancelToken });
