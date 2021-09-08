@@ -4,13 +4,17 @@ import { Model, DataTypes } from 'sequelize';
 interface MangaReadedAttributes {
   mangaId: number,
   userId: number,
-  chapter: number
+  lastChapterId: number,
+  lastChapter: number,
+  readed: string
 }
 
 class MangaReaded extends Model<MangaReadedAttributes> implements MangaReadedAttributes {
   public mangaId!: number;
   public userId!: number;
-  public chapter!: number;
+  public lastChapterId!: number;
+  public lastChapter!: number;
+  public readed!: string;
 
   public readonly updatedAt!: Date;
 
@@ -35,8 +39,18 @@ MangaReaded.init({
       key: 'id'
     }
   },
-  chapter: {
-    field: 'chapter',
+  lastChapterId: {
+    field: 'last_chapter_id',
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
+  lastChapter: {
+    field: 'last_chapter',
+    type: DataTypes.FLOAT.UNSIGNED,
+    allowNull: false,
+  },
+  readed: {
+    field: 'readed',
     type: DataTypes.FLOAT.UNSIGNED,
     allowNull: false,
   }
