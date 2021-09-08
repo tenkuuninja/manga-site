@@ -5,11 +5,11 @@ import MeController from '../controllers/me.controller';
 
 export class YourSelfRoutes extends RoutesConfig {
   constructor(app: Application) {
-    app.use(AuthMiddleware.isAuth);
     super(app, 'api/me');
   }
 
   configureRoutes(router: Router) {
+    router.use(AuthMiddleware.isAuth);
     
     router.get('', MeController.getInfo);
     router.get('/mangas', MeController.getManga);
