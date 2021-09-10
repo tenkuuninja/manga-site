@@ -1,6 +1,7 @@
 import express from 'express';
 import sequelize from './models';
 import routes from './routes';
+import cors from './middlewares/cors';
 require('dotenv').config()
 
 const app = express();
@@ -13,6 +14,9 @@ sequelize.authenticate({ logging: false })
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// cors
+app.use(cors);
 
 // routes
 routes(app);
