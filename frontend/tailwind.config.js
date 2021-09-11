@@ -12,6 +12,7 @@ module.exports = {
       },
       spacing: {
         18: '4.5rem',
+        180: '45rem',
         335: '83.75rem'
       },
       keyframes: {

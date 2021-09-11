@@ -1,0 +1,11 @@
+.content {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.trigger:hover > .content {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
