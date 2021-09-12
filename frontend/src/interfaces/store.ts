@@ -70,6 +70,7 @@ export interface IAppState {
   manga: IMangaStore,
   // similar: IMangaListStore,
   chapter: IChapterStore,
+  common: ICommonStore,
   genre: IGenreStore,
   comment: ICommentStore
 
