@@ -6,9 +6,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
-  UPDATE_USERNAME_SUCCESS,
-  UPDATE_PASSWORD_SUCCESS,
-  UPDATE_AVATAR_SUCCESS
+  // UPDATE_USERNAME_SUCCESS,
+  // UPDATE_PASSWORD_SUCCESS,
+  // UPDATE_AVATAR_SUCCESS
 } from './constants';
 
 export const register = (body : IUser) => async (dispatch: Dispatch) => {

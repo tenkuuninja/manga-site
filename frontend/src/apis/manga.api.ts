@@ -1,16 +1,19 @@
 import { CancelToken } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
-import { IPage, IManga, ISearchObject } from 'interfaces';
+import { IPage, IManga, ISearchObject, IMangaTop } from 'interfaces';
 
 const path = 'api/mangas';
 
 
-const MangaApi = {
+export const MangaApi = {
   fetchList: (options?: ISearchObject, cancelToken?: CancelToken) => {
     if (typeof options === 'undefined') options = {}
     const query: string = qs.stringify(options);
     return axios.get<IPage<IManga>>(path+'?'+query, { cancelToken });
+  },
+  fetchTop: (cancelToken?: CancelToken) => {
+    return axios.get<IMangaTop>(path+'/top', { cancelToken });
   },
   create: (payload: IManga, cancelToken?: CancelToken) => {
     return axios.post<IManga>(path, payload, { cancelToken });

@@ -51,6 +51,24 @@ class MangaController {
     }
   }
 
+  fetchTop = async (req: Request, res: Response) => {
+    let scope: any[] = ['includeGenre', 'hideSrcLeech', { method: ['paging', this.pageDefault, this.pageSizeDefault] }];
+    try {
+      let [all, day, week, month] = await Promise.all([
+        Manga.scope([...scope, { method: ['sortQuery', '-view'] }]).findAll(),
+        Manga.scope([...scope, { method: ['sortQuery', '-viewDay'] }]).findAll(),
+        Manga.scope([...scope, { method: ['sortQuery', '-viewWeek'] }]).findAll(),
+        Manga.scope([...scope, { method: ['sortQuery', '-viewMonth'] }]).findAll(),
+      ]);
+      res.status(200).json({ all, day, week, month })
+    } catch (error) {
+      console.log('manga controller fetch list error >>', error)
+      res.status(500).json({
+        errorMessage: "Tham số không hợp lệ"
+      });
+    }
+  }
+
   fetchById = async (req: Request, res: Response) => {
     try {
       const result = await Manga.scope([

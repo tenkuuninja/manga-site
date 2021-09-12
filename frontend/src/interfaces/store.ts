@@ -48,10 +48,14 @@ export interface IGenreStore {
 }
 
 export interface ICommonStore {
-  topAll: IMangaListStore,
-  topMonth: IMangaListStore,
-  topWeek: IMangaListStore,
-  topDay: IMangaListStore,
+  top: {
+    all: IManga[],
+    month: IManga[],
+    week: IManga[],
+    day: IManga[],
+    isLoading: boolean, 
+    isError: boolean
+  },
   follow: IMangaListStore,
   readed: IMangaListStore,
   local: {

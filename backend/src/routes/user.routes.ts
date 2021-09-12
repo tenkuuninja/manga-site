@@ -11,6 +11,7 @@ export class UserRoutes extends RoutesConfig {
   configureRoutes(router: Router) {
     
     router.get('', UserController.fetchList);
+    router.get('/exists', UserController.exist);
     router.get('/:id', UserController.fetchById);
     router.post('', 
       Validatior.userValid(),

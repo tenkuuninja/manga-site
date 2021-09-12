@@ -1,6 +1,6 @@
 import { CancelToken } from 'axios';
 import axios from './instance';
-import qs from 'query-string';
+// import qs from 'query-string';
 import { IPage } from 'interfaces';
 import { IRole } from 'interfaces';
 
@@ -22,7 +22,7 @@ export const fetchRole = (id: number, cancelToken?: CancelToken) => {
 //   return axios.delete<number>(path+'/'+id, { cancelToken });
 // }
 
-const RoleApi = {
+export const RoleApi = {
   fetchListRole: (cancelToken?: CancelToken) => {
     return axios.get<IPage<IRole>>(path, { cancelToken });
   }

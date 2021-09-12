@@ -16,9 +16,14 @@ class AuthController {
       req.body.verifyToken = uuidv4();
       req.body.resetToken = uuidv4();
       const user = await User.create(req.body);
+      let userResponse: User | null = null;
+      if (user) {
+        userResponse = await User.scope(['includeRole', 'hideSensitive']).findByPk(user.id);
+      }
       const accessToken = this.genToken(user);
       res.status(200).json({
-        accessToken: accessToken
+        accessToken: accessToken,
+        user: userResponse
       })
     } catch (error) {
       console.log('auth controller register error >>', error)

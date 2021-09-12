@@ -23,7 +23,7 @@ export const addRateManga = (id: number, cancelToken?: CancelToken) => {
   return axios.patch<boolean>(path+'/'+id, { cancelToken });
 }
 
-const CommentApi = {
+export const CommentApi = {
   fetchList: (options?: ISearchObject, cancelToken?: CancelToken) => {
     if (typeof options === 'undefined') options = {}
     const query: string = qs.stringify(options);

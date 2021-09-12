@@ -5,7 +5,7 @@ import { IChapter } from 'interfaces';
 
 const path = 'api/chapters';
 
-const ChapterApi = {
+export const ChapterApi = {
   create: (payload: IChapter, cancelToken?: CancelToken) => {
     return axios.post<IChapter>(path, payload, { cancelToken });
   },

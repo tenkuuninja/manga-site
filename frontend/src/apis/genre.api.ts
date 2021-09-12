@@ -4,7 +4,7 @@ import { IGenre } from 'interfaces';
 
 const path = 'api/genres';
 
-const GenreApi = {
+export const GenreApi = {
   fetchList: (cancelToken?: CancelToken) => {
     return axios.get<IGenre[]>(path, { cancelToken });
   },

@@ -4,7 +4,7 @@ import { IAuth, IUser } from 'interfaces';
 
 const path = 'api/auth';
 
-const AuthApi = {
+export const AuthApi = {
   loginWithPassword: (body: {},cancelToken?: CancelToken) => {
     return axios.post<IAuth>(path+'/login', body, { cancelToken });
   },

@@ -93,6 +93,23 @@ class UserController {
     }
   }
 
+  exist = async (req: Request, res: Response) => {
+    try {
+      const allowField = ['id', 'username', 'email'];
+      const options: any = {};
+      for (let key in req.query) {
+        if (allowField.includes(key)) options[key] = req.query[key]
+      }
+      const result = await User.count({
+        where: options,
+        paranoid: false
+      });
+      res.status(200).json(result > 0 ? true : false)
+    } catch (error) {
+      res.status(500).json(false)
+    }
+  }
+
   updatePassword = async (req: Request, res: Response) => {
     try {
       const user = await User.scope(['includeRole', 'hideSensitive']).findByPk(+req.params.id);

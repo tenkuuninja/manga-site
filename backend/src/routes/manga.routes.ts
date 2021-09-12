@@ -11,6 +11,7 @@ export class MangaRoutes extends RoutesConfig {
   configureRoutes(router: Router) {
 
     router.get('', MangaController.fetchList);
+    router.get('/top', MangaController.fetchTop);
     router.get('/:id', MangaController.fetchById);
     router.post('', 
       Validatior.mangaValid(),
