@@ -77,7 +77,7 @@ class AuthController {
             }
           });
           if (user) {
-            res.status(200).json({ user })
+            return res.status(200).json({ user })
           }
         }
       } 

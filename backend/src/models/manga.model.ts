@@ -148,7 +148,7 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
     });
     Manga.addScope('includeComment', {
       include: 'comments',
-      order: [['chapters', 'updatedAt', 'DESC']]
+      order: [['comments', 'updatedAt', 'DESC']]
     });
     Manga.addScope('showTotalFollowingById', (id) => ({
       attributes: {

@@ -6,7 +6,7 @@ interface MangaReadedAttributes {
   userId: number,
   lastChapterId: number,
   lastChapter: number,
-  readed: string
+  readed: string | number[]
 }
 
 class MangaReaded extends Model<MangaReadedAttributes> implements MangaReadedAttributes {
@@ -14,7 +14,7 @@ class MangaReaded extends Model<MangaReadedAttributes> implements MangaReadedAtt
   public userId!: number;
   public lastChapterId!: number;
   public lastChapter!: number;
-  public readed!: string;
+  public readed!: string | number[];
 
   public readonly updatedAt!: Date;
 
@@ -51,8 +51,17 @@ MangaReaded.init({
   },
   readed: {
     field: 'readed',
-    type: DataTypes.FLOAT.UNSIGNED,
+    type: DataTypes.TEXT,
     allowNull: false,
+    get() {
+      let rawValue = this.getDataValue('readed');
+      if (typeof rawValue === 'string') rawValue = rawValue.split(',').map(i => +i);
+      return rawValue;
+    },
+    set(value: string | string[] | number[]) {
+      if (typeof value != 'string') value = value.join(',')
+      this.setDataValue('readed', value);
+    }
   }
 }, {
   sequelize,

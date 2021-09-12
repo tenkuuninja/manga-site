@@ -1,4 +1,4 @@
-import { MangaApi } from 'apis';
+import { MangaApi, MeApi } from 'apis';
 import { Dispatch } from 'redux';
 import { CancelToken } from 'axios';
 import {
@@ -10,14 +10,15 @@ import {
   // FETCH_FOLLOW_MANGA_REQUEST,
   // FETCH_FOLLOW_MANGA_SUCCESS,
   // FETCH_FOLLOW_MANGA_FAILURE,
-  // FETCH_READED_MANGA_REQUEST,
-  // FETCH_READED_MANGA_SUCCESS,
-  // FETCH_READED_MANGA_FAILURE,
+  FETCH_READED_MANGA_REQUEST,
+  FETCH_READED_MANGA_SUCCESS,
+  FETCH_READED_MANGA_FAILURE,
   // ADD_READED,
   // SYNC_WITH_LOCALSTORAGE,
   // SET_LOCAL_NAME,
   // SET_LOCAL_EMAIL
 } from './constants';
+import { ISearchObject } from 'interfaces';
 
 export const fetchTopManga = (cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
   dispatch({ type: FETCH_TOP_MANGA_REQUEST });
@@ -46,17 +47,18 @@ export const fetchTopManga = (cancelToken?: CancelToken) => async (dispatch: Dis
 //   }
 // }
 
-// export const fetchReadedStory = () => async dispatch => {
-//   dispatch({ type: FETCH_READED_MANGA_REQUEST });
-//   try {
-//     let result = await MangaService.getList({in: [6759, 1536, 768, 3465], orderByIn: true});
-//     dispatch({ type: FETCH_READED_MANGA_SUCCESS, payload: {
-//       readed: result.data.manga
-//     } });
-//   } catch (error) {
-//     dispatch({ type: FETCH_READED_MANGA_FAILURE });
-//   }
-// }
+export const fetchReadedManga = (options?: ISearchObject,cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+  dispatch({ type: FETCH_READED_MANGA_REQUEST });
+  try {
+    let result = await MeApi.fetchManga(options, cancelToken);
+    dispatch({ type: FETCH_READED_MANGA_SUCCESS, payload: {
+      readed: result.data.content
+    } });
+  } catch (error) {
+    console.log(error)
+    dispatch({ type: FETCH_READED_MANGA_FAILURE });
+  }
+}
 
 // export const addHistory = (data) => async dispatch => {
 //   dispatch({ type: ADD_READED, payload: { story: data } });

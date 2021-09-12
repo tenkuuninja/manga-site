@@ -2,6 +2,9 @@ import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import Manga from '../models/manga.model';
 import User from '../models/user.model';
+import MangaReaded from '../models/manga_readed.model';
+import { FindOptions } from 'sequelize/types';
+import Sequelize from 'sequelize';
 
 class UserController {
 
@@ -40,6 +43,74 @@ class UserController {
       });
     } catch (error) {
       res.status(500).json({});
+    }
+  }
+
+  getHistory = async (req: Request, res: Response) => {
+    try {
+      if (req.user === null) throw Error();
+      console.log(req.user.id)
+      let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
+      let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
+      let scope: any[] = ['includeGenre', 'hideSrcLeech', { method: ['paging', page, size] }];
+      const options: FindOptions = {
+        include: [{
+          attributes: ['id'],
+          model: User,
+          as: 'readed',
+          through: {
+            where: {
+              userId: req.user.id
+            }
+          },
+          required: true
+        }],
+        order: [[Sequelize.literal("`readed.MangaReaded.updatedAt`"), 'DESC']]
+      }
+      const result = await Manga.scope([]).findAll(options);
+      const count = await Manga.count(options);
+      
+      res.status(200).json({
+        content: result,
+        count: count,
+        page: page,
+        size: size,
+        totalPage: Math.ceil(count/+size)
+      });
+    } catch (error) {
+      console.log("get readed ", error)
+      res.status(500).json({});
+    }
+  }
+
+  read = async (req: Request, res: Response) => {
+    try {
+      if (req.user === null) throw Error();
+      if (Number.isNaN(+req.params.chapter)) {
+        res.status(500).send(false);
+      }
+      let record = await MangaReaded.findOne({
+        where: {
+          mangaId: req.body.mangaId,
+          userId: req.user.id
+        }
+      });
+      if (record !== null) {
+        let readed = typeof record.readed === 'string' ? record.readed.split(',').map(i => +i) : record.readed;
+        readed.push(+req.params.chapter);
+        readed = [...new Set(readed)];
+        readed.sort((a, b) => a-b);
+        await record.update({
+          lastChapterId: req.body.lastChapterId,
+          lastChapter: req.body.lastChapter,
+          readed: readed
+        });
+      } else {
+        let record = await MangaReaded.create({...req.body, readed: req.params.chapter, userId: req.user.id});
+      }
+      res.status(201).send(true);
+    } catch (error) {
+      res.status(500).send(false);
     }
   }
 

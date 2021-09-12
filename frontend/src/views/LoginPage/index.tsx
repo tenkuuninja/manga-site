@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
@@ -15,7 +15,7 @@ const LoginPage = function() {
   const [password, setPassword] = useState<string>('');
   const [passwordIsMasked, setPasswordMasked] = useState<boolean>(true);
   if (isLoggedIn) {
-    history.push('/')
+    setTimeout(() => history.push('/'), 0);
   }
 
   const onRegister = (e: React.FormEvent) => {

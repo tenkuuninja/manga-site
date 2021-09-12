@@ -42,7 +42,7 @@ const RegisterPage = function() {
   const rePassword = /^[a-zA-Z0-9_\-+=!@#$%^&*]{8,32}$/g;
 
   if (isLoggedIn) {
-    history.push('/')
+    setTimeout(() => history.push('/'), 0);
   }
 
   const onRegister = (e: React.FormEvent) => {

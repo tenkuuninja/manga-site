@@ -1,6 +1,6 @@
-import { IUser } from './models/user';
+import { IUser } from '../interfaces';
 
 export interface IAuth {
   accessToken?: string,
-  user?:IUser
+  user?:IUser 
 }
