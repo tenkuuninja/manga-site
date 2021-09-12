@@ -1,5 +1,6 @@
 import { RouteProps } from 'react-router-dom';
 import HomePage from 'views/HomePage';
+import LoginPage from 'views/LoginPage';
 import RegisterPage from 'views/RegisterPage';
 
 interface RouteCustomProps extends RouteProps {
@@ -16,7 +17,7 @@ const navigation: RouteCustomProps[] =  [
   {
     path: '/dang-nhap.html',
     exact: true,
-    component: HomePage,
+    component: LoginPage,
     guard: 'none'
   },
   {

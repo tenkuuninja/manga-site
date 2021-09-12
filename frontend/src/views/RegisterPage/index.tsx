@@ -243,11 +243,7 @@ const RegisterPage = function() {
         <Button type="submit" variant="contained" color="primary" fullWidth className="rounded-none shadow-none text-semibold text-lg py-3 mt-6">
           Đăng ký
         </Button>
-        <div className="border-b border-black border-opacity-20 text-center text-sm py-4">
-          <Link to="reset-password.html">
-            Quên mật khẩu?
-          </Link>
-        </div>
+        <div className="border-b border-black border-opacity-20 text-center text-sm py-4"> </div>
       </form>
       <div className="text-center">
         Bạn đã có tài khoản? 

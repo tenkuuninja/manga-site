@@ -35,15 +35,17 @@ class AuthController {
 
   loginWithPassword = async (req: Request, res: Response) => {
     try {
+      const reEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/gi;
       if (req.body.user != null) throw Error('Đã đăng nhập');
-      const userByUsername = await User.findOne({
-        where: { username: req.body.username }
+      let typeLogin = reEmail.test(req.body.username) ? 'email' : 'username';
+      const userWithFullInfo = await User.findOne({
+        where: { [typeLogin]: req.body.username }
       });
-      if (userByUsername !== null) {
-        const match = await bcrypt.compare(req.body.password, userByUsername.password);
+      if (userWithFullInfo !== null) {
+        const match = await bcrypt.compare(req.body.password, userWithFullInfo.password);
         if (match) {
-          const accessToken = this.genToken(userByUsername);
-          const user = await User.scope(['includeRole', 'hideSensitive']).findByPk(userByUsername.id);
+          const accessToken = this.genToken(userWithFullInfo);
+          const user = await User.scope(['includeRole', 'hideSensitive']).findByPk(userWithFullInfo.id);
           if (user) {
             return res.status(200).json({ accessToken, user });
           }
