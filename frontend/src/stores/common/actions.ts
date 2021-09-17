@@ -7,12 +7,15 @@ import {
   FETCH_TOP_MANGA_REQUEST,
   FETCH_TOP_MANGA_SUCCESS,
   FETCH_TOP_MANGA_FAILURE,
-  // FETCH_FOLLOW_MANGA_REQUEST,
-  // FETCH_FOLLOW_MANGA_SUCCESS,
-  // FETCH_FOLLOW_MANGA_FAILURE,
+  FETCH_FOLLOW_MANGA_REQUEST,
+  FETCH_FOLLOW_MANGA_SUCCESS,
+  FETCH_FOLLOW_MANGA_FAILURE,
   FETCH_READED_MANGA_REQUEST,
   FETCH_READED_MANGA_SUCCESS,
   FETCH_READED_MANGA_FAILURE,
+  FETCH_AUTO_COMPLETE_REQUEST,
+  FETCH_AUTO_COMPLETE_SUCCESS,
+  FETCH_AUTO_COMPLETE_FAILURE,
   // ADD_READED,
   // SYNC_WITH_LOCALSTORAGE,
   // SET_LOCAL_NAME,
@@ -35,28 +38,41 @@ export const fetchTopManga = (cancelToken?: CancelToken) => async (dispatch: Dis
   }
 }
 
-// export const fetchFollowStory = (userId) => async dispatch => {
-//   dispatch({ type: FETCH_FOLLOW_MANGA_REQUEST });
-//   try {
-//     let result = await UserService.id(userId).fetchManga();
-//     dispatch({ type: FETCH_FOLLOW_MANGA_SUCCESS, payload: {
-//       follow: result.data.manga
-//     } });
-//   } catch (error) {
-//     dispatch({ type: FETCH_FOLLOW_MANGA_FAILURE });
-//   }
-// }
+export const fetchFollowManga = (options?: ISearchObject,cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+  dispatch({ type: FETCH_FOLLOW_MANGA_REQUEST });
+  try {
+    let result = await MeApi.fetchManga(options, cancelToken);
+    dispatch({ type: FETCH_FOLLOW_MANGA_SUCCESS, payload: {
+      follow: result.data.content
+    } });
+  } catch (error) {
+    dispatch({ type: FETCH_FOLLOW_MANGA_FAILURE });
+  }
+}
 
 export const fetchReadedManga = (options?: ISearchObject,cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
   dispatch({ type: FETCH_READED_MANGA_REQUEST });
   try {
-    let result = await MeApi.fetchManga(options, cancelToken);
+    let result = await MeApi.fetchReaded(options, cancelToken);
     dispatch({ type: FETCH_READED_MANGA_SUCCESS, payload: {
       readed: result.data.content
     } });
   } catch (error) {
     console.log(error)
     dispatch({ type: FETCH_READED_MANGA_FAILURE });
+  }
+}
+
+export const fetchAutoComplete = (search: string, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+  dispatch({ type: FETCH_AUTO_COMPLETE_REQUEST });
+  try {
+    let result = await MangaApi.fetchList({ search }, cancelToken);
+    dispatch({ type: FETCH_AUTO_COMPLETE_SUCCESS, payload: {
+      content: result.data.content
+    } });
+  } catch (error) {
+    console.log(error)
+    dispatch({ type: FETCH_AUTO_COMPLETE_FAILURE });
   }
 }
 

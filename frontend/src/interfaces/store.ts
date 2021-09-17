@@ -58,6 +58,7 @@ export interface ICommonStore {
   },
   follow: IMangaListStore,
   readed: IMangaListStore,
+  autoComplete: IMangaListStore,
   local: {
     email: string,
     name: string

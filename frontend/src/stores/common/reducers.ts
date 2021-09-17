@@ -12,6 +12,9 @@ import {
   FETCH_READED_MANGA_REQUEST,
   FETCH_READED_MANGA_SUCCESS,
   FETCH_READED_MANGA_FAILURE,
+  FETCH_AUTO_COMPLETE_REQUEST,
+  FETCH_AUTO_COMPLETE_SUCCESS,
+  FETCH_AUTO_COMPLETE_FAILURE,
   ADD_READED,
   SYNC_WITH_LOCALSTORAGE,
   SET_LOCAL_NAME,
@@ -23,6 +26,7 @@ let initialState: ICommonStore = {
   top: { all: [], day: [], week: [], month: [], isLoading: true, isError: false },
   follow: { payload: [], isLoading: false, isError: false },
   readed: { payload: [], isLoading: false, isError: false, },
+  autoComplete: { payload: [], isLoading: false, isError: false, },
   local: {
     name: '',
     email: ''
@@ -61,6 +65,12 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
       return {...state, readed: {payload: action.payload.readed, isLoading: false, isError: false}}
     case FETCH_READED_MANGA_FAILURE:
       return {...state, readed: {...state.readed, isError: true}}
+    case FETCH_AUTO_COMPLETE_REQUEST:
+      return {...state, autoComplete: {...state.autoComplete, isLoading: true}}
+    case FETCH_AUTO_COMPLETE_SUCCESS:
+      return {...state, autoComplete: {payload: action.payload.content, isLoading: false, isError: false}}
+    case FETCH_AUTO_COMPLETE_FAILURE:
+      return {...state, autoComplete: {...state.autoComplete, isError: true}}
     case ADD_READED:
       state.readed.payload.unshift(action.payload.story);
       return state;

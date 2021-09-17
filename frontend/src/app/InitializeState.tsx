@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { autoLogin } from 'stores/auth/actions';
 import { fetchListGenre } from 'stores/genre/actions';
-import { fetchTopManga, fetchReadedManga } from 'stores/common/actions';
-import { MeApi } from 'apis';
+import { fetchTopManga, fetchReadedManga, fetchFollowManga } from 'stores/common/actions';
 
 export const InitializeState = function() {
   const dispatch = useDispatch();
@@ -17,6 +16,7 @@ export const InitializeState = function() {
     let token = localStorage.getItem('token');
     if (token) {
       dispatch(autoLogin());
+      dispatch(fetchFollowManga());
       dispatch(fetchReadedManga());
     }
     // eslint-disable-next-line
