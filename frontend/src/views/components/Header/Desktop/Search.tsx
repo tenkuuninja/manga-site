@@ -7,6 +7,7 @@ import { debounce } from 'utils/helper';
 import axios, { CancelToken } from 'axios';
 import { fetchAutoComplete } from 'stores/common/actions';
 import { IAppState, IManga } from 'interfaces';
+import { AutoCompleteSkeleton } from './Skeleton';
 
 const Search = function() {
   const { autoComplete } = useSelector((store: IAppState) => store.common);
@@ -54,6 +55,33 @@ const Search = function() {
     // eslint-disable-next-line
   }, []);
 
+  let autoCompleteContent;
+
+  if (autoComplete.isLoading || autoComplete.isError) {
+    autoCompleteContent = <AutoCompleteSkeleton />
+  } else {
+    autoCompleteContent = <ul className="p-2">
+      {autoComplete.payload.map((item: IManga, i) => <li key={i}>
+        <Link to={``} className="block">
+          <div className='flex overflow-hidden space-x-2 p-2'>
+            <div className='flex-shrink-0 overflow-hidden rounded-lg w-12 h-12'>
+              <img className='w-full' src={item.imageUrl} alt='' />
+            </div>
+            <div className='flex-grow relative'>
+              <p className='truncate ... font-semibold text-base leading-5'>{item.title}</p>
+              <p className='absolute bottom-0 text-sm opacity-80'>
+                <span className="text-red-600">{countryType[item.country || 'jp'].title}</span>&nbsp;&nbsp;
+                {item.genres !== undefined && <span className="text-blue-600">
+                  {item.genres[0]?.title || ''}  {item.genres[1]?.title || ''}
+                </span>}
+              </p>
+            </div>
+          </div>
+        </Link>
+      </li>)}
+    </ul>
+  }
+
   return(
     <form 
       ref={formRef}
@@ -68,26 +96,7 @@ const Search = function() {
       />
       <div className={`absolute ${isAutoComplete ? "block" : "hidden"} border border-black border-opacity-10 bg-white top-12 left-0 right-0 mt-1`}>
         <p className="text-lg font-semibold px-4 pt-4 pb-1">Kết quả tìm kiếm</p>
-        <ul className="p-2">
-          {autoComplete.payload.map((item: IManga, i) => <li key={i}>
-            <Link to={``} className="block">
-              <div className='flex overflow-hidden space-x-2 p-2'>
-                <div className='flex-shrink-0 overflow-hidden rounded-lg w-12 h-12'>
-                  <img className='w-full' src={item.imageUrl} alt='' />
-                </div>
-                <div className='flex-grow relative'>
-                  <p className='truncate ... font-semibold text-base leading-5'>{item.title}</p>
-                  <p className='absolute bottom-0 text-sm opacity-80'>
-                    <span className="text-red-600">{countryType[item.country || 'jp'].title}</span>&nbsp;&nbsp;
-                    {item.genres !== undefined && <span className="text-blue-600">
-                      {item.genres[0]?.title || ''}  {item.genres[1]?.title || ''}
-                    </span>}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          </li>)}
-        </ul>
+        {autoCompleteContent}
       </div>
       <button className="mx-3 text-2xl"><MdSearch /></button>
     </form>

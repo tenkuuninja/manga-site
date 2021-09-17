@@ -4,6 +4,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        'sm': '576px', 
+        'md': '768px', 
+        'lg': '992px', 
+        'xl': '1200px', 
+      },
       colors: {
         skeleton: {
           light: '#9CA3AF',
@@ -11,10 +17,12 @@ module.exports = {
           dark: '#4B5563'
         }
       },
+      maxWidth: {
+        335: '83.75rem'
+      },
       spacing: {
         18: '4.5rem',
-        180: '45rem',
-        335: '83.75rem'
+        180: '45rem'
       },
       keyframes: {
         'pop-in': {

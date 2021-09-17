@@ -13,7 +13,7 @@ import Personal from './Personal';
 const DesktopHeader = function() {
   const { follow, readed } = useSelector((store: IAppState) => store.common)
   return(
-    <div className="flex items-center h-18 px-6 text-sm">
+    <div className="hidden lg:flex items-center h-18 px-6 text-sm">
       <Logo />
       <Genre />
       <Category />

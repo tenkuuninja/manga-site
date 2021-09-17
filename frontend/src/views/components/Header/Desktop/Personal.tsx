@@ -4,11 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IAppState } from 'interfaces';
 import Dropdown from 'views/components/Dropdown';
 import Avatar from 'views/components/Avatar';
-import {
-  Paper
-} from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import { logout } from 'stores/auth/actions';
-
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 
 const menu = [
@@ -27,6 +25,15 @@ const menu = [
 const Personal = function() {
   const { auth } = useSelector((store: IAppState) => store);
   const dispatch = useDispatch();
+
+  if (auth.isLoading) {
+    return(
+      <div className="ml-2 text-sm font-bold">
+        <AiOutlineLoading3Quarters className="inline-block animate-spin" />
+        <span className="ml-2" >Processing</span>
+      </div>
+    );
+  }
 
   if (!auth.isLoggedIn) {
     return(

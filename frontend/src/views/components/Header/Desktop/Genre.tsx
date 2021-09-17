@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IAppState } from 'interfaces'
 import Dropdown from 'views/components/Dropdown';
-import {
-  Paper
-} from '@material-ui/core';
+import { GenreSkeleton } from './Skeleton';
+import { Paper } from '@material-ui/core';
 
 const countries = [
   {id: 'jp', title: 'Manga',  slug: 'nhat-ban'},
@@ -18,9 +17,9 @@ const Genre = function() {
   
   let content;
   if (genre.isLoading) {
-    content = ''
+    content = <GenreSkeleton />
   } else if (genre.isError) {
-    content = ''
+    content = <GenreSkeleton />
   } else {
     content = <div className="grid w-180 mt-1 divide-x" style={{gridTemplateColumns: '100px auto'}}>
       <ul>
