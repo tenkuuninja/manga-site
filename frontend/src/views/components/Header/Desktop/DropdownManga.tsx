@@ -1,7 +1,6 @@
 import React from 'react';
 import { IManga } from 'interfaces';
 import Dropdown from 'views/components/Dropdown';
-import { data } from 'autoprefixer';
 import { MangaCardHorizontal } from 'views/components/MangaCard';
 import { Link } from 'react-router-dom';
 import { DropdownMangaSkeleton } from './Skeleton';

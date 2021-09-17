@@ -14,13 +14,11 @@ interface IUserForCheck {
 
 export const UserApi = {
   fetchList: (options?: ISearchObject, cancelToken?: CancelToken) => {
-    if (typeof options === 'undefined') options = {}
-    const query: string = qs.stringify(options);
+    const query: string = qs.stringify(options || {});
     return axios.get<IPage<IUser>>(path+'?'+query, { cancelToken });
   },
   isExist: (options?: IUserForCheck, cancelToken?: CancelToken) => {
-    if (typeof options === 'undefined') options = {}
-    const query: string = qs.stringify(options);
+    const query: string = qs.stringify(options || {});
     return axios.get<boolean>(path+'/exists?'+query, { cancelToken });
   },
   create: (payload: IUser, cancelToken?: CancelToken) => {

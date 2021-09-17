@@ -37,6 +37,7 @@ const Search = function() {
     const myRequest = axios.CancelToken.source();
     search(text, myRequest.token);
     return myRequest.cancel;
+    // eslint-disable-next-line
   }, [text]);
 
   useEffect(function() {

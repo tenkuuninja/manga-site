@@ -6,7 +6,8 @@ import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 import { UserApi } from 'apis';
 import { register } from 'stores/auth/actions';
 import { IAppState } from 'interfaces';
-import axios from 'axios';
+import axios, { CancelToken } from 'axios';
+import { debounce } from 'utils/helper';
 
 interface InputState {
   data: string,
@@ -66,15 +67,27 @@ const RegisterPage = function() {
 
   }
 
+  const checkUsernameExist = debounce(function(cancelToken: CancelToken) {
+    if (reUsername.test(username.data)) {
+      UserApi.isExist({ username: username.data }, cancelToken).then(res => {
+        if (res.data) setUsername({...username, error: true, message: 'Tên đăng nhập đã tồn tại, hãy đổi tên đăng nhập khác.'})
+      }).catch(err => {})
+    } 
+  }, 800);
+
+  const checkEmailExist = debounce(function(cancelToken: CancelToken) {
+    if (reEmail.test(email.data)) {
+      UserApi.isExist({ email: email.data }, cancelToken).then(res => {
+        if (res.data) setEmail({...email, error: true, message: 'Email đã tồn tại, hãy đổi địa chỉ email khác.'})
+      }).catch(error => {});
+    } 
+  }, 800);
+
   useEffect(function() {
     let myRequest = axios.CancelToken.source();
     const rg = /^[a-zA-Z0-9_]{6,14}$/g;
     const rg2 = /[^a-zA-Z0-9_]/g;
-    if (reUsername.test(username.data)) {
-      UserApi.isExist({ username: username.data }, myRequest.token).then(res => {
-        if (res.data) setUsername({...username, error: true, message: 'Tên đăng nhập đã tồn tại, hãy đổi tên đăng nhập khác.'})
-      }).catch(err => {})
-    } 
+    checkUsernameExist(myRequest.token);
     if (username.focus) {
       if (username.data === '') {
         setUsername({...username, error: true, message: 'Không được để trống tên đăng nhập.'});
@@ -99,11 +112,7 @@ const RegisterPage = function() {
 
   useEffect(function() {
     let myRequest = axios.CancelToken.source();
-    if (reEmail.test(email.data)) {
-      UserApi.isExist({ email: email.data }, myRequest.token).then(res => {
-        if (res.data) setEmail({...email, error: true, message: 'Email đã tồn tại, hãy đổi địa chỉ email khác.'})
-      }).catch(error => {});
-    } 
+    checkEmailExist(myRequest.token);
     if (email.focus) {
       if (email.data === '') {
         setEmail({...email, error: true, message: 'Không được để trống email'});
