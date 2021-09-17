@@ -95,7 +95,7 @@ const Search = function() {
         onChange={(e) => setText(e.target.value)}
         onClick={() => setAutoComplete(true)}
       />
-      <div className={`absolute ${isAutoComplete ? "block" : "hidden"} border border-black border-opacity-10 bg-white top-12 left-0 right-0 mt-1`}>
+      <div className={`absolute ${isAutoComplete && text.length ? "block" : "hidden"} border border-black border-opacity-10 bg-white top-12 left-0 right-0 mt-1`}>
         <p className="text-lg font-semibold px-4 pt-4 pb-1">Kết quả tìm kiếm</p>
         {autoCompleteContent}
       </div>

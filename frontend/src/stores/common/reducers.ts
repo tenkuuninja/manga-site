@@ -26,7 +26,7 @@ let initialState: ICommonStore = {
   top: { all: [], day: [], week: [], month: [], isLoading: true, isError: false },
   follow: { payload: [], isLoading: false, isError: false },
   readed: { payload: [], isLoading: false, isError: false, },
-  autoComplete: { payload: [], isLoading: false, isError: false, },
+  autoComplete: { payload: [], isLoading: true, isError: false, },
   local: {
     name: '',
     email: ''
