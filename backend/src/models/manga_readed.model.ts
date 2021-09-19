@@ -70,4 +70,6 @@ MangaReaded.init({
   paranoid: false
 });
 
+MangaReaded.removeAttribute('id');
+
 export default MangaReaded;

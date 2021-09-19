@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { Op } from 'sequelize';
+import { FindOptions, Op } from 'sequelize';
 import Manga from '../models/manga.model';
 import Genre from '../models/genre.model';
 import { changeToSlug } from '../utils/string';
+import MangaReaded from '../models/manga_readed.model';
 
 class MangaController {
 
@@ -71,12 +72,21 @@ class MangaController {
 
   fetchById = async (req: Request, res: Response) => {
     try {
+      const options: FindOptions = !req.user ? {} : {
+        include: [{
+          model: MangaReaded,
+          as: 'reads',
+          where: {
+            userId: req.user.id
+          }
+        }]
+      }
       const result = await Manga.scope([
         'includeGenre', 
         'includeChapter', 
         { method: ['showTotalFollowingById', +req.params.id] }, 
         'hideSrcLeech'
-      ]).findByPk(+req.params.id);
+      ]).findByPk(+req.params.id, options);
       res.status(200).json(result);
     } catch (error) {
       console.log('manga controller fetch error >>', error)

@@ -64,9 +64,19 @@ class User extends Model<UserAttributes> implements UserAttributes {
       onDelete: 'SET NULL',
       onUpdate: 'CASCADE'
     });
+    User.hasMany(MangaReaded, { 
+      as: 'reads', 
+      foreignKey: {
+        name: 'user_id',
+        allowNull: false
+      },
+      // sourceKey: 'user_id',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    });
     User.belongsTo(Role, { as: 'role' });
     User.belongsToMany(Manga, {through: 'manga_user', as: 'mangas', timestamps: false});
-    User.belongsToMany(Manga, {through: MangaReaded, as: 'readed'});
+    // User.belongsToMany(Manga, {through: MangaReaded, as: 'readed'});
   }
 
   static defineScope() {

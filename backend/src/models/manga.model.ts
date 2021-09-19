@@ -123,9 +123,18 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
       onDelete: 'CASCADE', 
       onUpdate: 'CASCADE'
     })
+    Manga.hasMany(MangaReaded, {
+      as: 'reads',
+      foreignKey: {
+        name: 'manga_id', 
+        allowNull: false
+      }, 
+      onDelete: 'CASCADE', 
+      onUpdate: 'CASCADE'
+    })
     Manga.belongsToMany(Genre, {through: 'manga_genre', as: 'genres', timestamps: false });
     Manga.belongsToMany(User, {through: 'manga_user', as: 'users', timestamps: false});
-    Manga.belongsToMany(User, {through: MangaReaded, as: 'readed'});
+    // Manga.belongsToMany(User, {through: MangaReaded, as: 'readed'});
   }
 
   static defineScope() {

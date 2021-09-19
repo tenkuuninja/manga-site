@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Manga from '../models/manga.model';
 import User from '../models/user.model';
 import MangaReaded from '../models/manga_readed.model';
-import { FindOptions } from 'sequelize/types';
+import { FindOptions, where } from 'sequelize/types';
 import Sequelize from 'sequelize';
 
 class UserController {
@@ -55,19 +55,16 @@ class UserController {
       let scope: any[] = ['includeGenre', 'hideSrcLeech', { method: ['paging', page, size] }];
       const options: FindOptions = {
         include: [{
-          attributes: ['id'],
-          model: User,
-          as: 'readed',
-          through: {
-            where: {
-              userId: req.user.id
-            }
+          model: MangaReaded,
+          as: 'reads',
+          where: {
+            userId: req.user.id
           },
           required: true
         }],
-        order: [[Sequelize.literal("`readed.MangaReaded.updatedAt`"), 'DESC']]
+        order: [[Sequelize.literal("`reads.updatedAt`"), 'DESC']]
       }
-      const result = await Manga.scope([]).findAll(options);
+      const result = await Manga.scope(scope).findAll(options);
       const count = await Manga.count(options);
       
       res.status(200).json({

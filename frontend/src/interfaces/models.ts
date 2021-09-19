@@ -59,7 +59,7 @@ export interface IManga {
   deletedAt?: Date | null;
   
   totalFollowing?: number;
-  readed?: IUser[],
+  readed?: IMangaReaded[],
   chapters?: IChapter;
   genres?: IGenre[];
 }
@@ -88,7 +88,7 @@ export interface IUser {
   deletedAt?: Date | null;
 
   role?: IRole
-  MangaReaded?: IMangaReaded
+  reads?: IMangaReaded[]
 }
 
 export interface IMangaReaded {
