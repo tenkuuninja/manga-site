@@ -159,9 +159,22 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
       include: 'comments',
       order: [['comments', 'updatedAt', 'DESC']]
     });
-    Manga.addScope('showTotalFollowingById', (id) => ({
+    Manga.addScope('includeReads', (userId, required: boolean = false) =>  ({
+      include: [{
+        model: MangaReaded,
+        as: 'reads',
+        where: { userId },
+        required: required
+      }]
+    }));
+    Manga.addScope('showTotalFollowing', {
       attributes: {
-        include: [[seq.literal("(SELECT COUNT(`User`.`id`) AS `count` FROM `user` AS `User` INNER JOIN `manga_user` AS `manga_user` ON `User`.`id` = `manga_user`.`user_id` AND `manga_user`.`manga_id` = "+id+")"), 'totalFollowing']]
+        include: [[seq.literal("(SELECT COUNT(`manga_user`.`user_id`) AS `count` FROM `manga_user` AS `manga_user` WHERE `manga_user`.`manga_id` = `Manga`.`id`)"), 'totalFollowing']]
+      }
+    });
+    Manga.addScope('showIsFollowingById', (userId) => ({
+      attributes: {
+        include: [[seq.literal("IF((SELECT COUNT(`manga_user`.`user_id`) AS `count` FROM `manga_user` AS `manga_user` WHERE `manga_user`.`user_id` = "+userId+" AND `manga_user`.`manga_id` = `Manga`.`id`)>0, 1, 0)"), 'isFollowing']]
       }
     }));
     Manga.addScope('hideSrcLeech', {
@@ -171,12 +184,12 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
     });
     Manga.addScope('sortQuery', (orders: string | string[]) => {
       if (typeof orders === 'string') orders = orders.split(',')
-      let order: [string, string][] = []
+      let order: any[] = [];
       for (let value of orders) {
-        if (!/^(\-|\+)[a-zA-Z0-9_-]+$/g.test(value)) continue;
+        if (!/^(\-|\+)[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)?$/g.test(value)) continue;
         let orderType = value.substr(0, 1) == '+' ? 'ASC' : 'DESC';
-        let orderName = value.substr(1);
-        order.push([orderName, orderType]);
+        let orderName = value.substr(1).split('.');
+        order.push([...orderName, orderType]);
       }
       return { order }
     });

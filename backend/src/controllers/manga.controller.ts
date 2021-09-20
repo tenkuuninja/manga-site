@@ -9,11 +9,14 @@ class MangaController {
 
   private readonly pageDefault: number = 1;
   private readonly pageSizeDefault: number = 30;
-  private readonly sortDefault: string = '-updated_at';
+  private readonly sortDefault: string = '-updatedAt';
 
   fetchList = async (req: Request, res: Response) => {
-    let scope: any[] = ['includeGenre', 'hideSrcLeech'];
+    let scope: any[] = ['includeGenre', 'hideSrcLeech', 'showTotalFollowing', ];
     let scopeCount: any[] = [];
+    if (req.user !== null) {
+      scope.push({ method: ['showIsFollowingById', +req.user.id] })
+    }
     if (req.query.search) {
       scope.push({ method: ['searchQuery', req.query.search] })
       scopeCount.push({ method: ['searchQuery', req.query.search] })
@@ -72,21 +75,12 @@ class MangaController {
 
   fetchById = async (req: Request, res: Response) => {
     try {
-      const options: FindOptions = !req.user ? {} : {
-        include: [{
-          model: MangaReaded,
-          as: 'reads',
-          where: {
-            userId: req.user.id
-          }
-        }]
+      let scope: any[] = ['includeGenre', 'includeChapter', 'showTotalFollowing', 'hideSrcLeech']
+      if (req.user !== null) {
+        scope.push({ method: ['showIsFollowingById', +req.user.id] });
+        scope.push({ method: ['includeReads', +req.user.id] });
       }
-      const result = await Manga.scope([
-        'includeGenre', 
-        'includeChapter', 
-        { method: ['showTotalFollowingById', +req.params.id] }, 
-        'hideSrcLeech'
-      ]).findByPk(+req.params.id, options);
+      const result = await Manga.scope(scope).findByPk(+req.params.id);
       res.status(200).json(result);
     } catch (error) {
       console.log('manga controller fetch error >>', error)

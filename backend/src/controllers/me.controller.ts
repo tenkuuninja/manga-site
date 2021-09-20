@@ -25,13 +25,16 @@ class UserController {
       if (req.user === null) throw Error();
       let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
       let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
-      const result = await req.user.getMangas({
-        attributes: {
-          exclude: ['leechType', 'leechUrl']
-        },
-        limit: size,
-        offset: (page-1)*size,
-        order: [['updatedAt','DESC']]
+      let scope: any[] = [
+        'includeGenre', 
+        'hideSrcLeech', 
+        'showTotalFollowing', 
+        { method: ['showIsFollowingById', +req.user.id] },
+        { method: ['paging', page, size] },
+        { method: ['sortQuery', '-updatedAt'] }
+      ];
+      const result = await Manga.scope(scope).findAll({
+        where: Sequelize.literal("EXISTS ( SELECT * FROM `manga_user` WHERE `manga_user`.`user_id` = "+(+req.user.id)+" AND `manga_user`.`manga_id` = `manga`.`id`)")
       })
       const count = await req.user.countMangas();
       res.status(200).json({
@@ -49,10 +52,15 @@ class UserController {
   getHistory = async (req: Request, res: Response) => {
     try {
       if (req.user === null) throw Error();
-      console.log(req.user.id)
       let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
       let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
-      let scope: any[] = ['includeGenre', 'hideSrcLeech', { method: ['paging', page, size] }];
+      let scope: any[] = [
+        'includeGenre', 
+        'hideSrcLeech', 
+        'showTotalFollowing', 
+        { method: ['paging', page, size] }, 
+        { method: ['showIsFollowingById', +req.user.id] }
+      ];
       const options: FindOptions = {
         include: [{
           model: MangaReaded,
@@ -62,7 +70,6 @@ class UserController {
           },
           required: true
         }],
-        order: [[Sequelize.literal("`reads.updatedAt`"), 'DESC']]
       }
       const result = await Manga.scope(scope).findAll(options);
       const count = await Manga.count(options);

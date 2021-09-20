@@ -36,12 +36,23 @@ class ChapterController {
 
   fetchById = async (req: Request, res: Response) => {
     try {
-      let scope: any[] = ['includeManga'];
+      let mangaScope: any[] = ['includeGenre', 'includeChapter', 'showTotalFollowing', 'hideSrcLeech'];
       let include: string | string[] = req.query.include as string | string[] || '';
       if (typeof include === 'string') {
         include = [include];
       }
-      const result = await Chapter.scope(scope).findByPk(+req.params.id);
+      if (req.user !== null) {
+        mangaScope.push({ method: ['showIsFollowingById', +req.user.id] })
+      }
+      const result = await Chapter.findOne({
+        where: {
+          id: +req.params.id
+        },
+        include: [{
+          model: Manga.scope(mangaScope),
+          as: 'manga'
+        }]
+      }); 
       if (include.includes('navigation') && result !== null) {
         let [prevChapter, nextChapter] = await Promise.all([
           Chapter.findOne({
