@@ -28,8 +28,10 @@ const Search = function() {
   }
   
   function redirectToSearchPage() {
-    setOpenSearch(false);
-    history.push('/tim-kiem.html?q='+text.replace(' ', '+'));
+    if (text.length > 0) {
+      setOpenSearch(false);
+      history.push('/tim-kiem.html?q='+text.replace(' ', '+'));
+    }
   }
 
   useEffect(function() {

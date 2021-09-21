@@ -30,8 +30,10 @@ const Search = function() {
   }
   
   function redirectToSearchPage() {
-    setAutoComplete(false);
-    history.push('/tim-kiem.html?q='+text.replace(' ', '+'));
+    if (text.length > 0) {
+      setAutoComplete(false);
+      history.push('/tim-kiem.html?q='+text.replace(' ', '+'));
+    }
   }
 
   function closeAutoComplete(e: MouseEvent) {

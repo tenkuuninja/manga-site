@@ -11,15 +11,15 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const menu = [
   [
-    { title: 'Truyện đang theo dõi', slug: '', icon: '' },
-    { title: 'Lịch sử đọc truyện', slug: '', icon: '' },
-    { title: 'Tìm kiếm nâng cao', slug: '', icon: '' },
+    { title: 'Truyện đang theo dõi', url: '', icon: '' },
+    { title: 'Lịch sử đọc truyện', url: '', icon: '' },
+    { title: 'Tìm kiếm nâng cao', url: '', icon: '' },
     
   ],
   [
-    { title: 'Quản lý tài khoản', slug: '', icon: '' },
-    { title: 'Thông báo', slug: '', icon: '' },
-    { title: 'Cài đặt', slug: '', icon: '' }
+    { title: 'Quản lý tài khoản', url: '', icon: '' },
+    { title: 'Thông báo', url: '', icon: '' },
+    { title: 'Cài đặt', url: '', icon: '' }
   ]
 ];
 
@@ -71,7 +71,7 @@ const Personal = function() {
           </Link>
           {menu.map((typeItem, i) => <ul key={i} className="py-2">
             {typeItem.map((item, j) => <li key={j} >
-              <Link to={item.slug} className="block px-4 py-2 hover:text-blue-700 transition duration-100">
+              <Link to={item.url} className="block px-4 py-2 hover:text-blue-700 transition duration-100">
                 {item.title}
               </Link>
             </li>)}

@@ -44,8 +44,8 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
       auth: true,
       child: [
         { title: 'Quản lý tài khoản', url: '' },
-        { title: 'Truyện đang theo dõi', url: '' },
-        { title: 'Lịch sử đọc truyện', url: '' },
+        { title: 'Truyện đang theo dõi', url: '/truyen-dang-theo-doi.html' },
+        { title: 'Lịch sử đọc truyện', url: '/lich-su-doc-truyen.html' },
         { title: 'Thông báo', url: '' },
       ]
     }, 
