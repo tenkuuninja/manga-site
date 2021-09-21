@@ -25,7 +25,7 @@ const AdvenceSearch = function() {
         </div>
       </Paper>}
     >
-    <div className="h-18">
+    <div className="h-18 select-none">
       <Link to="/tim-kiem-nang-cao.html">
         <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
           <span>Tìm kiếm nâng cao</span>

@@ -2,7 +2,7 @@ import { IUser, IManga, IChapter, IComment, IGenre } from '../interfaces';
 
 export interface IAuthStore {
   isLoggedIn: boolean;
-  user: IUser | {} | null, 
+  user: IUser | null, 
   isLoading: boolean, 
   isError: boolean
 }

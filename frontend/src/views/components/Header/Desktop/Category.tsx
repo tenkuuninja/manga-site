@@ -39,9 +39,9 @@ const Category = function() {
   return(
     <Dropdown
       placement="bottom-left"
-      overlay={<Paper className="animate-pop-in mt-1 text-sm" variant="outlined" square >{content}</Paper>}
+      overlay={<Paper className="animate-pop-in mt-1 text-sm select-none" variant="outlined" square >{content}</Paper>}
     >
-    <div className="h-18">
+    <div className="h-18 select-none">
       <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
         <span>Danh mục</span>
       </div>

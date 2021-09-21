@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { MdSearch } from 'react-icons/md';
 import { suggestPlaceholder, countryType } from 'utils/static';
@@ -12,6 +12,7 @@ import { AutoCompleteSkeleton } from './Skeleton';
 const Search = function() {
   const { autoComplete } = useSelector((store: IAppState) => store.common);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [text, setText] = useState<string>('');
   const [isAutoComplete, setAutoComplete] = useState<boolean>(false);
   const [placeholder, setPlaceholder] = useState<string>('Nhập tên truyện...');
@@ -21,10 +22,16 @@ const Search = function() {
     if (text.length > 0) {
       dispatch(fetchAutoComplete(text.replace(' ', '+'), cancelToken));
     }
-  }, 800);
+  }, 500);
 
   function onSearch(e: React.FormEvent) {
     e.preventDefault();
+    redirectToSearchPage();
+  }
+  
+  function redirectToSearchPage() {
+    setAutoComplete(false);
+    history.push('/tim-kiem.html?q='+text.replace(' ', '+'));
   }
 
   function closeAutoComplete(e: MouseEvent) {
@@ -61,7 +68,7 @@ const Search = function() {
   if (autoComplete.isLoading || autoComplete.isError) {
     autoCompleteContent = <AutoCompleteSkeleton />
   } else {
-    autoCompleteContent = <ul className="p-2">
+    autoCompleteContent = <ul className="p-2 h-96 overflow-y-auto">
       {autoComplete.payload.map((item: IManga, i) => <li key={i}>
         <Link to={``} className="block">
           <div className='flex overflow-hidden space-x-2 p-2'>
@@ -94,6 +101,11 @@ const Search = function() {
         placeholder={placeholder}
         onChange={(e) => setText(e.target.value)}
         onClick={() => setAutoComplete(true)}
+        onKeyPress={(e) => {
+          if (e.code === "Enter") {
+            redirectToSearchPage();
+          }
+        }}
       />
       <div className={`absolute ${isAutoComplete && text.length ? "block" : "hidden"} border border-black border-opacity-10 bg-white top-12 left-0 right-0 mt-1`}>
         <p className="text-lg font-semibold px-4 pt-4 pb-1">Kết quả tìm kiếm</p>

@@ -13,6 +13,7 @@ const menu = [
   [
     { title: 'Truyện đang theo dõi', slug: '', icon: '' },
     { title: 'Lịch sử đọc truyện', slug: '', icon: '' },
+    { title: 'Tìm kiếm nâng cao', slug: '', icon: '' },
     
   ],
   [
@@ -56,9 +57,17 @@ const Personal = function() {
     <Dropdown
       placement="bottom-right"
       overlay={<Paper className="animate-pop-in mt-1 text-sm" variant="outlined" square >
-        <div className="w-60 shadow divide-y z-30">
-          <Link to="/" className="block p-4">
-          <Avatar size="lg" src="" alt="Viet Hoang" />
+        <div className="w-60 shadow divide-y z-30 select-none">
+          <Link to="/" className="flex items-center p-4">
+            <Avatar size="lg" src="" alt="Viet Hoang" />
+            <div className="flex-grow pl-2 overflow-hidden">
+              <span className="truncate-lines line-clamp-1 text-lg font-bold">
+                {auth.user?.username}
+              </span>
+              <span className="text-xs" style={{ color: auth.user?.role?.color }}>
+                {auth.user?.role?.name}
+              </span>
+            </div>
           </Link>
           {menu.map((typeItem, i) => <ul key={i} className="py-2">
             {typeItem.map((item, j) => <li key={j} >
@@ -73,7 +82,7 @@ const Personal = function() {
         </div>
       </Paper>}
     >
-      <div className="h-18">
+      <div className="h-18 select-none">
         <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
           <Avatar size="sm" src="" alt="Viet Hoang" />
         </div>

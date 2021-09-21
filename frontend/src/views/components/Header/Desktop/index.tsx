@@ -20,20 +20,20 @@ const DesktopHeader = function() {
       <Search />
       <AdvenceSearch />
       <DropdownManga
-        data={follow.payload}
-        isLoading={follow.isLoading}
-        isError={follow.isError}
-        title="Theo dõi"
-        text="Truyện đang theo dõi"
-        url={`/truyen-dang-theo-doi.html`}
-      />
-      <DropdownManga
         data={readed.payload}
         isLoading={readed.isLoading}
         isError={readed.isError}
         title="Lịch sử"
         text="Lịch sử đọc truyện"
         url={`/lich-su-doc-truyen.html`}
+      />
+      <DropdownManga
+        data={follow.payload}
+        isLoading={follow.isLoading}
+        isError={follow.isError}
+        title="Theo dõi"
+        text="Truyện đang theo dõi"
+        url={`/truyen-dang-theo-doi.html`}
       />
       <Personal />
     </div>

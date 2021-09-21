@@ -34,7 +34,7 @@ export function DropdownMangaSkeleton() {
 
 export function AutoCompleteSkeleton() {
 	let listChildSkeleton = []
-	for (let i=0;i<10;i++) {
+	for (let i=0;i<5;i++) {
 		listChildSkeleton.push(<li className="p-2" key={i}>
       <div className='flex overflow-hidden space-x-2 p-2'>
         <div className="flex-shrink-0 bg-gray-400 rounded-lg w-12 h-12"></div>
