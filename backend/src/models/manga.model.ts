@@ -159,11 +159,11 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
       include: 'comments',
       order: [['comments', 'updatedAt', 'DESC']]
     });
-    Manga.addScope('includeReads', (userId, required: boolean = false) =>  ({
+    Manga.addScope('includeReads', (userId: number, required: boolean = false) =>  ({
       include: [{
         model: MangaReaded,
         as: 'reads',
-        where: { userId },
+        where: { userId: userId },
         required: required
       }]
     }));

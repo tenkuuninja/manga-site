@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import Chapter from '../models/chapter.model';
 import Manga from '../models/manga.model';
+import User from '../models/user.model';
 
 class ChapterController {
 
@@ -41,7 +42,7 @@ class ChapterController {
       if (typeof include === 'string') {
         include = [include];
       }
-      if (req.user !== null) {
+      if (req.user instanceof User) {
         mangaScope.push({ method: ['showIsFollowingById', +req.user.id] })
       }
       const result = await Chapter.findOne({

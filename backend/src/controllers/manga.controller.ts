@@ -4,6 +4,7 @@ import Manga from '../models/manga.model';
 import Genre from '../models/genre.model';
 import { changeToSlug } from '../utils/string';
 import MangaReaded from '../models/manga_readed.model';
+import User from '../models/user.model';
 
 class MangaController {
 
@@ -12,32 +13,32 @@ class MangaController {
   private readonly sortDefault: string = '-updatedAt';
 
   fetchList = async (req: Request, res: Response) => {
-    let scope: any[] = ['includeGenre', 'hideSrcLeech', 'showTotalFollowing', ];
-    let scopeCount: any[] = [];
-    if (req.user !== null) {
-      scope.push({ method: ['showIsFollowingById', +req.user.id] })
-    }
-    if (req.query.search) {
-      scope.push({ method: ['searchQuery', req.query.search] })
-      scopeCount.push({ method: ['searchQuery', req.query.search] })
-    }
-    if (req.query.filter) {
-      scope.push({ method: ['filterQuery', req.query.filter] })
-      scopeCount.push({ method: ['filterQuery', req.query.filter] })
-    }
-    if (typeof req.query.genre === 'string') {
-      scope.push({ method: ['filterGenre', req.query.genre.split(',').filter(id => !isNaN(+id))] })
-      scopeCount.push({ method: ['filterGenre', req.query.genre.split(',').filter(id => !isNaN(+id))] })
-    }
-    if (typeof req.query.sort === 'string') {
-      scope.push({ method: ['sortQuery', req.query.sort] });
-    } else {
-      scope.push({ method: ['sortQuery', this.sortDefault] });
-    }
-    let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
-    let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
-    scope.push({ method: ['paging', page, size] });
     try {
+      let scope: any[] = ['includeGenre', 'hideSrcLeech', 'showTotalFollowing', ];
+      let scopeCount: any[] = [];
+      if (req.user instanceof User) {
+        scope.push({ method: ['showIsFollowingById', +req.user.id] })
+      }
+      if (req.query.search) {
+        scope.push({ method: ['searchQuery', req.query.search] })
+        scopeCount.push({ method: ['searchQuery', req.query.search] })
+      }
+      if (req.query.filter) {
+        scope.push({ method: ['filterQuery', req.query.filter] })
+        scopeCount.push({ method: ['filterQuery', req.query.filter] })
+      }
+      if (typeof req.query.genre === 'string') {
+        scope.push({ method: ['filterGenre', req.query.genre.split(',').filter(id => !isNaN(+id))] })
+        scopeCount.push({ method: ['filterGenre', req.query.genre.split(',').filter(id => !isNaN(+id))] })
+      }
+      if (typeof req.query.sort === 'string') {
+        scope.push({ method: ['sortQuery', req.query.sort] });
+      } else {
+        scope.push({ method: ['sortQuery', this.sortDefault] });
+      }
+      let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
+      let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
+      scope.push({ method: ['paging', page, size] });
       const result = await Manga.scope(scope).findAll();
       const count = await Manga.scope(scopeCount).count();
       res.status(200).json({
@@ -76,7 +77,7 @@ class MangaController {
   fetchById = async (req: Request, res: Response) => {
     try {
       let scope: any[] = ['includeGenre', 'includeChapter', 'showTotalFollowing', 'hideSrcLeech']
-      if (req.user !== null) {
+      if (req.user instanceof User) {
         scope.push({ method: ['showIsFollowingById', +req.user.id] });
         scope.push({ method: ['includeReads', +req.user.id] });
       }
