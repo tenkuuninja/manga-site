@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "cd .. && yarn build && cd deploy",
+    "prestart": "yarn --cwd ../ run install && yarn --cwd ../ run build",
     "start": "node index.js"
   },
   "author": "",
