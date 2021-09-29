@@ -8,6 +8,7 @@
     "start": "nodemon ./src/index.ts",
     "build": "tsc"
   },
+  "heroku-run-build-script": true,
   "keywords": [],
   "author": "",
   "license": "ISC",
