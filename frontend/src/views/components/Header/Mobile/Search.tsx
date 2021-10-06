@@ -47,7 +47,7 @@ const Search = function() {
     autoCompleteContent = <AutoCompleteSkeleton />
   } else {
     autoCompleteContent = <ul className="p-2 overflow-y-auto h-screen pb-24">
-      {autoComplete.payload.map((item: IManga, i) => <li key={i}>
+      {autoComplete.data.map((item: IManga, i) => <li key={i}>
         <Link to={``} className="block">
           <div className='flex overflow-hidden space-x-2 p-2'>
             <div className='flex-shrink-0 overflow-hidden rounded-lg w-12 h-12'>

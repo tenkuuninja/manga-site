@@ -5,9 +5,9 @@ import { ActionTypes } from './types';
 let initialState: ICommonStore = {
   // config: {},
   top: { all: [], day: [], week: [], month: [], isLoading: true, isError: false },
-  follow: { payload: [], isLoading: false, isError: false },
-  readed: { payload: [], isLoading: false, isError: false, },
-  autoComplete: { payload: [], isLoading: true, isError: false, },
+  follow: { data: [], isLoading: false, isError: false },
+  readed: { data: [], isLoading: false, isError: false, },
+  autoComplete: { data: [], isLoading: true, isError: false, },
   local: {
     name: '',
     email: ''
@@ -53,7 +53,7 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
     case ActionTypes.FetchAutoCompleteFailure:
       return {...state, autoComplete: {...state.autoComplete, isError: true}}
     case ActionTypes.AddReaded:
-      state.readed.payload.unshift(action.payload.story);
+      state.readed.data.unshift(action.payload.story);
       return state;
     case ActionTypes.SyncWithLocalstorage:
       return {...state, local: action.payload.data}

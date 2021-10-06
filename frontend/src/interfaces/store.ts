@@ -8,7 +8,7 @@ export interface IAuthStore {
 }
 
 export interface IListMangaStore {
-  payload: IManga[],
+  data: IManga[],
   page: number,
   totalPage: number,
   isLoading: boolean, 
@@ -16,25 +16,25 @@ export interface IListMangaStore {
 }
 
 export interface IMangaStore {
-  payload: IManga,
+  data: IManga,
   isLoading: boolean, 
   isError: boolean
 }
 
 export interface IMangaListStore {
-  payload: IManga[],
+  data: IManga[],
   isLoading: boolean, 
   isError: boolean
 }
 
 export interface IChapterStore {
-  payload: IChapter,
+  data: IChapter,
   isLoading: boolean, 
   isError: boolean
 }
 
 export interface ICommentStore {
-  payload: IComment[],
+  data: IComment[],
   page: number,
   count: number,
   isLoading: boolean, 
@@ -42,7 +42,7 @@ export interface ICommentStore {
 }
 
 export interface IGenreStore {
-  payload: IGenre[],
+  data: IGenre[],
   isLoading: boolean, 
   isError: boolean
 }

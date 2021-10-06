@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
 let initialState: IChapterStore = {
-  payload: { mangaId: 0, number: 0, content: [] },
+  data: { mangaId: 0, number: 0, content: [] },
   isLoading: false, 
   isError: false
 }
@@ -18,7 +18,7 @@ const authReducer: Reducer = (state: IChapterStore = initialState, action: IActi
     case ActionTypes.FetchChapterSuccess:
       return {
         ...state,
-        payload: action.payload.content,  
+        data: action.payload.content,  
         isLoading: false, 
         isError: false
       }

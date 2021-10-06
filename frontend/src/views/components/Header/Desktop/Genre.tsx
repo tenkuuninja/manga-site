@@ -29,7 +29,7 @@ const Genre = function() {
         </li>)}
       </ul>
       <ul className="grid grid-flow-col grid-rows-6 my-2">
-        {genre.payload.map(item => <li key={item.id}>
+        {genre.data.map(item => <li key={item.id}>
           <Link to={`/the-loai-${item.id}-${item.titleSlug}.html`} className="block px-4 py-2 text-center hover:text-blue-700 transition duration-100">
             {item.title}
           </Link>

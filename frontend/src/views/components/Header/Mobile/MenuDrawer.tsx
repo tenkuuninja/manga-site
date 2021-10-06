@@ -173,7 +173,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
           <span className="ml-4">Menu</span>
         </div>
         <ul>
-          {genre.payload.map((item: IGenre, i) => <li key={i}>
+          {genre.data.map((item: IGenre, i) => <li key={i}>
             <Link to={`/the-loai-${item.id}-${item.titleSlug}.html`} className="block px-4 py-2">
               {item.title}
             </Link>

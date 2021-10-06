@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
 let initialState: IGenreStore = {
-  payload: [],
+  data: [],
   isLoading: false, 
   isError: false
 }
@@ -18,7 +18,7 @@ const authReducer: Reducer = (state: IGenreStore = initialState, action: IAction
     case ActionTypes.FetchGenreSuccess:
       return {
         ...state,
-        payload: action.payload,  
+        data: action.payload,  
         isLoading: false, 
         isError: false
       }

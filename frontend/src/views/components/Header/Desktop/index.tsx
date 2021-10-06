@@ -20,7 +20,7 @@ const DesktopHeader = function() {
       <Search />
       <AdvenceSearch />
       <DropdownManga
-        data={readed.payload}
+        data={readed.data}
         isLoading={readed.isLoading}
         isError={readed.isError}
         title="Lịch sử"
@@ -28,7 +28,7 @@ const DesktopHeader = function() {
         url={`/lich-su-doc-truyen.html`}
       />
       <DropdownManga
-        data={follow.payload}
+        data={follow.data}
         isLoading={follow.isLoading}
         isError={follow.isError}
         title="Theo dõi"

@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
 let initialState: ICommentStore = {
-  payload: [],
+  data: [],
   page: 0,
   count: 0,
   isLoading: false, 
@@ -20,7 +20,7 @@ const authReducer: Reducer = (state: ICommentStore = initialState, action: IActi
     case ActionTypes.FetchCommentSuccess:
       return {
         ...state,
-        payload: action.payload.content, 
+        data: action.payload.content, 
         page: action.payload.page, 
         count: action.payload.totalPage, 
         isLoading: false, 

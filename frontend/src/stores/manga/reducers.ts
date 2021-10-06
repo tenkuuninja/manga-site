@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
 let initialState: IMangaStore = {
-  payload: {},
+  data: {},
   isLoading: false, 
   isError: false
 }
@@ -18,7 +18,7 @@ const authReducer: Reducer = (state: IMangaStore = initialState, action: IAction
     case ActionTypes.FetchMangaSuccess:
       return {
         ...state,
-        payload: action.payload.content, 
+        data: action.payload.content, 
         isLoading: false, 
         isError: false
       }
