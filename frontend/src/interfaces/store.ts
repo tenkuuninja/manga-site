@@ -7,7 +7,7 @@ export interface IAuthStore {
   isError: boolean
 }
 
-export interface ICatalogStore {
+export interface IListMangaStore {
   payload: IManga[],
   page: number,
   totalPage: number,
@@ -67,7 +67,7 @@ export interface ICommonStore {
 
 export interface IAppState {
   auth: IAuthStore,
-  catalog: ICatalogStore,
+  listManga: IListMangaStore,
   manga: IMangaStore,
   // similar: IMangaListStore,
   chapter: IChapterStore,

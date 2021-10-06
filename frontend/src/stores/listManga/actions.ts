@@ -3,34 +3,30 @@ import MangaApi from 'apis/manga.api';
 import { CancelToken } from 'axios';
 import { ISearchObject } from 'interfaces'
 import { Dispatch } from 'redux';
-import {
-  FETCH_CATALOG_REQUEST,
-  FETCH_CATALOG_SUCCESS,
-  FETCH_CATALOG_FAILURE
-} from './constants';
+import { ActionTypes } from './types';
 
 export const fetchListManga = (filter?: ISearchObject, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
-  dispatch({ type: FETCH_CATALOG_REQUEST });
+  dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
     let result = await MangaApi.fetchList(filter, cancelToken);
-    dispatch({ type: FETCH_CATALOG_SUCCESS, payload: result.data.content });
+    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data.content });
   } catch (error) {
-    dispatch({ type: FETCH_CATALOG_FAILURE });
+    dispatch({ type: ActionTypes.FetchListMangaFailure });
   }
 }
 
 export const fetchListMangaFollow = (filter?: ISearchObject, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
-  dispatch({ type: FETCH_CATALOG_REQUEST });
+  dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
     let result = await MeApi.fetchManga(filter, cancelToken);
-    dispatch({ type: FETCH_CATALOG_SUCCESS, payload: result.data.content });
+    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data.content });
   } catch (error) {
-    dispatch({ type: FETCH_CATALOG_FAILURE });
+    dispatch({ type: ActionTypes.FetchListMangaFailure });
   }
 }
 
 export const fetchListMangaReaded = (filter?: ISearchObject, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
-  dispatch({ type: FETCH_CATALOG_REQUEST });
+  dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
     let result = await MeApi.fetchReaded(filter, cancelToken);
     result.data.content.sort((a, b) => {
@@ -41,9 +37,9 @@ export const fetchListMangaReaded = (filter?: ISearchObject, cancelToken?: Cance
       }
       return 0
     });
-    dispatch({ type: FETCH_CATALOG_SUCCESS, payload: result.data.content });
+    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data.content });
   } catch (error) {
-    dispatch({ type: FETCH_CATALOG_FAILURE });
+    dispatch({ type: ActionTypes.FetchListMangaFailure });
   }
 }
 

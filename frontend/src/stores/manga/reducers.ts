@@ -1,36 +1,28 @@
-import { IAction, ICatalogStore } from 'interfaces';
+import { IAction, IMangaStore } from 'interfaces';
 import { Reducer } from 'redux';
-import {
-  FETCH_CATALOG_REQUEST,
-  FETCH_CATALOG_SUCCESS,
-  FETCH_CATALOG_FAILURE
-} from './constants';
+import { ActionTypes } from './types';
 
-let initialState: ICatalogStore = {
-  payload: [],
-  page: 0,
-  totalPage: 0,
+let initialState: IMangaStore = {
+  payload: {},
   isLoading: false, 
   isError: false
 }
 
-const authReducer: Reducer = (state: ICatalogStore = initialState, action: IAction): ICatalogStore => {
+const authReducer: Reducer = (state: IMangaStore = initialState, action: IAction): IMangaStore => {
   switch(action.type) {
-    case FETCH_CATALOG_REQUEST:
+    case ActionTypes.FetchMangaRequest:
       return {
         ...state, 
         isLoading: true
       }
-    case FETCH_CATALOG_SUCCESS:
+    case ActionTypes.FetchMangaSuccess:
       return {
         ...state,
         payload: action.payload.content, 
-        page: action.payload.page, 
-        totalPage: action.payload.totalPage, 
         isLoading: false, 
         isError: false
       }
-    case FETCH_CATALOG_FAILURE:
+    case ActionTypes.FetchMangaFailure:
       return {
         ...state,
         isLoading: false, 

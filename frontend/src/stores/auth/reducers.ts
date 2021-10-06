@@ -1,14 +1,6 @@
 import { IAction, IAuthStore } from 'interfaces';
 import { Reducer } from 'redux';
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT,
-  UPDATE_USERNAME_SUCCESS,
-  UPDATE_PASSWORD_SUCCESS,
-  UPDATE_AVATAR_SUCCESS
-} from './constants';
+import { ActionTypes } from './types';
 
 let initialState: IAuthStore = {
   isLoggedIn: false, 
@@ -19,32 +11,32 @@ let initialState: IAuthStore = {
 
 const authReducer: Reducer = (state: IAuthStore = initialState, action: IAction): IAuthStore => {
   switch(action.type) {
-    case LOGIN_REQUEST:
+    case ActionTypes.LoginRequest:
       return {
         ...state, 
         isLoading: true
       }
-    case LOGIN_SUCCESS:
+    case ActionTypes.LoginSuccess:
       return {
         isLoggedIn: true, 
         user: action.payload.user, 
         isLoading: false, 
         isError: false
       }
-    case LOGIN_FAILURE:
+    case ActionTypes.LoginFailure:
       return {
         ...state, 
         isLoggedIn: false, 
         isLoading: false, 
         isError: true
       }
-    case LOGOUT:
+    case ActionTypes.Logout:
       return {
         ...state, 
         isLoggedIn: false, 
         user: {}
       }
-    case UPDATE_USERNAME_SUCCESS:
+    case ActionTypes.UpdateUsernameSuccess:
       return {
         ...state, 
         user: {
@@ -52,9 +44,9 @@ const authReducer: Reducer = (state: IAuthStore = initialState, action: IAction)
           username: action.payload.username
         }
       }
-    case UPDATE_PASSWORD_SUCCESS:
+    case ActionTypes.UpdatePasswordSuccess:
       return state;
-    case UPDATE_AVATAR_SUCCESS:
+    case ActionTypes.UpdateAvatarSuccess:
       return {
         ...state, 
         user: {

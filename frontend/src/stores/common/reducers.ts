@@ -1,25 +1,6 @@
 import { IAction, ICommonStore } from 'interfaces';
 import { Reducer } from 'redux';
-import {
-  // SET_CONFIG,
-  // UPDATE_CONFIG,
-  FETCH_TOP_MANGA_REQUEST,
-  FETCH_TOP_MANGA_SUCCESS,
-  FETCH_TOP_MANGA_FAILURE,
-  FETCH_FOLLOW_MANGA_REQUEST,
-  FETCH_FOLLOW_MANGA_SUCCESS,
-  FETCH_FOLLOW_MANGA_FAILURE,
-  FETCH_READED_MANGA_REQUEST,
-  FETCH_READED_MANGA_SUCCESS,
-  FETCH_READED_MANGA_FAILURE,
-  FETCH_AUTO_COMPLETE_REQUEST,
-  FETCH_AUTO_COMPLETE_SUCCESS,
-  FETCH_AUTO_COMPLETE_FAILURE,
-  ADD_READED,
-  SYNC_WITH_LOCALSTORAGE,
-  SET_LOCAL_NAME,
-  SET_LOCAL_EMAIL
-} from './constants';
+import { ActionTypes } from './types';
 
 let initialState: ICommonStore = {
   // config: {},
@@ -35,13 +16,13 @@ let initialState: ICommonStore = {
 
 const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAction) => {
   switch (action.type) {
-    // case SET_CONFIG:
+    // case ActionTypes.SetConfig:
     //   return { ...state, config: action.payload.config }
-    // case UPDATE_CONFIG:
+    // case ActionTypes.UpdateConfig:
     //   return { ...state, config: { ...state.config, [action.payload.key]: action.payload.value } }
-    case FETCH_TOP_MANGA_REQUEST:
+    case ActionTypes.FetchTopMangaRequest:
       return {...state, top: {...state.top, isLoading: true, isError: false}}
-    case FETCH_TOP_MANGA_SUCCESS:
+    case ActionTypes.FetchTopMangaSuccess:
       return {...state, top: {
         ...state.top,
         all: action.payload.all, 
@@ -51,34 +32,34 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
         isLoading: false,
         isError: false
       }}
-    case FETCH_TOP_MANGA_FAILURE:
+    case ActionTypes.FetchTopMangaFailure:
       return {...state, top: {...state.top, isLoading: false, isError: true}}
-    case FETCH_FOLLOW_MANGA_REQUEST:
+    case ActionTypes.FetchFollowMangaRequest:
       return {...state, follow: {...state.follow, isLoading: true }}
-    case FETCH_FOLLOW_MANGA_SUCCESS:
+    case ActionTypes.FetchFollowMangaSuccess:
       return {...state, follow: {payload: action.payload.follow, isLoading: false, isError: false}}
-    case FETCH_FOLLOW_MANGA_FAILURE:
+    case ActionTypes.FetchFollowMangaFailure:
       return {...state, follow: {...state.follow, isError: true}}
-    case FETCH_READED_MANGA_REQUEST:
+    case ActionTypes.FetchReadedMangaRequest:
       return {...state, readed: {...state.readed, isLoading: true}}
-    case FETCH_READED_MANGA_SUCCESS:
+    case ActionTypes.FetchReadedMangaSuccess:
       return {...state, readed: {payload: action.payload.readed, isLoading: false, isError: false}}
-    case FETCH_READED_MANGA_FAILURE:
+    case ActionTypes.FetchReadedMangaFailure:
       return {...state, readed: {...state.readed, isError: true}}
-    case FETCH_AUTO_COMPLETE_REQUEST:
+    case ActionTypes.FetchAutoCompleteRequest:
       return {...state, autoComplete: {...state.autoComplete, isLoading: true}}
-    case FETCH_AUTO_COMPLETE_SUCCESS:
+    case ActionTypes.FetchAutoCompleteSuccess:
       return {...state, autoComplete: {payload: action.payload.content, isLoading: false, isError: false}}
-    case FETCH_AUTO_COMPLETE_FAILURE:
+    case ActionTypes.FetchAutoCompleteFailure:
       return {...state, autoComplete: {...state.autoComplete, isError: true}}
-    case ADD_READED:
+    case ActionTypes.AddReaded:
       state.readed.payload.unshift(action.payload.story);
       return state;
-    case SYNC_WITH_LOCALSTORAGE:
+    case ActionTypes.SyncWithLocalstorage:
       return {...state, local: action.payload.data}
-    case SET_LOCAL_NAME:
+    case ActionTypes.SetLocalName:
       return {...state, local: {...state.local, name: action.payload.name}}
-    case SET_LOCAL_EMAIL:
+    case ActionTypes.SetLocalEmail:
       return {...state, local: {...state.local, email: action.payload.email}}
     default:
       return state;

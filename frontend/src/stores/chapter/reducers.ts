@@ -1,10 +1,6 @@
 import { IAction, IChapterStore } from 'interfaces';
 import { Reducer } from 'redux';
-import {
-  FETCH_CHAPTER_REQUEST,
-  FETCH_CHAPTER_SUCCESS,
-  FETCH_CHAPTER_FAILURE
-} from './constants';
+import { ActionTypes } from './types';
 
 let initialState: IChapterStore = {
   payload: { mangaId: 0, number: 0, content: [] },
@@ -14,19 +10,19 @@ let initialState: IChapterStore = {
 
 const authReducer: Reducer = (state: IChapterStore = initialState, action: IAction): IChapterStore => {
   switch(action.type) {
-    case FETCH_CHAPTER_REQUEST:
+    case ActionTypes.FetchChapterRequest:
       return {
         ...state, 
         isLoading: true
       }
-    case FETCH_CHAPTER_SUCCESS:
+    case ActionTypes.FetchChapterSuccess:
       return {
         ...state,
         payload: action.payload.content,  
         isLoading: false, 
         isError: false
       }
-    case FETCH_CHAPTER_FAILURE:
+    case ActionTypes.FetchChapterFailure:
       return {
         ...state,
         isLoading: false, 

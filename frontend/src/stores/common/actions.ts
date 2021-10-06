@@ -1,78 +1,59 @@
 import { MangaApi, MeApi } from 'apis';
 import { Dispatch } from 'redux';
 import { CancelToken } from 'axios';
-import {
-  // SET_CONFIG,
-  // UPDATE_CONFIG,
-  FETCH_TOP_MANGA_REQUEST,
-  FETCH_TOP_MANGA_SUCCESS,
-  FETCH_TOP_MANGA_FAILURE,
-  FETCH_FOLLOW_MANGA_REQUEST,
-  FETCH_FOLLOW_MANGA_SUCCESS,
-  FETCH_FOLLOW_MANGA_FAILURE,
-  FETCH_READED_MANGA_REQUEST,
-  FETCH_READED_MANGA_SUCCESS,
-  FETCH_READED_MANGA_FAILURE,
-  FETCH_AUTO_COMPLETE_REQUEST,
-  FETCH_AUTO_COMPLETE_SUCCESS,
-  FETCH_AUTO_COMPLETE_FAILURE,
-  // ADD_READED,
-  // SYNC_WITH_LOCALSTORAGE,
-  // SET_LOCAL_NAME,
-  // SET_LOCAL_EMAIL
-} from './constants';
+import { ActionTypes } from './types';
 import { ISearchObject } from 'interfaces';
 
 export const fetchTopManga = (cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
-  dispatch({ type: FETCH_TOP_MANGA_REQUEST });
+  dispatch({ type: ActionTypes.FetchTopMangaRequest });
   try {
     let result = await MangaApi.fetchTop();
-    dispatch({ type: FETCH_TOP_MANGA_SUCCESS, payload: {
+    dispatch({ type: ActionTypes.FetchTopMangaSuccess, payload: {
       all: result.data.all,
       day: result.data.day,
       week: result.data.week,
       month: result.data.month
     } });
   } catch (error) {
-    dispatch({ type: FETCH_TOP_MANGA_FAILURE });
+    dispatch({ type: ActionTypes.FetchTopMangaFailure });
   }
 }
 
 export const fetchFollowManga = (options?: ISearchObject,cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
-  dispatch({ type: FETCH_FOLLOW_MANGA_REQUEST });
+  dispatch({ type: ActionTypes.FetchFollowMangaRequest });
   try {
     let result = await MeApi.fetchManga(options, cancelToken);
-    dispatch({ type: FETCH_FOLLOW_MANGA_SUCCESS, payload: {
+    dispatch({ type: ActionTypes.FetchFollowMangaSuccess, payload: {
       follow: result.data.content
     } });
   } catch (error) {
-    dispatch({ type: FETCH_FOLLOW_MANGA_FAILURE });
+    dispatch({ type: ActionTypes.FetchFollowMangaFailure });
   }
 }
 
 export const fetchReadedManga = (options?: ISearchObject,cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
-  dispatch({ type: FETCH_READED_MANGA_REQUEST });
+  dispatch({ type: ActionTypes.FetchReadedMangaRequest });
   try {
     let result = await MeApi.fetchReaded(options, cancelToken);
-    dispatch({ type: FETCH_READED_MANGA_SUCCESS, payload: {
+    dispatch({ type: ActionTypes.FetchReadedMangaSuccess, payload: {
       readed: result.data.content
     } });
   } catch (error) {
     console.log(error)
-    dispatch({ type: FETCH_READED_MANGA_FAILURE });
+    dispatch({ type: ActionTypes.FetchReadedMangaFailure });
   }
 }
 
 export const fetchAutoComplete = (search: string, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
-  dispatch({ type: FETCH_AUTO_COMPLETE_REQUEST });
+  dispatch({ type: ActionTypes.FetchAutoCompleteRequest });
   try {
     let result = await MangaApi.fetchList({ search }, cancelToken);
-    dispatch({ type: FETCH_AUTO_COMPLETE_SUCCESS, payload: {
+    dispatch({ type: ActionTypes.FetchAutoCompleteSuccess, payload: {
       content: result.data.content
     } });
   } catch (error) {
     console.log(error)
-    dispatch({ type: FETCH_AUTO_COMPLETE_FAILURE });
+    dispatch({ type: ActionTypes.FetchAutoCompleteFailure });
   }
 }
 

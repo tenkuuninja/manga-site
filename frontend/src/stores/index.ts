@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger';
 import { IAppState } from 'interfaces';
 
 import authReducer from './auth/reducers';
-import catalogReducer from './catalog/reducers';
+import catalogReducer from './listManga/reducers';
 import chapterReducer from './chapter/reducers';
 import commentReducer from './comment/reducers';
 import genreReducer from './genre/reducers';
@@ -13,7 +13,7 @@ import mangaReducer from './manga/reducers';
 
 const rootReducer: Reducer = combineReducers({
   auth: authReducer,
-  catalog: catalogReducer,
+  listManga: catalogReducer,
   chapter: chapterReducer,
   comment: commentReducer,
   genre: genreReducer,

@@ -1,19 +1,15 @@
 import GenreApi from 'apis/genre.api';
 import { Dispatch } from 'redux';
 import { CancelToken } from 'axios';
-import {
-  FETCH_GENRE_REQUEST,
-  FETCH_GENRE_SUCCESS,
-  FETCH_GENRE_FAILURE
-} from './constants';
+import { ActionTypes } from './types';
 
 export const fetchListGenre = (cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
-  dispatch({ type: FETCH_GENRE_REQUEST });
+  dispatch({ type: ActionTypes.FetchGenreRequest });
   try {
     let result = await GenreApi.fetchList(cancelToken);
-    dispatch({ type: FETCH_GENRE_SUCCESS, payload: result.data });
+    dispatch({ type: ActionTypes.FetchGenreSuccess, payload: result.data });
   } catch (error) {
-    dispatch({ type: FETCH_GENRE_FAILURE });
+    dispatch({ type: ActionTypes.FetchGenreFailure });
   }
 }
 

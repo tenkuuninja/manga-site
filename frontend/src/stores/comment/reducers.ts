@@ -1,10 +1,6 @@
 import { IAction, ICommentStore } from 'interfaces';
 import { Reducer } from 'redux';
-import {
-  FETCH_COMMENT_REQUEST,
-  FETCH_COMMENT_SUCCESS,
-  FETCH_COMMENT_FAILURE
-} from './constants';
+import { ActionTypes } from './types';
 
 let initialState: ICommentStore = {
   payload: [],
@@ -16,12 +12,12 @@ let initialState: ICommentStore = {
 
 const authReducer: Reducer = (state: ICommentStore = initialState, action: IAction): ICommentStore => {
   switch(action.type) {
-    case FETCH_COMMENT_REQUEST:
+    case ActionTypes.FetchCommentRequest:
       return {
         ...state, 
         isLoading: true
       }
-    case FETCH_COMMENT_SUCCESS:
+    case ActionTypes.FetchCommentSuccess:
       return {
         ...state,
         payload: action.payload.content, 
@@ -30,7 +26,7 @@ const authReducer: Reducer = (state: ICommentStore = initialState, action: IActi
         isLoading: false, 
         isError: false
       }
-    case FETCH_COMMENT_FAILURE:
+    case ActionTypes.FetchCommentFailure:
       return {
         ...state,
         isLoading: false, 

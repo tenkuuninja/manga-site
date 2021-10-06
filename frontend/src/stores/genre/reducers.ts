@@ -1,10 +1,6 @@
 import { IAction, IGenreStore } from 'interfaces';
 import { Reducer } from 'redux';
-import {
-  FETCH_GENRE_REQUEST,
-  FETCH_GENRE_SUCCESS,
-  FETCH_GENRE_FAILURE
-} from './constants';
+import { ActionTypes } from './types';
 
 let initialState: IGenreStore = {
   payload: [],
@@ -14,19 +10,19 @@ let initialState: IGenreStore = {
 
 const authReducer: Reducer = (state: IGenreStore = initialState, action: IAction): IGenreStore => {
   switch(action.type) {
-    case FETCH_GENRE_REQUEST:
+    case ActionTypes.FetchGenreRequest:
       return {
         ...state, 
         isLoading: true
       }
-    case FETCH_GENRE_SUCCESS:
+    case ActionTypes.FetchGenreSuccess:
       return {
         ...state,
         payload: action.payload,  
         isLoading: false, 
         isError: false
       }
-    case FETCH_GENRE_FAILURE:
+    case ActionTypes.FetchGenreFailure:
       return {
         ...state,
         isLoading: false, 
