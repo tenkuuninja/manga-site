@@ -34,5 +34,5 @@ if (process.env.NODE_ENV === `development`) {
 }
 
 
-export const store: Store<IAppState> = createStore(rootReducer, applyMiddleware(logger, thunk));
+export const store: Store<IAppState> = createStore(rootReducer, applyMiddleware(...middlewares));
 
