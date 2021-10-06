@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IAppState } from 'interfaces';
 import Dropdown from 'views/components/Dropdown';
 import Avatar from 'views/components/Avatar';
-import { Paper } from '@material-ui/core';
 import { logout } from 'stores/auth/actions';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
@@ -56,7 +55,7 @@ const Personal = function() {
   return(
     <Dropdown
       placement="bottom-right"
-      overlay={<Paper className="animate-pop-in mt-1 text-sm" variant="outlined" square >
+      overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >
         <div className="w-60 shadow divide-y z-30 select-none">
           <Link to="/" className="flex items-center p-4">
             <Avatar size="lg" src="" alt="Viet Hoang" />
@@ -80,11 +79,11 @@ const Personal = function() {
             Đăng xuất
           </div>
         </div>
-      </Paper>}
+      </div>}
     >
       <div className="h-18 select-none">
         <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
-          <Avatar size="sm" src="" alt="Viet Hoang" />
+          <Avatar src="" alt="Viet Hoang" />
         </div>
       </div>
     </Dropdown>

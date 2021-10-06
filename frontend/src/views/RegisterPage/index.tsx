@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
+import { TextField, Button, InputAdornment, IconButton } from '@mui/material';
 import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 import { UserApi } from 'apis';
 import { register } from 'stores/auth/actions';

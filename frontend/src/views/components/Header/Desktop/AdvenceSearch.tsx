@@ -1,17 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Dropdown from 'views/components/Dropdown';
-import {
-  Paper
-} from '@material-ui/core';
-
 
 const AdvenceSearch = function() {
 
   return(
     <Dropdown
       placement="bottom-right"
-      overlay={<Paper className="animate-pop-in mt-1 text-sm" variant="outlined" square >
+      overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >
         <div className="p-4 w-64">
           <p className="pb-5 text-xl text-center font-semibold">
             Lọc truyện dựa trên mong muốn của bạn
@@ -23,7 +19,7 @@ const AdvenceSearch = function() {
             Tìm kiếm nâng cao
           </Link>
         </div>
-      </Paper>}
+      </div>}
     >
     <div className="h-18 select-none">
       <Link to="/tim-kiem-nang-cao.html">

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { IAppState } from 'interfaces'
 import Dropdown from 'views/components/Dropdown';
 import { GenreSkeleton } from './Skeleton';
-import { Paper } from '@material-ui/core';
 
 const countries = [
   {id: 'jp', title: 'Manga',  slug: 'nhat-ban'},
@@ -42,7 +41,7 @@ const Genre = function() {
   return(
     <Dropdown
       placement="bottom-left"
-      overlay={<Paper className="animate-pop-in mt-1 text-sm select-none" variant="outlined" square >{content}</Paper>}
+      overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >{content}</div>}
     >
       <div className="h-18 select-none">
         <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
