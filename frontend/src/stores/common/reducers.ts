@@ -37,19 +37,19 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
     case ActionTypes.FetchFollowMangaRequest:
       return {...state, follow: {...state.follow, isLoading: true }}
     case ActionTypes.FetchFollowMangaSuccess:
-      return {...state, follow: {payload: action.payload.follow, isLoading: false, isError: false}}
+      return {...state, follow: {data: action.payload.follow, isLoading: false, isError: false}}
     case ActionTypes.FetchFollowMangaFailure:
       return {...state, follow: {...state.follow, isError: true}}
     case ActionTypes.FetchReadedMangaRequest:
       return {...state, readed: {...state.readed, isLoading: true}}
     case ActionTypes.FetchReadedMangaSuccess:
-      return {...state, readed: {payload: action.payload.readed, isLoading: false, isError: false}}
+      return {...state, readed: {data: action.payload.readed, isLoading: false, isError: false}}
     case ActionTypes.FetchReadedMangaFailure:
       return {...state, readed: {...state.readed, isError: true}}
     case ActionTypes.FetchAutoCompleteRequest:
       return {...state, autoComplete: {...state.autoComplete, isLoading: true}}
     case ActionTypes.FetchAutoCompleteSuccess:
-      return {...state, autoComplete: {payload: action.payload.content, isLoading: false, isError: false}}
+      return {...state, autoComplete: {data: action.payload.content, isLoading: false, isError: false}}
     case ActionTypes.FetchAutoCompleteFailure:
       return {...state, autoComplete: {...state.autoComplete, isError: true}}
     case ActionTypes.AddReaded:
