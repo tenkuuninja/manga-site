@@ -69,7 +69,7 @@ const RegisterPage = function() {
 
   const checkUsernameExist = debounce(function(cancelToken: CancelToken) {
     if (reUsername.test(username.data)) {
-      UserApi.isExist({ username: username.data }, cancelToken).then(res => {
+      UserApi.isExist({ username: username.data }, { cancelToken }).then(res => {
         if (res.data) setUsername({...username, error: true, message: 'Tên đăng nhập đã tồn tại, hãy đổi tên đăng nhập khác.'})
       }).catch(err => {})
     } 
@@ -77,7 +77,7 @@ const RegisterPage = function() {
 
   const checkEmailExist = debounce(function(cancelToken: CancelToken) {
     if (reEmail.test(email.data)) {
-      UserApi.isExist({ email: email.data }, cancelToken).then(res => {
+      UserApi.isExist({ email: email.data }, { cancelToken }).then(res => {
         if (res.data) setEmail({...email, error: true, message: 'Email đã tồn tại, hãy đổi địa chỉ email khác.'})
       }).catch(error => {});
     } 

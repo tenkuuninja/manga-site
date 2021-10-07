@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { MdSearch } from 'react-icons/md';
 import { suggestPlaceholder, countryType } from 'utils/static';
 import { debounce } from 'utils/helper';
-import axios, { CancelToken } from 'axios';
 import { fetchAutoComplete } from 'stores/common/actions';
 import { IAppState, IManga } from 'interfaces';
 import { AutoCompleteSkeleton } from './Skeleton';
@@ -18,9 +17,9 @@ const Search = function() {
   const [placeholder, setPlaceholder] = useState<string>('Nhập tên truyện...');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const search = debounce(function(text: string, cancelToken: CancelToken) {
+  const search = debounce(function(text: string) {
     if (text.length > 0) {
-      dispatch(fetchAutoComplete(text.replace(' ', '+'), cancelToken));
+      dispatch(fetchAutoComplete(text.replace(' ', '+')));
     }
   }, 500);
 
@@ -43,9 +42,7 @@ const Search = function() {
   }
 
   useEffect(function() {
-    const myRequest = axios.CancelToken.source();
-    search(text, myRequest.token);
-    return myRequest.cancel;
+    search(text);
     // eslint-disable-next-line
   }, [text]);
 

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IAppState, IManga } from 'interfaces';
 import { debounce } from 'utils/helper';
 import { fetchAutoComplete } from 'stores/common/actions';
-import axios, { CancelToken } from 'axios';
 import { AutoCompleteSkeleton } from '../Desktop/Skeleton';
 import { countryType } from 'utils/static';
 
@@ -16,9 +15,9 @@ const Search = function() {
   const [isOpenSearch, setOpenSearch] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
 
-  const search = debounce(function(text: string, cancelToken: CancelToken) {
+  const search = debounce(function(text: string) {
     if (text.length > 0) {
-      dispatch(fetchAutoComplete(text.replace(' ', '+'), cancelToken));
+      dispatch(fetchAutoComplete(text.replace(' ', '+')));
     }
   }, 500);
 
@@ -35,9 +34,7 @@ const Search = function() {
   }
 
   useEffect(function() {
-    const myRequest = axios.CancelToken.source();
-    search(text, myRequest.token);
-    return myRequest.cancel;
+    search(text);
     // eslint-disable-next-line
   }, [text]);
 
