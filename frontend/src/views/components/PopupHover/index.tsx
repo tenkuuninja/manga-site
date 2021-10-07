@@ -66,6 +66,7 @@ function PopupHover({overlay, children, placement='bottomLeft', spacing = 0}: Po
           break;
       }
     }
+    // eslint-disable-next-line
   }, [placement]);
 
   useEffect(function() {
@@ -76,11 +77,23 @@ function PopupHover({overlay, children, placement='bottomLeft', spacing = 0}: Po
         case 'topRight':
           contentRef.current.style.marginBottom = `${spacing}px`
           break;
+        case 'bottom':
+        case 'bottomLeft':
+        case 'bottomRight':
+          contentRef.current.style.marginTop = `${spacing}px`
+          break;
+        case 'left':
+          contentRef.current.style.marginRight = `${spacing}px`
+          break;
+        case 'right':
+          contentRef.current.style.marginLeft = `${spacing}px`
+          break;
       
         default:
           break;
       }
     }
+    // eslint-disable-next-line
   }, [spacing]);
 
   return(
