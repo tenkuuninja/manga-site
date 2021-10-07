@@ -1,4 +1,4 @@
-import { CancelToken } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
 import { IPage, IUser, ISearchObject } from 'interfaces';
@@ -13,29 +13,29 @@ interface IUserForCheck {
 
 
 export const UserApi = {
-  fetchList: (options?: ISearchObject, cancelToken?: CancelToken) => {
+  fetchList: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
     const query: string = qs.stringify(options || {});
-    return axios.get<IPage<IUser>>(path+'?'+query, { cancelToken });
+    return axios.get<IPage<IUser>>(path+'?'+query, config);
   },
-  isExist: (options?: IUserForCheck, cancelToken?: CancelToken) => {
+  isExist: (options?: IUserForCheck, config: AxiosRequestConfig = {}) => {
     const query: string = qs.stringify(options || {});
-    return axios.get<boolean>(path+'/exists?'+query, { cancelToken });
+    return axios.get<boolean>(path+'/exists?'+query, config);
   },
-  create: (payload: IUser, cancelToken?: CancelToken) => {
-    return axios.post<IUser>(path, payload, { cancelToken });
+  create: (payload: IUser, config: AxiosRequestConfig = {}) => {
+    return axios.post<IUser>(path, payload, config);
   },
   byId: (id: number) => ({
-    fetch: (cancelToken?: CancelToken) => {
-      return axios.get<IUser>(path+'/'+id, { cancelToken });
+    fetch: (config: AxiosRequestConfig = {}) => {
+      return axios.get<IUser>(path+'/'+id, config);
     },
-    update: (payload: IUser, cancelToken?: CancelToken) => {
-      return axios.put<IUser>(path+'/'+id, payload, { cancelToken });
+    update: (payload: IUser, config: AxiosRequestConfig = {}) => {
+      return axios.put<IUser>(path+'/'+id, payload, config);
     },
-    delete: (cancelToken?: CancelToken) => {
-      return axios.delete<number>(path+'/'+id, { cancelToken });
+    delete: (config: AxiosRequestConfig = {}) => {
+      return axios.delete<number>(path+'/'+id, config);
     },
-    updatePassword: (body: { oldPassword: string, password: string }, cancelToken?: CancelToken) => {
-      return axios.patch<boolean>(path+'/'+id, body, { cancelToken });
+    updatePassword: (body: { oldPassword: string, password: string }, config: AxiosRequestConfig = {}) => {
+      return axios.patch<boolean>(path+'/'+id, body, config);
     }
   })
 }

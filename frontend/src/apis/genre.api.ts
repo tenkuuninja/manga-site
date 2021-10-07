@@ -1,15 +1,15 @@
-import { CancelToken } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import axios from './instance';
 import { IGenre } from 'interfaces';
 
 const path = 'api/genres';
 
 export const GenreApi = {
-  fetchList: (cancelToken?: CancelToken) => {
-    return axios.get<IGenre[]>(path, { cancelToken });
+  fetchList: (config: AxiosRequestConfig = {}) => {
+    return axios.get<IGenre[]>(path, config);
   },
-  fetch: (id: number, cancelToken?: CancelToken) => {
-    return axios.get<IGenre>(path+'/'+id, { cancelToken });
+  fetch: (id: number, config: AxiosRequestConfig = {}) => {
+    return axios.get<IGenre>(path+'/'+id, config);
   }
 }
 

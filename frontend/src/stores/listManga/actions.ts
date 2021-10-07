@@ -1,34 +1,42 @@
 import { MeApi } from 'apis';
 import MangaApi from 'apis/manga.api';
-import { CancelToken } from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 import { ISearchObject } from 'interfaces'
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
 
-export const fetchListManga = (filter?: ISearchObject, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+let cancelTokenSource: CancelTokenSource;
+
+export const fetchListManga = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
+  cancelTokenSource.cancel();
+  cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
-    let result = await MangaApi.fetchList(filter, cancelToken);
+    let result = await MangaApi.fetchList(filter, { cancelToken: cancelTokenSource.token });
     dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data.content });
   } catch (error) {
     dispatch({ type: ActionTypes.FetchListMangaFailure });
   }
 }
 
-export const fetchListMangaFollow = (filter?: ISearchObject, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+export const fetchListMangaFollow = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
+  cancelTokenSource.cancel();
+  cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
-    let result = await MeApi.fetchManga(filter, cancelToken);
+    let result = await MeApi.fetchManga(filter, { cancelToken: cancelTokenSource.token });
     dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data.content });
   } catch (error) {
     dispatch({ type: ActionTypes.FetchListMangaFailure });
   }
 }
 
-export const fetchListMangaReaded = (filter?: ISearchObject, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+export const fetchListMangaReaded = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
+  cancelTokenSource.cancel();
+  cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
-    let result = await MeApi.fetchReaded(filter, cancelToken);
+    let result = await MeApi.fetchReaded(filter, { cancelToken: cancelTokenSource.token });
     result.data.content.sort((a, b) => {
       if (a.readed && b.readed && a.readed?.length > 0 && b.readed?.length > 0) {
         let [da, db] = [a.readed[0].updatedAt, b.readed[0].updatedAt];

@@ -1,4 +1,4 @@
-import { CancelToken } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
 import { IChapter } from 'interfaces';
@@ -6,20 +6,20 @@ import { IChapter } from 'interfaces';
 const path = 'api/chapters';
 
 export const ChapterApi = {
-  create: (payload: IChapter, cancelToken?: CancelToken) => {
-    return axios.post<IChapter>(path, payload, { cancelToken });
+  create: (payload: IChapter, config: AxiosRequestConfig = {}) => {
+    return axios.post<IChapter>(path, payload, config);
   },
   byId: (id: number) => ({
-    fetch: (options?: any, cancelToken?: CancelToken) => {
+    fetch: (options?: any, config: AxiosRequestConfig = {}) => {
       if (typeof options === 'undefined') options = {}
       const query: string = qs.stringify(options);
-      return axios.get<IChapter>(path+'/'+id+'?'+query, { cancelToken });
+      return axios.get<IChapter>(path+'/'+id+'?'+query, config);
     },
-    update: (payload: IChapter, cancelToken?: CancelToken) => {
-      return axios.put<IChapter>(path+'/'+id, payload, { cancelToken });
+    update: (payload: IChapter, config: AxiosRequestConfig = {}) => {
+      return axios.put<IChapter>(path+'/'+id, payload, config);
     },
-    delete: (cancelToken?: CancelToken) => {
-      return axios.delete<number>(path+'/'+id, { cancelToken });
+    delete: (config: AxiosRequestConfig = {}) => {
+      return axios.delete<number>(path+'/'+id, config);
     }
   })
 }

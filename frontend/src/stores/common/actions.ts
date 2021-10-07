@@ -1,10 +1,9 @@
 import { MangaApi, MeApi } from 'apis';
 import { Dispatch } from 'redux';
-import { CancelToken } from 'axios';
 import { ActionTypes } from './types';
 import { ISearchObject } from 'interfaces';
 
-export const fetchTopManga = (cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+export const fetchTopManga = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.FetchTopMangaRequest });
   try {
     let result = await MangaApi.fetchTop();
@@ -19,10 +18,10 @@ export const fetchTopManga = (cancelToken?: CancelToken) => async (dispatch: Dis
   }
 }
 
-export const fetchFollowManga = (options?: ISearchObject,cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+export const fetchFollowManga = (options?: ISearchObject) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.FetchFollowMangaRequest });
   try {
-    let result = await MeApi.fetchManga(options, cancelToken);
+    let result = await MeApi.fetchManga(options);
     dispatch({ type: ActionTypes.FetchFollowMangaSuccess, payload: {
       follow: result.data.content
     } });
@@ -31,10 +30,10 @@ export const fetchFollowManga = (options?: ISearchObject,cancelToken?: CancelTok
   }
 }
 
-export const fetchReadedManga = (options?: ISearchObject,cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+export const fetchReadedManga = (options?: ISearchObject) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.FetchReadedMangaRequest });
   try {
-    let result = await MeApi.fetchReaded(options, cancelToken);
+    let result = await MeApi.fetchReaded(options);
     dispatch({ type: ActionTypes.FetchReadedMangaSuccess, payload: {
       readed: result.data.content
     } });
@@ -44,10 +43,10 @@ export const fetchReadedManga = (options?: ISearchObject,cancelToken?: CancelTok
   }
 }
 
-export const fetchAutoComplete = (search: string, cancelToken?: CancelToken) => async (dispatch: Dispatch) => {
+export const fetchAutoComplete = (search: string) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.FetchAutoCompleteRequest });
   try {
-    let result = await MangaApi.fetchList({ search }, cancelToken);
+    let result = await MangaApi.fetchList({ search });
     dispatch({ type: ActionTypes.FetchAutoCompleteSuccess, payload: {
       content: result.data.content
     } });

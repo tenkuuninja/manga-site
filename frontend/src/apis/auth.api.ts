@@ -1,18 +1,18 @@
-import { CancelToken } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import axios from './instance';
 import { IAuth, IUser } from 'interfaces';
 
 const path = 'api/auth';
 
 export const AuthApi = {
-  loginWithPassword: (body: {},cancelToken?: CancelToken) => {
-    return axios.post<IAuth>(path+'/login', body, { cancelToken });
+  loginWithPassword: (body: {}, config: AxiosRequestConfig = {}) => {
+    return axios.post<IAuth>(path+'/login', body, config);
   },
-  loginWithToken: (cancelToken?: CancelToken) => {
-    return axios.post<IAuth>(path+'/token-login', { cancelToken });
+  loginWithToken: (config: AxiosRequestConfig = {}) => {
+    return axios.post<IAuth>(path+'/token-login', config);
   },
-  register: (body: IUser, cancelToken?: CancelToken) => {
-    return axios.post<IAuth>(path+'/register', body, { cancelToken });
+  register: (body: IUser, config: AxiosRequestConfig = {}) => {
+    return axios.post<IAuth>(path+'/register', body, config);
   }
 }
 

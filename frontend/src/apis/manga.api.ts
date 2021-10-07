@@ -1,4 +1,4 @@
-import { CancelToken } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
 import { IPage, IManga, ISearchObject, IMangaTop } from 'interfaces';
@@ -7,31 +7,31 @@ const path = 'api/mangas';
 
 
 export const MangaApi = {
-  fetchList: (options?: ISearchObject, cancelToken?: CancelToken) => {
+  fetchList: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
     if (typeof options === 'undefined') options = {}
     const query: string = qs.stringify(options);
-    return axios.get<IPage<IManga>>(path+'?'+query, { cancelToken });
+    return axios.get<IPage<IManga>>(path+'?'+query, config);
   },
-  fetchTop: (cancelToken?: CancelToken) => {
-    return axios.get<IMangaTop>(path+'/top', { cancelToken });
+  fetchTop: (config: AxiosRequestConfig = {}) => {
+    return axios.get<IMangaTop>(path+'/top', config);
   },
-  create: (payload: IManga, cancelToken?: CancelToken) => {
-    return axios.post<IManga>(path, payload, { cancelToken });
+  create: (payload: IManga, config: AxiosRequestConfig = {}) => {
+    return axios.post<IManga>(path, payload, config);
   },
   byId: (id: number) => ({
-    fetch: (options?: ISearchObject, cancelToken?: CancelToken) => {
+    fetch: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
       if (typeof options === 'undefined') options = {}
       const query: string = qs.stringify(options);
-      return axios.get<IManga>(path+'/'+id+'?'+query, { cancelToken });
+      return axios.get<IManga>(path+'/'+id+'?'+query, config);
     },
-    update: (payload: IManga, cancelToken?: CancelToken) => {
-      return axios.put<IManga>(path+'/'+id, payload, { cancelToken });
+    update: (payload: IManga, config: AxiosRequestConfig = {}) => {
+      return axios.put<IManga>(path+'/'+id, payload, config);
     },
-    delete: (cancelToken?: CancelToken) => {
-      return axios.delete<number>(path+'/'+id, { cancelToken });
+    delete: (config: AxiosRequestConfig = {}) => {
+      return axios.delete<number>(path+'/'+id, config);
     },
-    addRate: (cancelToken?: CancelToken) => {
-      return axios.patch<boolean>(path+'/'+id, { cancelToken });
+    addRate: (config: AxiosRequestConfig = {}) => {
+      return axios.patch<boolean>(path+'/'+id, config);
     }
   })
 }
