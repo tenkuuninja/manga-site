@@ -7,7 +7,7 @@ import { ActionTypes } from './types';
 let cancelTokenSource: CancelTokenSource;
 
 export const register = (id: number, option?: ISearchObject) => async (dispatch: Dispatch) => {
-  cancelTokenSource.cancel();
+  if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
   cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchMangaRequest });
   try {

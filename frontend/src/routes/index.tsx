@@ -3,7 +3,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import routes from './routes'
+import routes from './navigation'
 
 const Routes = function() {
   return(

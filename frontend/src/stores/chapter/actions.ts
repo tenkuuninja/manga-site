@@ -6,7 +6,7 @@ import { ActionTypes } from './types';
 let cancelTokenSource: CancelTokenSource;
 
 export const fetchChapter = (id: number, options: any) => async (dispatch: Dispatch) => {
-  cancelTokenSource.cancel();
+  if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
   cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchChapterRequest });
   try {

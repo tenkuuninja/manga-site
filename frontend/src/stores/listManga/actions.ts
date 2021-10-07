@@ -8,31 +8,31 @@ import { ActionTypes } from './types';
 let cancelTokenSource: CancelTokenSource;
 
 export const fetchListManga = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
-  cancelTokenSource.cancel();
+  if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
   cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
     let result = await MangaApi.fetchList(filter, { cancelToken: cancelTokenSource.token });
-    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data.content });
+    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data });
   } catch (error) {
     dispatch({ type: ActionTypes.FetchListMangaFailure });
   }
 }
 
 export const fetchListMangaFollow = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
-  cancelTokenSource.cancel();
+  if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
   cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
     let result = await MeApi.fetchManga(filter, { cancelToken: cancelTokenSource.token });
-    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data.content });
+    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data });
   } catch (error) {
     dispatch({ type: ActionTypes.FetchListMangaFailure });
   }
 }
 
 export const fetchListMangaReaded = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
-  cancelTokenSource.cancel();
+  if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
   cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchListMangaRequest });
   try {
@@ -45,7 +45,7 @@ export const fetchListMangaReaded = (filter?: ISearchObject) => async (dispatch:
       }
       return 0
     });
-    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data.content });
+    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data });
   } catch (error) {
     dispatch({ type: ActionTypes.FetchListMangaFailure });
   }

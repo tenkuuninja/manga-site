@@ -18,7 +18,9 @@ function App() {
         <ThemeProvider theme={materialUiTheme} >
           <InitializeState />
           <Header />
-          <Routes />
+          <React.Suspense fallback={`loading`}>
+            <Routes />
+          </React.Suspense>
         </ThemeProvider>
       </Provider>
     </Router>
