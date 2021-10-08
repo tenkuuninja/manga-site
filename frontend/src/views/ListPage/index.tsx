@@ -5,6 +5,7 @@ import qs from 'query-string';
 import { fetchListManga, fetchListMangaFollow, fetchListMangaReaded } from 'stores/listManga/actions';
 import { IAppState, IManga } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
+import { Pagination } from '@mui/material';
 
 interface IParams {
   [index: string]: string
@@ -77,14 +78,24 @@ const ListPage = () => {
   }, [match.url, page]);
 
   return(
-    <>List Page
-    <ul className='grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3'>
-
-      {listManga.data.map((manga: IManga) => <li key={manga.id}>
-        <MangaCardVertical data={manga} />
-      </li>)}
-    </ul>
-    </>
+    <div className="max-w-335 mx-auto">
+      List Page
+      <ul className='grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 p-4'>
+        {listManga.data.map((manga: IManga) => <li key={manga.id}>
+          <MangaCardVertical data={manga} />
+        </li>)}
+      </ul>
+      <div className="my-4">
+        <Pagination 
+          count={listManga.totalPage} 
+          showFirstButton 
+          showLastButton 
+          defaultPage={page}
+          onChange={(e, value: number) => setPage(value)}
+          className="flex justify-center"
+        />
+      </div>
+    </div>
   );
 }
 
