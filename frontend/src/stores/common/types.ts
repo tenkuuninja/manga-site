@@ -17,6 +17,8 @@ export enum ActionTypes  {
   SyncWithLocalstorage        = 'SyncWithLocalstorage',
   SetLocalName                = 'SetLocalName',
   SetLocalEmail               = 'SetLocalEmail',
+  IncreaseTopLoading          = 'IncreaseTopLoading',
+  DecreaseTopLoading          = 'DecreaseTopLoading',
 }
 
 export default ActionTypes;

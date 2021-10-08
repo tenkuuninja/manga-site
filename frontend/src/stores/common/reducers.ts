@@ -11,10 +11,11 @@ let initialState: ICommonStore = {
   local: {
     name: '',
     email: ''
-  }
+  },
+  topLoading: 0
 }
 
-const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAction) => {
+const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAction): ICommonStore => {
   switch (action.type) {
     // case ActionTypes.SetConfig:
     //   return { ...state, config: action.payload.config }
@@ -61,6 +62,10 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
       return {...state, local: {...state.local, name: action.payload.name}}
     case ActionTypes.SetLocalEmail:
       return {...state, local: {...state.local, email: action.payload.email}}
+    case ActionTypes.IncreaseTopLoading:
+      return { ...state, topLoading: state.topLoading+1 }
+    case ActionTypes.DecreaseTopLoading:
+      return { ...state, topLoading: Math.max(state.topLoading-1, 0) }
     default:
       return state;
   }

@@ -12,7 +12,10 @@ export function debounce(func: Function, wait: number = 100) {
   }
 }
 
-export const getRelativeTimeFromNow = (date: Date) => {
+export const getRelativeTimeFromNow = (date: Date, sec?: number) => {
+  if (sec !== undefined && Date.now() - Date.parse(date.toString()) > sec*100 ) {
+    return moment(date).format('DD/MM/YYYY');
+  }
   return moment(date).locale('vi').startOf('seconds').fromNow();
 }
 

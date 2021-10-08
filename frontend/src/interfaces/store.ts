@@ -63,6 +63,7 @@ export interface ICommonStore {
     email: string,
     name: string
   }
+  topLoading: number
 }
 
 export interface IAppState {

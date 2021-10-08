@@ -2,6 +2,7 @@ import { MangaApi, MeApi } from 'apis';
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
 import { ISearchObject } from 'interfaces';
+import { type } from 'os';
 
 export const fetchTopManga = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.FetchTopMangaRequest });
@@ -88,5 +89,8 @@ export const fetchAutoComplete = (search: string) => async (dispatch: Dispatch) 
 //     dispatch({ type: SET_LOCAL_EMAIL, payload: { email } });
 //   }
 // }
+
+export const increaseTopLoading = () => ({ type: ActionTypes.IncreaseTopLoading })
+export const decreaseTopLoading = () => ({ type: ActionTypes.DecreaseTopLoading })
 
 

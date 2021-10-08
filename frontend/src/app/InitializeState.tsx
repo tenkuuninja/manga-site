@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { autoLogin } from 'stores/auth/actions';
 import { fetchListGenre } from 'stores/genre/actions';
-import { fetchTopManga, fetchReadedManga, fetchFollowManga } from 'stores/common/actions';
+import { fetchTopManga, fetchReadedManga, fetchFollowManga, increaseTopLoading, decreaseTopLoading } from 'stores/common/actions';
 import { IAppState } from 'interfaces';
+import axiosInstance from 'apis/instance';
 
 export const InitializeState = function() {
   const { isLoggedIn } = useSelector((store: IAppState) => store.auth);
@@ -17,6 +17,23 @@ export const InitializeState = function() {
     if (token) {
       dispatch(autoLogin());
     }
+
+    
+    axiosInstance.interceptors.request.use(function(config) {
+      dispatch(increaseTopLoading());
+      return config;
+    }, function(error) {
+      dispatch(decreaseTopLoading());
+      return Promise.reject(error);
+    });
+    axiosInstance.interceptors.response.use(function(response) {
+      dispatch(decreaseTopLoading());
+      return response;
+    }, function(error) {
+      dispatch(decreaseTopLoading());
+      return Promise.reject(error);
+    });
+
     // eslint-disable-next-line
   }, []);
 
