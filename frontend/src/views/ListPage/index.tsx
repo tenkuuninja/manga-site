@@ -80,7 +80,7 @@ const ListPage = () => {
   return(
     <div className="max-w-335 mx-auto">
       List Page
-      <ul className='grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 p-4'>
+      <ul className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 p-4'>
         {listManga.data.map((manga: IManga) => <li key={manga.id}>
           <MangaCardVertical data={manga} />
         </li>)}

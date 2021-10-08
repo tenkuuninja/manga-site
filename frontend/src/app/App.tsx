@@ -8,7 +8,6 @@ import materialUiTheme from './customMaterialUi';
 import Routes from 'routes';
 import Header from 'views/components/Header';
 import 'assets/main.css';
-import 'rc-trigger/assets/index.css';
 import 'assets/style.css';
 
 function App() {

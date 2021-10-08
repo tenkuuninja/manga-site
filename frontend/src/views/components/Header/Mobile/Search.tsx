@@ -89,7 +89,7 @@ const Search = function() {
             }
           }}
         />
-        <div className={`absolute border border-black border-opacity-10 h-screen pb-14 bg-white top-14 inset-x-0`}>
+        <div className={`absolute border border-black border-opacity-10 h-screen pb-14 bg-white top-14 inset-x-0 z-50`}>
           {text.length > 0 && <p className="text-lg font-semibold px-4 pt-4">Kết quả tìm kiếm</p>}
           {text.length > 0 && autoCompleteContent}
         </div>
