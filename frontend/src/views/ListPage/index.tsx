@@ -98,7 +98,12 @@ const ListPage = () => {
       default:
         break;
     }
+    // eslint-disable-next-line
   }, [match.url, page]);
+
+  if (noContent) {
+    
+  }
 
   return(
     <div className="max-w-335 mx-auto my-4">

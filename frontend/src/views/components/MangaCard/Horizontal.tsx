@@ -11,7 +11,7 @@ interface MangaCardHorizontalProps {
 export const MangaCardHorizontal = function(props: MangaCardHorizontalProps) {
   let {id, title, titleSlug, imageUrl, country, genres} = props.manga;
   return(
-    <Link to={``}>
+    <Link to={`/truyen-tranh-${id}-${titleSlug}.html`}>
       <div className='flex overflow-hidden space-x-2 p-4'>
         <div className='flex-shrink-0 overflow-hidden rounded-lg w-20 h-20'>
           <img className='w-full' src={imageUrl} alt='' />

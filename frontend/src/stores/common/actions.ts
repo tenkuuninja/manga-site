@@ -2,7 +2,6 @@ import { MangaApi, MeApi } from 'apis';
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
 import { ISearchObject } from 'interfaces';
-import { type } from 'os';
 
 export const fetchTopManga = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.FetchTopMangaRequest });

@@ -25,9 +25,10 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
     } else {
       if (placement !== 'right') setPlacement('right');
     }
+    // eslint-disable-next-line
   }, [width]);
+
   return(
-    <>
     <PopupHover
       placement={placement}
       spacing={10}
@@ -72,8 +73,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
           </div>
         </div>
       </Link>
-    </PopupHover>      
-    </>
+    </PopupHover>    
   )
 }
 

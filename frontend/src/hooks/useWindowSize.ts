@@ -14,4 +14,4 @@ export function useWindowSize() {
   return size;
 }
 
-export default { useWindowSize };
+export default useWindowSize ;
