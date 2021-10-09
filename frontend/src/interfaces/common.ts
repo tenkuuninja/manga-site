@@ -1,3 +1,4 @@
+import { IManga } from "./models";
 export interface IPage<T> {
   content: T[];
   count: number;
@@ -15,4 +16,11 @@ export interface ISearchObject {
   page?: number;
   size?: number;
   include?: string | string[]
+}
+
+export interface IMangaTop {
+  all: IManga;
+  day: IManga;
+  week: IManga;
+  month: IManga;
 }
