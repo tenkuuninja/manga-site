@@ -73,7 +73,7 @@ const Search = function() {
         </div>
       </div>
       <form 
-        className={`${isOpenSearch ? "flex" : "hidden"} items-center h-14 fixed top-0 inset-x-0 bg-white`}
+        className={`${isOpenSearch ? "flex" : "hidden"} items-center h-14 fixed top-0 inset-x-0 bg-white z-10`}
         onSubmit={onSearch}
       >
         <div className="mx-3 text-2xl" onClick={() => setOpenSearch(false)}>

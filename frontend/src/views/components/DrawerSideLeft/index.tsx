@@ -29,7 +29,7 @@ function Drawer({overlay, children, className}: DrawerProps) {
         onClick={() => setOpen(false)}
       />
       <div 
-        className={`${isOpen ? "translate-x-0 ease-in duration-200" : "-translate-x-full ease-out duration-150"} bg-white w-72 transform absolute transition-all shadow-lg border-r border-black border-opacity-30 inset-y-0 left-0 z-40 ${className}`}
+        className={`${isOpen ? "translate-x-0 ease-in duration-200" : "-translate-x-full ease-out duration-150"} bg-white w-72 transform fixed transition-all shadow-lg border-r border-black border-opacity-30 inset-y-0 left-0 z-40 ${className}`}
         style={{maxWidth: '75vw'}}
       >
         <div className={`${isOpen ? "opacity-100" : "opacity-0"}  transition-opacity delay-300 ease-out duration-200 overflow-y-auto h-screen `} >

@@ -4,7 +4,7 @@ import { VerticalCardSkeleton } from 'views/components/MangaCard';
 export const ListVerticalCardSkeleton = () => {
   let items: JSX.Element[] = []
   for (let i = 0; i<30; i++) {
-    items.push(<VerticalCardSkeleton />)
+    items.push(<VerticalCardSkeleton key={i} />)
   }
 
   return(

@@ -12,10 +12,13 @@ export function debounce(func: Function, wait: number = 100) {
   }
 }
 
-export const getRelativeTimeFromNow = (date: Date, sec?: number) => {
-  if (sec !== undefined && Date.now() - Date.parse(date.toString()) > sec*100 ) {
-    return moment(date).format('DD/MM/YYYY');
+export const getRelativeTimeFromNow = (dateStr?: string, sec?: number) => {
+  if (dateStr === undefined) {
+    dateStr = Date.toString();
   }
-  return moment(date).locale('vi').startOf('seconds').fromNow();
+  if (sec !== undefined && Date.now() - Date.parse(dateStr) > sec*100 ) {
+    return moment(dateStr).format('DD/MM/YYYY');
+  }
+  return moment(dateStr).locale('vi').startOf('seconds').fromNow();
 }
 

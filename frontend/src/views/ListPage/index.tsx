@@ -7,6 +7,8 @@ import { IAppState, IManga } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
 import { Pagination } from '@mui/material';
 import { ListVerticalCardSkeleton } from './Skeleton';
+import { getRelativeTimeFromNow } from 'utils/helper';
+import { RiCloseCircleLine } from 'react-icons/ri';
 
 interface IParams {
   [index: string]: string
@@ -87,11 +89,15 @@ const ListPage = () => {
         }
         break;
       case '/the-loai-:genreId(\\d+)-:genreSlug([a-z-]+).html':
+        console.log(match)
+        console.log(match.path==='/the-loai-:genreId(\\d+)-:genreSlug([a-z-]+).html')
         let thisGenre = genre.data.filter(i => i.id === +match.params.genreId)
         if (thisGenre.length > 0) {
+          console.log(1)
           dispatch(fetchListManga({ page, genre: match.params.genreId }));
           setTitle('Thể loại '+thisGenre[0].title);
         } else {
+          console.log(2)
           setNoContent(true);
         }
         break;
@@ -100,20 +106,49 @@ const ListPage = () => {
         break;
     }
     // eslint-disable-next-line
-  }, [match.url, page]);
+  }, [match.url, page, genre.data.length]);
 
   if (noContent) {
     
   }
 
-  let listContent: JSX.Element;
+  let overlayCard = (manga: IManga) => {
+    switch (match.path) {
+      case '/truyen-dang-theo-doi.html':
+        return <div className="p-2 flex justify-between">
+          <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">{getRelativeTimeFromNow(manga.updatedAt||'')}</span>
+          <span className="text-2xl">
+            <RiCloseCircleLine 
+              className="rounded-full bg-white"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            />
+          </span>
+        </div>
+      case '/lich-su-doc-truyen.html':
+        let date: string | undefined = manga?.reads?.length  ? manga?.reads[0].updatedAt : '';
+        return <div className="p-2">
+          <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">{getRelativeTimeFromNow(date||'')}</span>
+        </div>
+      default:
+        return <div className="p-2">
+          <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">{getRelativeTimeFromNow(manga.updatedAt||'')}</span>
+        </div>
+    }
+  }
+
+  let listContent: JSX.Element = <></>
   if (listManga.isLoading || listManga.isError) {
     listContent = <ListVerticalCardSkeleton />
   } else {
     listContent = 
     <ul className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 py-4'>
       {listManga.data.map((manga: IManga) => <li key={manga.id}>
-        <MangaCardVertical data={manga} />
+        <MangaCardVertical 
+          data={manga} 
+          overlay={overlayCard(manga)}
+        />
       </li>)}
     </ul>
   }

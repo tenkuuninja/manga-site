@@ -6,7 +6,7 @@ export interface IChapter {
   number?: number;
   content?: string[];
   totalPage?: number;
-  updatedAt?: Date;
+  updatedAt?: string;
 
   manga?: IManga,
   navigation?: NavigationChapter
@@ -22,8 +22,8 @@ export interface IComment {
   email?: string;
   content: string;
   point?: number;
-  updatedAt?: Date;
-  deletedAt?: Date | null;
+  updatedAt?: string;
+  deletedAt?: string | null;
   
   manga?: IManga;
   user?: IUser;
@@ -54,12 +54,13 @@ export interface IManga {
   viewDay?: number;
   viewWeek?: number,
   viewMonth?: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date | null;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string | null;
   
   totalFollowing?: number;
   readed?: IMangaReaded[],
+  reads?: IMangaReaded[],
   chapters?: IChapter;
   genres?: IGenre[];
 }
@@ -83,9 +84,9 @@ export interface IUser {
   verifyToken?: string;
   resetToken?: string;
   setting?: any;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date | null;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string | null;
 
   role?: IRole
   reads?: IMangaReaded[]
@@ -97,7 +98,7 @@ export interface IMangaReaded {
   readed?: number[]
   lastChapter?: number
   lastChapterId?: number
-  updatedAt?: Date
+  updatedAt?: string
 }
 
 

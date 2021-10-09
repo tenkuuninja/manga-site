@@ -38,10 +38,9 @@ export const fetchListMangaReaded = (filter?: ISearchObject) => async (dispatch:
   try {
     let result = await MeApi.fetchReaded(filter, { cancelToken: cancelTokenSource.token });
     result.data.content.sort((a, b) => {
-      if (a.readed && b.readed && a.readed?.length > 0 && b.readed?.length > 0) {
-        let [da, db] = [a.readed[0].updatedAt, b.readed[0].updatedAt];
-        if (da instanceof Date && db instanceof Date)
-          return db.valueOf()-da.valueOf()
+      if (a.reads && b.reads && a.reads?.length > 0 && b.reads?.length > 0) {
+        let [da, db] = [Date.parse(a.reads[0].updatedAt||''), Date.parse(b.reads[0].updatedAt||'')];
+        return db-da
       }
       return 0
     });

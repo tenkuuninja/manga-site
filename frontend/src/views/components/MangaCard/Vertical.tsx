@@ -16,7 +16,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
   const [placement, setPlacement] = useState<'left'|'right'>('right');
   const cardRef = useRef<HTMLDivElement>(null);
   const [width] = useWindowSize();
-  const { id, title, titleSlug, imageUrl, description, chapter, isFinish, country, updatedAt = new Date(), genres } = props.data
+  const { id, title, titleSlug, imageUrl, description, chapter, isFinish, country, updatedAt = '', genres } = props.data
 
   useEffect(function() {
     let remain = width - ((cardRef.current?.offsetLeft||0) + (cardRef.current?.offsetWidth||0))
@@ -34,7 +34,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
       spacing={10}
       overlay={
       <div className={`hidden lg:block animate-pop-in z-20`}>
-        <div className='overflow-hidden rounded-lg bg-white shadow-lg border border-gray-200 w-96 p-2'>
+        <div className='overflow-hidden rounded-lg bg-white shadow-lg border border-gray-200 w-96 p-4'>
           <h3 className='font-semibold text-lg'>{title}</h3>
           <p className='text-xs text-green-500'>Cập nhật từ <span className='text-sm text-green-600 font-semibold'>{getRelativeTimeFromNow(updatedAt)}</span></p>
           <p className=' text-sm'>{chapter} chương &bull; {isFinish ? 'Đã hoàn thành' : 'Đang cập nhật'}</p>
@@ -69,7 +69,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
             </div>
           </div>
           <div className='px-1 py-2 text-center'>
-            <h3 className='truncate-lines font-semibold leading-5 overflow-hidden overflow-ellipsis'>{title}</h3>
+            <h3 className='truncate-lines text-sm md:text-base font-semibold  overflow-hidden overflow-ellipsis'>{title}</h3>
           </div>
         </div>
       </Link>
