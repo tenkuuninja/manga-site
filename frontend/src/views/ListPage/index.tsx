@@ -6,6 +6,7 @@ import { fetchListManga, fetchListMangaFollow, fetchListMangaReaded } from 'stor
 import { IAppState, IManga } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
 import { Pagination } from '@mui/material';
+import { ListVerticalCardSkeleton } from './Skeleton';
 
 interface IParams {
   [index: string]: string
@@ -105,16 +106,24 @@ const ListPage = () => {
     
   }
 
+  let listContent: JSX.Element;
+  if (listManga.isLoading || listManga.isError) {
+    listContent = <ListVerticalCardSkeleton />
+  } else {
+    listContent = 
+    <ul className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 py-4'>
+      {listManga.data.map((manga: IManga) => <li key={manga.id}>
+        <MangaCardVertical data={manga} />
+      </li>)}
+    </ul>
+  }
+
   return(
-    <div className="max-w-335 mx-auto my-4">
-      <h1 className='p-4 text-2xl lg:text-4xl font-bold'>
+    <div className="max-w-335 mx-auto my-4 p-4">
+      <h1 className='text-3xl lg:text-4xl font-bold mb-2'>
         {title}
       </h1>
-      <ul className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 p-4'>
-        {listManga.data.map((manga: IManga) => <li key={manga.id}>
-          <MangaCardVertical data={manga} />
-        </li>)}
-      </ul>
+      {listContent}
       <div className="my-4">
         <Pagination 
           count={listManga.totalPage} 

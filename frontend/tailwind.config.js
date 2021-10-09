@@ -12,9 +12,9 @@ module.exports = {
       },
       colors: {
         skeleton: {
-          light: '#9CA3AF',
-          DEFAULT: '#6B7280',
-          dark: '#4B5563'
+          light: '#D1D5DB',
+          DEFAULT: '#9CA3AF',
+          dark: '#6B7280'
         }
       },
       maxWidth: {

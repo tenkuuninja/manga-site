@@ -12,3 +12,15 @@ export function HorizontalCardSkeleton() {
     </div>
   );
 }
+
+export function VerticalCardSkeleton() {
+  return(
+    <div className="">
+      <div className="bg-skeleton rounded-tl rounded-tr" style={{ paddingTop: '133%' }}></div>
+      <div className="mt-2">
+        <div className="h-5 bg-gray-400 rounded mb-1"></div>
+        <div className="h-5 bg-gray-400 rounded"></div>
+      </div>
+    </div>
+  );
+}
