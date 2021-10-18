@@ -321,7 +321,20 @@ Manga.init({
     defaultValue: "{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":1}",
     get() {
       const rawValue = this.getDataValue('rate');
-      return JSON.parse(rawValue);
+      const response = JSON.parse(rawValue);
+      if (/^{"1":\d+,"2":\d+,"3":\d+,"4":\d+,"5":\d+}$/g.test(rawValue)) {
+        let count = 0, sum = 0;
+        for (let i = 1; i<=5; i++) {
+          count += response[i];
+          sum += i*response[i];
+        }
+        response.all = +(sum/(count||1)).toFixed(1);
+      }
+      else {
+        response.all = 5;
+      }
+      console.log(response)
+      return response
     },
     set(value: any) {
       if (typeof value != 'string') value = JSON.stringify(value)
