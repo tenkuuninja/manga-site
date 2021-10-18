@@ -165,7 +165,7 @@ const ListPage = () => {
           showFirstButton 
           showLastButton 
           defaultPage={page}
-          onChange={(e, value: number) => setPage(value)}
+          onChange={(e, value: number) => value !== null && setPage(value)}
           className="flex justify-center"
         />
       </div>

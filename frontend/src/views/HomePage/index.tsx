@@ -2,7 +2,11 @@ import React from 'react';
 
 const HomePage = function() {
   return(
-    <>Home Page</>
+    <React.Fragment>
+      <div>
+        
+      </div>
+    </React.Fragment>
   );
 }
 
