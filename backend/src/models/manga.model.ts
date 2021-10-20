@@ -333,7 +333,6 @@ Manga.init({
       else {
         response.all = 5;
       }
-      console.log(response)
       return response
     },
     set(value: any) {
