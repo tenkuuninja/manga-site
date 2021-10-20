@@ -6,9 +6,9 @@ import { store } from 'stores';
 import InitializeState from './InitializeState';
 import TopLoading from 'views/components/TopLoading';
 import materialUiTheme from './customMaterialUi';
-import Routes from 'routes';
+import Routes from 'app/routes';
 import Header from 'views/components/Header';
-import 'assets/main.css';
+import 'assets/tailwind-build.css';
 import 'assets/style.css';
 
 function App() {
