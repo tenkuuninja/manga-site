@@ -1,11 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 
-const protocolRe = /(^\w+:|^)\/\//;
-
-const ACCESS_CONTROL_ALLOW_ORIGIN = process.env.ACCESS_CONTROL_ALLOW_ORIGIN?.split(',').map((host: string) => host.trim().replace(protocolRe, '')) || '*'
+const ACCESS_CONTROL_ALLOW_ORIGIN = process.env.ACCESS_CONTROL_ALLOW_ORIGIN?.split(',').map((host: string) => host.trim()) || '*'
 
 export default function(req: Request, res: Response, next: NextFunction) {
-  const origin = req.headers.origin?.replace(protocolRe, '') || '';
+  const origin = req.headers.origin || '';
   if (ACCESS_CONTROL_ALLOW_ORIGIN === '*' || ACCESS_CONTROL_ALLOW_ORIGIN.includes('*')) {
     res.header("Access-Control-Allow-Origin", "*");
   } else if (ACCESS_CONTROL_ALLOW_ORIGIN.includes(origin)) {
