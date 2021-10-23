@@ -29,6 +29,6 @@ app.get('/sync', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+  console.log(`⚡️[server]: Server is running on port ${PORT}`);
 });
  
