@@ -13,7 +13,10 @@ export const MangaCardHorizontal = function(props: MangaCardHorizontalProps) {
   return(
     <Link to={`/truyen-tranh-${id}-${titleSlug}.html`}>
       <div className='flex overflow-hidden space-x-2 p-4'>
-        <div className='flex-shrink-0 overflow-hidden rounded-lg w-20 h-20'>
+        <div 
+          className='flex-shrink-0 overflow-hidden rounded-lg w-20 h-20 bg-no-repeat bg-center bg-cover border border-black border-opacity-20' 
+          style={{ backgroundImage: `url(https://img.idesign.vn/2018/10/23/id-loading-1.gif)` }}
+        >
           <img className='w-full' src={imageUrl} alt='' />
         </div>
         <div className='flex-grow relative'>
