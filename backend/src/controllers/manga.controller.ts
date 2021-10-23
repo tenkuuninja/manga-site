@@ -3,7 +3,6 @@ import { FindOptions, Op } from 'sequelize';
 import Manga from '../models/manga.model';
 import Genre from '../models/genre.model';
 import { changeToSlug } from '../utils/string';
-import MangaReaded from '../models/manga_readed.model';
 import User from '../models/user.model';
 
 class MangaController {
@@ -28,8 +27,14 @@ class MangaController {
         scopeCount.push({ method: ['filterQuery', req.query.filter] })
       }
       if (typeof req.query.genre === 'string') {
-        scope.push({ method: ['filterGenre', req.query.genre.split(',').filter(id => !isNaN(+id))] })
-        scopeCount.push({ method: ['filterGenre', req.query.genre.split(',').filter(id => !isNaN(+id))] })
+        let genreIds = req.query.genre.split(',').filter(id => !isNaN(+id)).map(item => +item);
+        scope.push({ method: ['genreQuery', genreIds] })
+        scopeCount.push({ method: ['genreQuery', genreIds] })
+      }
+      if (typeof req.query.notgenre === 'string') {
+        let notgenreIds = req.query.notgenre.split(',').filter(id => !isNaN(+id)).map(item => +item);
+        scope.push({ method: ['notgenreQuery', notgenreIds] })
+        scopeCount.push({ method: ['notgenreQuery', notgenreIds] })
       }
       if (typeof req.query.sort === 'string') {
         scope.push({ method: ['sortQuery', req.query.sort] });
@@ -51,7 +56,7 @@ class MangaController {
     } catch (error) {
       console.log('manga controller fetch list error >>', error)
       res.status(500).json({
-        errorMessage: "Tham số không hợp lệ"
+        errorMessage: "Đã xảy ra lỗi"
       });
     }
   }
@@ -69,7 +74,7 @@ class MangaController {
     } catch (error) {
       console.log('manga controller fetch list error >>', error)
       res.status(500).json({
-        errorMessage: "Tham số không hợp lệ"
+        errorMessage: "Đã xảy ra lỗi"
       });
     }
   }

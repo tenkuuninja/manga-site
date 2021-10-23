@@ -223,9 +223,14 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
         where: filterObj
       }
     });
-    Manga.addScope('filterGenre', (genreIds: number[] | string[]) => {
+    Manga.addScope('genreQuery', (genreIds: number[]) => {
       return {
-        where: seq.literal(genreIds.map((id: number | string) => "EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `manga`.`id`)").join(' AND '))
+        where: seq.literal(genreIds.map((id: number) => "EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `manga`.`id`)").join(' AND '))
+      }
+    });
+    Manga.addScope('notgenreQuery', (genreIds: number[]) => {
+      return {
+        where: seq.literal(genreIds.map((id: number) => "NOT EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `manga`.`id`)").join(' AND '))
       }
     });
     Manga.addScope('paging', (page: number, pageSize: number) => {
