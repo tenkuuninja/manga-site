@@ -63,7 +63,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
       <Link to={`/truyen-tranh-${id}-${titleSlug}.html`}>
         <div ref={cardRef} className='rounded-md overflow-hidden bg-white border-gray-200'>
           <div className='overflow-hidden relative bg-no-repeat bg-center bg-cover border border-black border-opacity-20' style={{ paddingTop: '133%', backgroundImage: `url(https://img.idesign.vn/2018/10/23/id-loading-1.gif)` }}>
-            <img className='absolute top-0 object-cover w-full h-full' src={imageUrl} alt="" />
+            <img className='absolute top-0 object-cover w-full h-full' src={imageUrl} alt=" " />
             <div className="absolute inset-0">{props.overlay}</div>
             {/* <div className='absolute h-5 w-full bottom-0 bg-gray-800 opacity-60'></div> */}
           </div>

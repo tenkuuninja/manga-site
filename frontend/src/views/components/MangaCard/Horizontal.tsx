@@ -17,7 +17,7 @@ export const MangaCardHorizontal = function(props: MangaCardHorizontalProps) {
           className='flex-shrink-0 overflow-hidden rounded-lg w-20 h-20 bg-no-repeat bg-center bg-cover border border-black border-opacity-20' 
           style={{ backgroundImage: `url(https://img.idesign.vn/2018/10/23/id-loading-1.gif)` }}
         >
-          <img className='w-full' src={imageUrl} alt='' />
+          <img className='w-full' src={imageUrl} alt=' ' />
         </div>
         <div className='flex-grow relative'>
           <p className='truncate-lines font-semibold text-base leading-5'>{title}</p>
