@@ -82,22 +82,18 @@ const ListPage = () => {
         }
         if (match.params.countrySlug in countrySlugs) {
           const country = countrySlugs[match.params.countrySlug as keyof typeof countrySlugs]
-          dispatch(fetchListManga({ filter: 'country:eq:'+country.code }));
+          dispatch(fetchListManga({ page, filter: 'country:eq:'+country.code }));
           setTitle('Truyện tranh '+country.name);
         } else {
           setNoContent(true);
         }
         break;
       case '/the-loai-:genreId(\\d+)-:genreSlug([a-z-]+).html':
-        console.log(match)
-        console.log(match.path==='/the-loai-:genreId(\\d+)-:genreSlug([a-z-]+).html')
         let thisGenre = genre.data.filter(i => i.id === +match.params.genreId)
         if (thisGenre.length > 0) {
-          console.log(1)
           dispatch(fetchListManga({ page, genre: match.params.genreId }));
           setTitle('Thể loại '+thisGenre[0].title);
         } else {
-          console.log(2)
           setNoContent(true);
         }
         break;
@@ -107,6 +103,10 @@ const ListPage = () => {
     }
     // eslint-disable-next-line
   }, [match.url, page, genre.data.length]);
+
+  useEffect(function() {
+    setPage(1);
+  }, [match.path]);
 
   if (noContent) {
     
@@ -164,7 +164,7 @@ const ListPage = () => {
           count={listManga.totalPage} 
           showFirstButton 
           showLastButton 
-          defaultPage={page}
+          page={page}
           onChange={(e, value: number) => value !== null && setPage(value)}
           className="flex justify-center"
         />
