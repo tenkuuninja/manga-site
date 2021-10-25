@@ -6,15 +6,15 @@ import { ActionTypes } from './types';
 
 let cancelTokenSource: CancelTokenSource;
 
-export const register = (id: number, option?: ISearchObject) => async (dispatch: Dispatch) => {
+export const fetchManga = (id: number, option?: ISearchObject) => async (dispatch: Dispatch) => {
   if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
   cancelTokenSource = axios.CancelToken.source();
   dispatch({ type: ActionTypes.FetchMangaRequest });
   try {
     let result = await MangaApi.byId(id).fetch(option, { cancelToken: cancelTokenSource.token });
-    dispatch({ type: ActionTypes.FetchMangaRequest, payload: result.data });
+    dispatch({ type: ActionTypes.FetchMangaSuccess, payload: result.data });
   } catch (error) {
-    dispatch({ type: ActionTypes.FetchMangaSuccess });
+    dispatch({ type: ActionTypes.FetchMangaFailure });
   }
 }
 

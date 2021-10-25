@@ -58,10 +58,11 @@ export interface IManga {
   updatedAt?: string;
   deletedAt?: string | null;
   
+  isFollowing?: number;
   totalFollowing?: number;
   readed?: IMangaReaded[],
   reads?: IMangaReaded[],
-  chapters?: IChapter;
+  chapters?: IChapter[];
   genres?: IGenre[];
 }
 

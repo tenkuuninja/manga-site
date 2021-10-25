@@ -1,7 +1,8 @@
 import { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
 const HomePageComponent = lazy(() => import('views/HomePage'));
-const ListPageComponent = lazy(() => import('views/ListPage'));
+const MangaListPageComponent = lazy(() => import('views/ListPage'));
+const MangaDetailPageComponent = lazy(() => import('views/MangaDetailPage'));
 const LoginPageComponent = lazy(() => import('views/LoginPage'));
 const RegisterPageComponent = lazy(() => import('views/RegisterPage'));
 
@@ -34,7 +35,19 @@ const navigation: RouteCustomProps[] =  [
       '/the-loai-:genreId(\\d+)-:genreSlug([a-z-]+).html',
     ],
     exact: true,
-    component: ListPageComponent,
+    component: MangaListPageComponent,
+    guard: 'none'
+  },
+  {
+    path: '/truyen-tranh-:mangaId(\\d+)-:mangaSlug([a-z0-9-]+).html',
+    exact: true,
+    component: MangaDetailPageComponent,
+    guard: 'none'
+  },
+  {
+    path: '/doc-truyen-:mangaId(\\d+)-:chapterId(\\d+)-:mangaSlug([a-z0-9-]+)-chap-:chapterNumber([0-9]+-?[0-9]{0,2}).html',
+    exact: true,
+    component: MangaDetailPageComponent,
     guard: 'none'
   },
   {

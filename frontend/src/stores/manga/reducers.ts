@@ -18,7 +18,7 @@ const authReducer: Reducer = (state: IMangaStore = initialState, action: IAction
     case ActionTypes.FetchMangaSuccess:
       return {
         ...state,
-        data: action.payload.content, 
+        data: action.payload, 
         isLoading: false, 
         isError: false
       }

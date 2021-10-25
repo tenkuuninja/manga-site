@@ -1,0 +1,18 @@
+.background {
+  background-image: url(https://cdnb.artstation.com/p/assets/images/images/019/170/273/large/ford-nguyen-city-street.jpg);
+}
+
+
+@media (min-width: 992px) {
+  .container {
+    display: grid;
+    grid-template-columns: 65% 35%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+}
