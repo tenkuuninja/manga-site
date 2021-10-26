@@ -8,6 +8,7 @@ import TopLoading from 'views/components/TopLoading';
 import materialUiTheme from './customMaterialUi';
 import Routes from 'app/routes';
 import Header from 'views/components/Header';
+import Footer from 'views/components/Footer';
 import 'assets/tailwind-build.css';
 import 'assets/style.css';
 
@@ -22,6 +23,7 @@ function App() {
           <React.Suspense fallback={`loading`}>
             <Routes />
           </React.Suspense>
+          <Footer />
         </ThemeProvider>
       </Provider>
     </Router>
