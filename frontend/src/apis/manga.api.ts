@@ -32,6 +32,9 @@ export const MangaApi = {
     },
     addRate: (config: AxiosRequestConfig = {}) => {
       return axios.patch<boolean>(path+'/'+id, config);
+    },
+    increaseFavorite: (config: AxiosRequestConfig = {}) => {
+      return axios.patch<boolean>(path+'/'+id+'/increment', { favorite: 1 }, config);
     }
   })
 }

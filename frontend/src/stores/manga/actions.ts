@@ -3,6 +3,7 @@ import { ISearchObject } from 'interfaces'
 import axios, { CancelTokenSource } from 'axios';
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
+import { MeApi } from 'apis';
 
 let cancelTokenSource: CancelTokenSource;
 
@@ -15,6 +16,33 @@ export const fetchManga = (id: number, option?: ISearchObject) => async (dispatc
     dispatch({ type: ActionTypes.FetchMangaSuccess, payload: result.data });
   } catch (error) {
     dispatch({ type: ActionTypes.FetchMangaFailure });
+  }
+}
+
+export const followManga = (id: number) => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: ActionTypes.FollowManga });
+    await MeApi.followManga(id);
+  } catch (error) {
+    
+  }
+}
+
+export const unfollowManga = (id: number) => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: ActionTypes.UnfollowManga });
+    await MeApi.unfollowManga(id);
+  } catch (error) {
+    
+  }
+}
+
+export const increaseFavorite = (id: number) => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: ActionTypes.IncreaseFavorite });
+    await MangaApi.byId(id).increaseFavorite();
+  } catch (error) {
+    
   }
 }
 

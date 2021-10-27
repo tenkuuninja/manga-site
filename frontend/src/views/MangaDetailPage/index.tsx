@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IAppState, IChapter } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
-import { fetchManga } from 'stores/manga/actions';
+import { fetchManga, followManga, increaseFavorite, unfollowManga } from 'stores/manga/actions';
 import { Link } from 'react-router-dom';
 import { countryType } from 'utils/static';
 import { 
@@ -18,13 +18,27 @@ interface IParams {
   mangaSlug: string;
 }
 
+const amountItemShowPreview = 10;
+
 const MangaDetailPage = () => {
   const manga = useSelector((store: IAppState) => store.manga);
   const dispatch = useDispatch();
   const match = useRouteMatch<IParams>();
+  const [showAllChapter, setShowAllChapter] = useState<boolean>(false);
+  const mangaId = +match.params.mangaId;
 
   function onFollow() {
+    if (manga.data.isFollowing === 0) {
+      dispatch(followManga(mangaId));
+    } else if (manga.data.isFollowing === 1) {
+      dispatch(unfollowManga(mangaId));
+    }
+  }
 
+  function handleIncreaseFavorite() {
+    if (1) {
+      dispatch(increaseFavorite(mangaId));
+    }
   }
 
   useEffect(function() {
@@ -115,8 +129,8 @@ const MangaDetailPage = () => {
                 <li className='inline-block px-4 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl mr-1 mt-1 cursor-pointer' onClick={() => onFollow()}>
                   <span className='block'>{!isFollowing ? 'Theo dõi' : 'Hủy Theo dõi'}</span>
                 </li>
-                <li className='inline-block px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl mr-1 mt-1'>
-                  <Link className='block' to={`/the-loai-.html`}> Thích</Link>
+                <li className='inline-block px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl mr-1 mt-1' onClick={handleIncreaseFavorite}>
+                  <span className='block'> Thích</span>
                 </li>
               </ul>
             </div>
@@ -126,7 +140,7 @@ const MangaDetailPage = () => {
             <ul className='divide-y clear-both overflow-hidden'>
               {chapters?.map((chapter: IChapter, i: number) => 
               // <li key={i} className={`block w-full clear-both overflow-hidden hover:bg-gray-100 ${(amountItemShowPreview<i && !showAll) && 'hidden'}`}>
-              <li key={i}>
+              <li key={i} className={`${(amountItemShowPreview<i && !showAllChapter) && 'hidden'}`}>
                 <Link 
                   to={`/doc-truyen-${chapter.mangaId}-${chapter.id}-${titleSlug}-chap-${(''+chapter.number).replace('.', '-')}.html`} 
                   className='block overflow-hidden hover:bg-gray-50 p-4 transition-colors duration-100'
@@ -140,9 +154,14 @@ const MangaDetailPage = () => {
                 </Link>
               </li>)}
             </ul>
-            {/* <div className={`px-1 py-2 text-sm ${(amountItemShowPreview >= chapter.payload.length || showAll) && 'hidden'}`}>
-              <span className='inline-block w-full border border-blue-400 rounded text-center text-blue-400 hover:text-blue-500 hover:border-blue-500 py-2 cursor-pointer' onClick={() => setShowAll(true)}>Xem tất cả ({chapter.payload.length})</span>
-            </div> */}
+            <div className={`px-1 py-2 text-sm ${(amountItemShowPreview >= (chapters?.length||0) || showAllChapter) && 'hidden'}`}>
+              <span 
+                className='inline-block w-full border border-blue-400 rounded text-center text-blue-400 hover:text-blue-500 hover:border-blue-500 py-2 cursor-pointer' 
+                onClick={() => setShowAllChapter(true)}
+              >
+                Xem tất cả ({chapters?.length})
+              </span>
+            </div>
           </div>          
         </main>
         <aside className="hidden lg:block p-4 border-l border-black border-opacity-10">
