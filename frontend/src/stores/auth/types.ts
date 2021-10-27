@@ -1,11 +1,11 @@
 export enum ActionTypes  {
-  LoginRequest            = 'LoginRequest',
-  LoginSuccess            = 'LoginSuccess',
-  LoginFailure            = 'LoginFailure',
-  Logout                  = 'Logout',
-  UpdateUsernameSuccess   = 'UpdateUsernameSuccess',
-  UpdatePasswordSuccess   = 'UpdatePasswordSuccess',
-  UpdateAvatarSuccess     = 'UpdateAvatarSuccess',
+  LoginRequest            = 'auth_LoginRequest',
+  LoginSuccess            = 'auth_LoginSuccess',
+  LoginFailure            = 'auth_LoginFailure',
+  Logout                  = 'auth_Logout',
+  UpdateUsernameSuccess   = 'auth_UpdateUsernameSuccess',
+  UpdatePasswordSuccess   = 'auth_UpdatePasswordSuccess',
+  UpdateAvatarSuccess     = 'auth_UpdateAvatarSuccess',
 }
 
 export default ActionTypes;

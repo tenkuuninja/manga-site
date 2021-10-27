@@ -1,7 +1,7 @@
 export enum ActionTypes  {
-  FetchChapterRequest = 'FetchChapterRequest',
-  FetchChapterSuccess = 'FetchChapterSuccess',
-  FetchChapterFailure = 'FetchChapterFailure',
+  FetchChapterRequest = 'chapter_FetchChapterRequest',
+  FetchChapterSuccess = 'chapter_FetchChapterSuccess',
+  FetchChapterFailure = 'chapter_FetchChapterFailure',
 }
 
 export default ActionTypes;

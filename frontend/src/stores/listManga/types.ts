@@ -1,7 +1,7 @@
 export enum ActionTypes  {
-  FetchListMangaRequest = 'FetchListMangaRequest',
-  FetchListMangaSuccess = 'FetchListMangaSuccess',
-  FetchListMangaFailure = 'FetchListMangaFailure',
+  FetchListMangaRequest = 'mangas_FetchListMangaRequest',
+  FetchListMangaSuccess = 'mangas_FetchListMangaSuccess',
+  FetchListMangaFailure = 'mangas_FetchListMangaFailure',
 }
 
 export default ActionTypes;
