@@ -12,6 +12,7 @@ import {
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { Icon } from '@iconify/react';
 import st from './detail.module.css';
+import Comment from 'views/components/Comment';
 
 interface IParams {
   mangaId: string;
@@ -97,7 +98,6 @@ const MangaDetailPage = () => {
               <div className='flex items-center space-x-2'>
                 <Rating readOnly value={rate?.all || 5} />
                 ({rateCount})
-                <Icon icon="bx:bx-home" className="text-" />
               </div>
               <p className='space-x-2'>
                 <span className='inline-block'><Icon icon="grommet-icons:update" /></span>
@@ -129,7 +129,7 @@ const MangaDetailPage = () => {
                 <li className='inline-block px-4 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl mr-1 mt-1 cursor-pointer' onClick={() => onFollow()}>
                   <span className='block'>{!isFollowing ? 'Theo dõi' : 'Hủy Theo dõi'}</span>
                 </li>
-                <li className='inline-block px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl mr-1 mt-1' onClick={handleIncreaseFavorite}>
+                <li className='inline-block px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl mr-1 mt-1 cursor-pointer' onClick={handleIncreaseFavorite}>
                   <span className='block'> Thích</span>
                 </li>
               </ul>
@@ -162,7 +162,8 @@ const MangaDetailPage = () => {
                 Xem tất cả ({chapters?.length})
               </span>
             </div>
-          </div>          
+          </div>  
+          <Comment />        
         </main>
         <aside className="hidden lg:block p-4 border-l border-black border-opacity-10">
           <div className="sticky top-5 bg-white">

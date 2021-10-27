@@ -1,15 +1,13 @@
 import { AxiosRequestConfig } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
-import { IPage, IManga, ISearchObject, IMangaTop } from 'interfaces';
+import { IPage, IManga, ISearchObject, IMangaTop, IChapter, IComment } from 'interfaces';
 
 const path = 'api/mangas';
 
-
 export const MangaApi = {
   fetchList: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-    if (typeof options === 'undefined') options = {}
-    const query: string = qs.stringify(options);
+    const query: string = qs.stringify(options || {});
     return axios.get<IPage<IManga>>(path+'?'+query, config);
   },
   fetchTop: (config: AxiosRequestConfig = {}) => {
@@ -20,9 +18,16 @@ export const MangaApi = {
   },
   byId: (id: number) => ({
     fetch: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-      if (typeof options === 'undefined') options = {}
-      const query: string = qs.stringify(options);
+      const query: string = qs.stringify(options || {});
       return axios.get<IManga>(path+'/'+id+'?'+query, config);
+    },
+    fetchChapter: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
+      const query: string = qs.stringify(options || {});
+      return axios.get<IPage<IChapter>>(path+'/'+id+'/chapters?'+query, config);
+    },
+    fetchComment: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
+      const query: string = qs.stringify(options || {});
+      return axios.get<IPage<IComment>>(path+'/'+id+'/comments?'+query, config);
     },
     update: (payload: IManga, config: AxiosRequestConfig = {}) => {
       return axios.put<IManga>(path+'/'+id, payload, config);
