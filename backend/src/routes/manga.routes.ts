@@ -13,6 +13,8 @@ export class MangaRoutes extends RoutesConfig {
     router.get('', MangaController.fetchList);
     router.get('/top', MangaController.fetchTop);
     router.get('/:id', MangaController.fetchById);
+    router.get('/:id/chapters', MangaController.getChapterById);
+    router.get('/:id/comments', MangaController.getCommentById);
     router.post('', 
       Validatior.mangaValid(),
       Validatior.verify,

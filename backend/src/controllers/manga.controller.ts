@@ -4,6 +4,8 @@ import Manga from '../models/manga.model';
 import Genre from '../models/genre.model';
 import { changeToSlug } from '../utils/string';
 import User from '../models/user.model';
+import Chapter from '../models/chapter.model';
+import Comment from '../models/comment.model';
 
 class MangaController {
 
@@ -90,6 +92,60 @@ class MangaController {
       res.status(200).json(result);
     } catch (error) {
       console.log('manga controller fetch error >>', error)
+      res.status(500).json({
+        errorMessage: "Đã xảy ra lỗi"
+      });
+    }
+  }
+
+  getChapterById = async (req: Request, res: Response) => {
+    try {
+      const { rows, count } = await Chapter.findAndCountAll({
+        where: {
+          mangaId: +req.params.id
+        }
+      });
+      res.status(200).json({
+        content: rows,
+        count: count,
+        page: 1,
+        size: count,
+        totalPage: 1
+      })
+    } catch (error) {
+      console.log('manga controller fetch chapter error >>', error)
+      res.status(500).json({
+        errorMessage: "Đã xảy ra lỗi"
+      });
+    }
+  }
+
+  getCommentById = async (req: Request, res: Response) => {
+    try {
+      let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
+      let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
+      let scope: any[] = ['includeUser', 'includeManga', 'includeReply', { method: ['paging', page, size] }];
+      if (typeof req.query.sort === 'string') {
+        scope.push({ method: ['sortQuery', req.query.sort] });
+      } else {
+        scope.push({ method: ['sortQuery', '-createdAt'] });
+      }
+      let options: FindOptions = {
+        where: {
+          mangaId: +req.params.id
+        }
+      };
+      const result = await Comment.scope(scope).findAll(options);
+      const count = await Comment.count(options);
+      res.status(200).json({
+        content: result,
+        count: count,
+        page: page,
+        size: size,
+        totalPage: Math.ceil(count/+size)
+      })
+    } catch (error) {
+      console.log('manga controller fetch comment error >>', error)
       res.status(500).json({
         errorMessage: "Đã xảy ra lỗi"
       });
