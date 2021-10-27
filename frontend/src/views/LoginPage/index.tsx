@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, InputAdornment, IconButton } from '@mui/material';
-import { MdVisibilityOff, MdVisibility } from "react-icons/md";
+import { Icon } from '@iconify/react';
 import { login } from 'stores/auth/actions';
 import { IAppState } from 'interfaces';
 
@@ -31,7 +31,7 @@ const LoginPage = function() {
 
   const passwordMaskedIcon = <InputAdornment position="end">
       <IconButton size="small" onClick={() => setPasswordMasked(!passwordIsMasked)}>
-        { passwordIsMasked ? <MdVisibility /> : <MdVisibilityOff /> }
+        { passwordIsMasked ? <Icon icon="ic:round-visibility" /> : <Icon icon="ic:round-visibility-off" /> }
       </IconButton>
     </InputAdornment>
 

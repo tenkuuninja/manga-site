@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { MdClose, MdSearch } from 'react-icons/md';
+import { Icon } from '@iconify/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IAppState, IManga } from 'interfaces';
 import { debounce } from 'utils/helper';
@@ -69,7 +69,7 @@ const Search = function() {
     <div>
       <div className="h-14 select-none" onClick={() => setOpenSearch(true)}>
         <div className="inline-flex justify-center items-center cursor-pointer h-10 my-2 px-3">
-          <MdSearch className="text-2xl" />
+          <Icon icon="ic:round-search" className="text-2xl" />
         </div>
       </div>
       <form 
@@ -77,7 +77,7 @@ const Search = function() {
         onSubmit={onSearch}
       >
         <div className="mx-3 text-2xl" onClick={() => setOpenSearch(false)}>
-          <MdClose className="text-2xl" />
+          <Icon icon="ic:round-close" className="text-2xl" />
         </div>
         <input 
           className="flex-grow outline-none text-base mx-1" 
@@ -94,7 +94,7 @@ const Search = function() {
           {text.length > 0 && autoCompleteContent}
         </div>
         <button type="submit" className="mx-3 text-2xl">
-          <MdSearch className="text-2xl" />
+          <Icon icon="ic:round-search" className="text-2xl" />
         </button>
       </form>
     </div>

@@ -4,17 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { fetchManga } from 'stores/manga/actions';
 import { Link } from 'react-router-dom';
-import { BsBook, BsEye, BsHeart } from 'react-icons/bs';
-import { BiHome, BiGridVertical } from 'react-icons/bi';
-import { GrUpdate } from 'react-icons/gr';
-import st from './detail.module.css';
 import { countryType } from 'utils/static';
 import { 
   Rating,
   Breadcrumbs,
-  Link as LinkMui
 } from '@mui/material';
 import { getRelativeTimeFromNow } from 'utils/helper';
+import { Icon } from '@iconify/react';
+import st from './detail.module.css';
 
 interface IParams {
   mangaId: string;
@@ -32,7 +29,8 @@ const MangaDetailPage = () => {
 
   useEffect(function() {
     dispatch(fetchManga(+match.params.mangaId));
-  }, []);
+    // eslint-disable-next-line
+  }, [match.params.mangaId]);
 
   const { 
     title, 
@@ -64,11 +62,11 @@ const MangaDetailPage = () => {
         <main className="p-4">
           <Breadcrumbs className="mb-2 text-sm font-bold" >
             <Link to="/" className="flex items-center">
-              <BiHome className="mr-1 text-base" />
+              <Icon icon="bx:bx-home" className="mr-1 text-base" />
               Trang chủ
             </Link>
             <Link to="/truyen-moi-cap-nhat.html" className="flex items-center">
-              <BiGridVertical className="mr-1 text-base" />
+              <Icon icon="bi:grid-3x3-gap-fill" className="mr-1 text-base" />
               Danh sách
             </Link>
             <p className="truncate cursor-pointer text-gray-600">
@@ -85,15 +83,16 @@ const MangaDetailPage = () => {
               <div className='flex items-center space-x-2'>
                 <Rating readOnly value={rate?.all || 5} />
                 ({rateCount})
+                <Icon icon="bx:bx-home" className="text-" />
               </div>
               <p className='space-x-2'>
-                <span className='inline-block'><GrUpdate /></span>
+                <span className='inline-block'><Icon icon="grommet-icons:update" /></span>
                 <span>Cập nhật từ {(updatedAt)}</span>
               </p>
-              <p className=''><BsBook className='inline-block' /> {chapter} chương &bull; {isFinish ? 'Đã hoàn thành' : 'Đang cập nhật'}</p>
+              <p className=''><Icon icon="bi:book" /> {chapter} chương &bull; {isFinish ? 'Đã hoàn thành' : 'Đang cập nhật'}</p>
               <p className='space-x-4'>
-                <span><BsEye className='inline-block' /> {view}</span>
-                <span><BsHeart className='inline-block' /> {favorite}</span>
+                <span><Icon icon="bi:eye" /> {view}</span>
+                <span><Icon icon="bi:heart" /> {favorite}</span>
               </p>
               {author?.length && <p>Tác giả: {author.join(', ')}</p>}
               <ul className='text-sm font-medium space-x-1'>

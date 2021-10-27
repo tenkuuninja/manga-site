@@ -5,7 +5,7 @@ import { IAppState } from 'interfaces';
 import Dropdown from 'views/components/Dropdown';
 import Avatar from 'views/components/Avatar';
 import { logout } from 'stores/auth/actions';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { Icon } from '@iconify/react';
 
 
 const menu = [
@@ -29,7 +29,7 @@ const Personal = function() {
   if (auth.isLoading) {
     return(
       <div className="ml-2 text-sm font-bold">
-        <AiOutlineLoading3Quarters className="inline-block animate-spin" />
+        <Icon icon="eos-icons:bubble-loading" />
         <span className="ml-2" >Processing</span>
       </div>
     );

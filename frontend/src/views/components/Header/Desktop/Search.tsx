@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { MdSearch } from 'react-icons/md';
+import { Icon } from '@iconify/react';
 import { suggestPlaceholder, countryType } from 'utils/static';
 import { debounce } from 'utils/helper';
 import { fetchAutoComplete } from 'stores/common/actions';
@@ -110,7 +110,7 @@ const Search = function() {
         <p className="text-lg font-semibold px-4 pt-4 pb-1">Kết quả tìm kiếm</p>
         {autoCompleteContent}
       </div>
-      <button className="mx-3 text-2xl"><MdSearch /></button>
+      <button className="mx-3 text-2xl"><Icon icon="ic:round-search" /></button>
     </form>
   );
 }

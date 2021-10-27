@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Drawer from 'views/components/DrawerSideLeft';
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
-import { MdDehaze } from 'react-icons/md';
+import { Icon } from '@iconify/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IAppState, IGenre } from 'interfaces';
 import { logout } from 'stores/auth/actions';
@@ -119,7 +118,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
               </Link>}
               {item.action !== undefined && <div className="block px-4 py-2 cursor-pointer" onClick={item.action}>
                 <span>{item.title}</span>
-                <span className="float-right pt-1"><RiArrowRightSLine className="text-lg" /></span>
+                <span className="float-right pt-1"><Icon icon="ri:arrow-right-s-line" className="text-lg" /></span>
               </div>}
             </li>)}
           </ul>
@@ -130,7 +129,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
       </div>
       <div className={`transform ${isOpenCategory ? "translate-x-0" : "translate-x-full"} transition absolute top-0 left-0 overflow-y-auto w-72 h-screen min-h-screen bg-white`}>
         <div className="flex justify-start items-center w-full p-4 bg-gray-100 cursor-pointer" onClick={() => setOpenCategory(false)}>
-          <RiArrowLeftSLine className="text-lg" />
+          <Icon icon="ri:arrow-left-s-line" className="text-lg" />
           <span className="ml-4">Menu</span>
         </div>
         <ul>
@@ -143,7 +142,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
       </div>
       <div className={`transform ${isOpenRank ? "translate-x-0" : "translate-x-full"} transition absolute top-0 left-0 overflow-y-auto w-72 h-screen min-h-screen bg-white`}>
         <div className="flex justify-start items-center w-full p-4 bg-gray-100 cursor-pointer" onClick={() => setOpenRank(false)}>
-          <RiArrowLeftSLine className="text-lg" />
+          <Icon icon="ri:arrow-left-s-line" className="text-lg" />
           <span className="ml-4">Menu</span>
         </div>
         <ul>
@@ -156,7 +155,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
       </div>
       <div className={`transform ${isOpenCountry ? "translate-x-0" : "translate-x-full"} transition absolute top-0 left-0 overflow-y-auto w-72 h-screen min-h-screen bg-white`}>
         <div className="flex justify-start items-center w-full p-4 bg-gray-100 cursor-pointer" onClick={() => setOpenCountry(false)}>
-          <RiArrowLeftSLine className="text-lg" />
+          <Icon icon="ri:arrow-left-s-line" className="text-lg" />
           <span className="ml-4">Menu</span>
         </div>
         <ul>
@@ -169,7 +168,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
       </div>
       <div className={`transform ${isOpenGenre ? "translate-x-0" : "translate-x-full"} transition absolute top-0 left-0 overflow-y-auto w-72 h-screen min-h-screen bg-white`}>
         <div className="flex justify-start items-center w-full p-4 bg-gray-100 cursor-pointer" onClick={() => setOpenGenre(false)}>
-          <RiArrowLeftSLine className="text-lg" />
+          <Icon icon="ri:arrow-left-s-line" className="text-lg" />
           <span className="ml-4">Menu</span>
         </div>
         <ul>
@@ -192,7 +191,7 @@ function MenuDrawer() {
     >
       <div className="h-14 select-none">
         <div className="inline-flex justify-center items-center cursor-pointer h-10 my-2 px-3">
-          <MdDehaze className="text-2xl" />
+          <Icon icon="ic:round-dehaze" className="text-2xl" />
         </div>
       </div>
     </Drawer>

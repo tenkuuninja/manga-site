@@ -8,7 +8,7 @@ import { MangaCardVertical } from 'views/components/MangaCard';
 import { Pagination } from '@mui/material';
 import { ListVerticalCardSkeleton } from './Skeleton';
 import { getRelativeTimeFromNow } from 'utils/helper';
-import { RiCloseCircleLine } from 'react-icons/ri';
+import { Icon } from '@iconify/react';
 
 interface IParams {
   [index: string]: string
@@ -118,7 +118,8 @@ const ListPage = () => {
         return <div className="p-2 flex justify-between">
           <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">{getRelativeTimeFromNow(manga.updatedAt||'')}</span>
           <span className="text-2xl">
-            <RiCloseCircleLine 
+            <Icon 
+              icon="ri:close-circle-line" 
               className="rounded-full bg-white"
               onClick={(e) => {
                 e.preventDefault();

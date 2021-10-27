@@ -2,8 +2,7 @@ import React from 'react';
 import { IAppState, IGenre } from 'interfaces';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaTelegramPlane, FaTumblr } from 'react-icons/fa';
-import { SiTinder } from 'react-icons/si';
+import { Icon } from '@iconify/react';
 import st from './footer.module.css';
 
 const str = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem fugiat tempore, ipsa, modi facilis porro quasi neque nemo rerum pariatur suscipit quae consectetur!';
@@ -16,10 +15,10 @@ const categories = [
 ]
 
 const follow = [
-  { text: <><FaFacebookF /> Facebook</>, url: '#' },
-  { text: <><FaTelegramPlane /> Telegram</>, url: '#' },
-  { text: <><FaTumblr /> Tumblr</>, url: '#' },
-  { text: <><SiTinder /> Tinder</>, url: '#' },
+  { text: <><Icon icon="cib:facebook-f" /> Facebook</>, url: '#' },
+  { text: <><Icon icon="cib:telegram-plane" /> Telegram</>, url: '#' },
+  { text: <><Icon icon="cib:tumblr" /> Tumblr</>, url: '#' },
+  { text: <><Icon icon="simple-icons:onlyfans" /> Onlyfans</>, url: '#' },
 ];
 
 
