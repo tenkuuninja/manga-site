@@ -16,14 +16,17 @@ export class MangaRoutes extends RoutesConfig {
     router.post('', 
       Validatior.mangaValid(),
       Validatior.verify,
-      MangaController.create);
+      MangaController.create
+    );
     router.put('/:id', 
       Validatior.mangaValid(),
       Validatior.verify,
-      MangaController.update);
+      MangaController.update
+    );
     router.delete('/:id', MangaController.delete);
 
     router.patch('/:id/rate', MangaController.addRate);
+    router.patch('/:id/increment', MangaController.incrementFields);
     
     return router;
   }

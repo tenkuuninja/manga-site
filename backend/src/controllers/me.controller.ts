@@ -22,7 +22,7 @@ class UserController {
 
   getManga = async (req: Request, res: Response) => {
     try {
-      if (req.user === null) throw Error();
+      if (req.user === undefined) throw Error();
       let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
       let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
       let scope: any[] = [
@@ -51,7 +51,7 @@ class UserController {
 
   getHistory = async (req: Request, res: Response) => {
     try {
-      if (req.user === null) throw Error();
+      if (req.user === undefined) throw Error();
       let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
       let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
       let scope: any[] = [
@@ -89,7 +89,7 @@ class UserController {
 
   read = async (req: Request, res: Response) => {
     try {
-      if (req.user === null) throw Error();
+      if (req.user === undefined) throw Error();
       if (Number.isNaN(+req.params.chapter)) {
         res.status(500).send(false);
       }
@@ -120,7 +120,7 @@ class UserController {
 
   follow = async (req: Request, res: Response) => {
     try {
-      if (req.user === null) throw Error();
+      if (req.user === undefined) throw Error();
       const manga = await Manga.findByPk(req.params.id);
       if (manga) {
         await req.user.addManga(manga);
@@ -134,7 +134,7 @@ class UserController {
 
   unfollow = async (req: Request, res: Response) => {
     try {
-      if (req.user === null) throw Error();
+      if (req.user === undefined) throw Error();
       const manga = await Manga.findByPk(req.params.id);
       if (manga) {
         await req.user.removeManga(manga);

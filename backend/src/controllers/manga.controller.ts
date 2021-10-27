@@ -157,15 +157,29 @@ class MangaController {
 
   addRate = async (req: Request, res: Response) => {
     try {
-      const manga = await Manga.findByPk(+req.params.id);
+      const manga = await Manga.findByPk(+req.params.id,);
       let rate: any = manga?.rate;
       const star = +req.body.star;
       if (1<=star && star>=5) {
         rate[star] = rate[star] + 1;
-        await manga?.update({ rate });
+        await manga?.update({ rate }, { silent: true });
         res.status(200).send(true)
       }
       res.status(200).send(false)
+    } catch (error) {
+      res.status(500).send(false)
+    }
+  }
+
+  incrementFields = async (req: Request, res: Response) => {
+    try {
+      await Manga.increment(req.body, { 
+        where: { 
+          id: +req.params.id 
+        }, 
+        silent: true 
+      });
+      res.status(200).send(true)
     } catch (error) {
       res.status(500).send(false)
     }

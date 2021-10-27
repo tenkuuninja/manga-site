@@ -14,8 +14,8 @@ export class YourSelfRoutes extends RoutesConfig {
     router.get('', MeController.getInfo);
     router.get('/mangas', MeController.getManga);
     router.get('/reads', MeController.getHistory);
-    router.post('/mangas/:id/:chapter', MeController.follow);
     router.post('/reads', MeController.read);
+    router.post('/mangas/:id', MeController.follow);
     router.delete('/mangas/:id', MeController.unfollow);
 
     return router;
