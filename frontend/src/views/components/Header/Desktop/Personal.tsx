@@ -58,7 +58,7 @@ const Personal = function() {
       overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >
         <div className="w-60 shadow divide-y z-30 select-none">
           <Link to="/" className="flex items-center p-4">
-            <Avatar size="lg" src="" alt="Viet Hoang" />
+            <Avatar size="lg" src="" alt={auth.user?.username} />
             <div className="flex-grow pl-2 overflow-hidden">
               <span className="truncate-lines line-clamp-1 text-lg font-bold">
                 {auth.user?.username}
@@ -83,7 +83,7 @@ const Personal = function() {
     >
       <div className="h-18 select-none">
         <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
-          <Avatar src="" alt="Viet Hoang" />
+          <Avatar src="" alt={auth.user?.username} />
         </div>
       </div>
     </Dropdown>

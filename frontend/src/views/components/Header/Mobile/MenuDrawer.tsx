@@ -93,7 +93,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
     </div>;
   } else {
     headMenu = <Link to="/" className="flex items-center p-4">
-      <Avatar size="lg" src="" alt="Viet Hoang" />
+      <Avatar size="lg" src="" alt={auth.user?.username} />
       <div className="flex-grow pl-2 overflow-hidden">
         <span className="truncate-lines line-clamp-1 text-lg font-bold">
           {auth.user?.username}

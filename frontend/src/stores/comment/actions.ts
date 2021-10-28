@@ -1,5 +1,5 @@
-import { MangaApi } from 'apis';
-import { ISearchObject } from 'interfaces'
+import { CommentApi, MangaApi } from 'apis';
+import { IComment, ISearchObject } from 'interfaces'
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
 
@@ -10,6 +10,18 @@ export const fetchListCommentByMangaId = (mangaId: number, filter?: ISearchObjec
     dispatch({ type: ActionTypes.FetchCommentSuccess, payload: result.data });
   } catch (error) {
     dispatch({ type: ActionTypes.FetchCommentFailure });
+  }
+}
+
+export const addComment = (body: IComment) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionTypes.AddCommentRequest, payload: {
+    parentId: body.parentId
+  } });
+  try {
+    let result = await CommentApi.createComment(body);
+    dispatch({ type: ActionTypes.AddCommentSuccess, payload: result.data });
+  } catch (error) {
+    dispatch({ type: ActionTypes.AddCommentFailure });
   }
 }
 

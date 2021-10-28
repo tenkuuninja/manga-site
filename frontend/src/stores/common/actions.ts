@@ -1,7 +1,7 @@
 import { MangaApi, MeApi } from 'apis';
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
-import { ISearchObject } from 'interfaces';
+import { ISearchObject, ILocalCommon } from 'interfaces';
 
 export const fetchTopManga = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.FetchTopMangaRequest });
@@ -60,34 +60,47 @@ export const fetchAutoComplete = (search: string) => async (dispatch: Dispatch) 
 //   dispatch({ type: ADD_READED, payload: { story: data } });
 // }
 
-// export const syncWithLocalStorage = () => async dispatch => {
-//   const dataString = localStorage.getItem('utilities');
-//   if (dataString) {
-//     dispatch({ type: SYNC_WITH_LOCALSTORAGE, payload: { data: JSON.parse(dataString) } });
-//   } else {
-//     localStorage.setItem('utilities', '{}');
-//   }
-// }
+export const syncWithLocalStorage = () => async (dispatch: Dispatch) => {
+  const defaultData: ILocalCommon = {
+    name: '',
+    email: ''
+  }
+  
+  const data = JSON.parse(localStorage.getItem('utilities')||'{}');
+  let isLocalUtilities = true;
+  for (let key in defaultData) {
+    if (!data.hasOwnProperty(key)) {
+      isLocalUtilities = false;
+    }
+  }
 
-// export const setLocalName = (name) => async dispatch => {
-//   const dataString = localStorage.getItem('utilities');
-//   if (dataString) {
-//     let dataJson = JSON.parse(dataString);
-//     dataJson.name = name;
-//     localStorage.setItem('utilities', JSON.stringify(dataJson));
-//     dispatch({ type: SET_LOCAL_NAME, payload: { name } });
-//   }
-// }
+  if (isLocalUtilities) {
+    dispatch({ type: ActionTypes.SyncWithLocalstorage, payload: { data } });
+  } else {
+    localStorage.setItem('utilities', JSON.stringify(defaultData));
+    dispatch({ type: ActionTypes.SyncWithLocalstorage, payload: { data: defaultData } });
+  }
+}
 
-// export const setLocalEmail = (email) => async dispatch => {
-//   const dataString = localStorage.getItem('utilities');
-//   if (dataString) {
-//     let dataJson = JSON.parse(dataString);
-//     dataJson.email = email;
-//     localStorage.setItem('utilities', JSON.stringify(dataJson));
-//     dispatch({ type: SET_LOCAL_EMAIL, payload: { email } });
-//   }
-// }
+export const setLocalName = (name: string) => async (dispatch: Dispatch) => {
+  const dataString = localStorage.getItem('utilities');
+  if (dataString) {
+    let dataJson = JSON.parse(dataString);
+    dataJson.name = name;
+    localStorage.setItem('utilities', JSON.stringify(dataJson));
+    dispatch({ type: ActionTypes.SetLocalName, payload: { name } });
+  }
+}
+
+export const setLocalEmail = (email: string) => async (dispatch: Dispatch) => {
+  const dataString = localStorage.getItem('utilities');
+  if (dataString) {
+    let dataJson = JSON.parse(dataString);
+    dataJson.email = email;
+    localStorage.setItem('utilities', JSON.stringify(dataJson));
+    dispatch({ type: ActionTypes.SetLocalEmail, payload: { email } });
+  }
+}
 
 export const increaseTopLoading = () => ({ type: ActionTypes.IncreaseTopLoading })
 export const decreaseTopLoading = () => ({ type: ActionTypes.DecreaseTopLoading })

@@ -35,6 +35,16 @@ export interface IChapterStore {
 
 export interface ICommentStore {
   data: IComment[],
+  current: {
+    data: IComment;
+    isLoading: boolean; 
+    isError: boolean;
+  };
+  add: {
+    isLoading: boolean;
+    isError: boolean;
+    parentId: number | null;
+  };
   page: number,
   count: number,
   isLoading: boolean, 
@@ -45,6 +55,11 @@ export interface IGenreStore {
   data: IGenre[],
   isLoading: boolean, 
   isError: boolean
+}
+
+export interface ILocalCommon {
+  email: string;
+  name: string;
 }
 
 export interface ICommonStore {
@@ -59,10 +74,7 @@ export interface ICommonStore {
   follow: IMangaListStore,
   readed: IMangaListStore,
   autoComplete: IMangaListStore,
-  local: {
-    email: string,
-    name: string
-  }
+  local: ILocalCommon;
   topLoading: number
 }
 

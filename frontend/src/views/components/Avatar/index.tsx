@@ -1,12 +1,5 @@
 import React from 'react';
-import { Avatar } from '@mui/material';
-
-function toCharName(s: string) {
-  s = s.trim().replace(/\s+/g, ' ')
-	if (s.length === 0) return 'AA';
-	s = s.split(' ').filter((item, i) => i<2).map(item => item[0]).join('').toUpperCase();
-  return s;
-}
+import { Avatar as AvatarMui } from '@mui/material';
 
 // https://mui.com/components/avatars/
 function stringToColor(string: string) {
@@ -45,11 +38,11 @@ interface AvatarProps {
   randomColor?: boolean
 }
 
-const MyAvatar = function(props: AvatarProps) {
+const Avatar = function(props: AvatarProps) {
   let { src, alt = '', letter = true, size = 'md',  border = false, className = ''} = props
 
   return( 
-    <Avatar 
+    <AvatarMui 
       alt={alt} 
       src={src} 
       sx={{
@@ -59,9 +52,9 @@ const MyAvatar = function(props: AvatarProps) {
       }} 
       className={`${border && 'border border-gray-300'} font-bold ${className}`} 
     >
-      {(letter || !src) && toCharName(alt || '')} 
-    </Avatar>
+      {(letter || !src) && (alt[0].toUpperCase() || 'G')} 
+    </AvatarMui>
   );
 }
 
-export default MyAvatar;
+export default Avatar;

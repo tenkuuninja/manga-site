@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { autoLogin } from 'stores/auth/actions';
 import { fetchListGenre } from 'stores/genre/actions';
-import { fetchTopManga, fetchReadedManga, fetchFollowManga, increaseTopLoading, decreaseTopLoading } from 'stores/common/actions';
+import { fetchTopManga, fetchReadedManga, fetchFollowManga, increaseTopLoading, decreaseTopLoading, syncWithLocalStorage } from 'stores/common/actions';
 import { IAppState } from 'interfaces';
 import axiosInstance from 'apis/instance';
 
@@ -13,6 +13,7 @@ export const InitializeState = function() {
   useEffect(function() {
     dispatch(fetchListGenre());
     dispatch(fetchTopManga());
+    dispatch(syncWithLocalStorage());
     let token = localStorage.getItem('token');
     if (token) {
       dispatch(autoLogin());

@@ -20,13 +20,14 @@ export interface IComment {
   chapter?: number | null;
   name?: string | null;
   email?: string;
-  content: string;
+  content?: string;
   point?: number;
-  updatedAt?: string;
+  createdAt?: string;
   deletedAt?: string | null;
   
   manga?: IManga;
   user?: IUser;
+  replies?: IComment[];
 }
 
 export interface IGenre {
@@ -101,10 +102,6 @@ export interface IMangaReaded {
   lastChapterId?: number
   updatedAt?: string
 }
-
-
-
-
 
 interface NavigationChapter {
   previous?: IChapter | null,
