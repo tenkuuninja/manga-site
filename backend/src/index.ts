@@ -23,10 +23,13 @@ routes(app);
 
 app.get('/', (req, res) => res.send('Express + TypeScript Server'));
 
-app.get('/sync', async (req, res) => {
-  sequelize.sync({ alter: true });
-  res.send('');
-});
+if (process.env.NODE_ENV === "production") {
+  app.get('/sync', async (req, res) => {
+    sequelize.sync({ alter: true });
+    res.send('');
+  });
+}
+
 
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running on port ${PORT}`);
