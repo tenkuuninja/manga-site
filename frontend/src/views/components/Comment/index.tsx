@@ -8,6 +8,7 @@ import { TextField } from '@mui/material';
 import Avatar from '../Avatar';
 import { setLocalEmail, setLocalName } from 'stores/common/actions';
 import { getRelativeTimeFromNow } from 'utils/helper';
+import { CommentBoxSkeleton, SingleCommentBoxSkeleton } from './Skeleton';
 
 interface IParams {
   mangaId: string;
@@ -139,6 +140,7 @@ const CommentBox = (props: ICommentBoxProps) => {
 }
 
 const CommentBoxWithReplies = (props: { data: IComment }) => {
+  const { add } = useSelector((store: IAppState) => store.comment);
   const [isOpenReplyForm, setOpenReplyForm] = useState<boolean>(false);
   const replyFormRef = useRef<HTMLDivElement>(null);
 
@@ -148,6 +150,11 @@ const CommentBoxWithReplies = (props: { data: IComment }) => {
     }
   }
 
+  let commentAdding;
+  if (add.isLoading && add.parentId === props.data.id) {
+    commentAdding = <li className="py-3"><SingleCommentBoxSkeleton /></li>
+  }
+
   return(
     <React.Fragment>
       <CommentBox data={props.data} handleReplyAction={handleReplyAction} />
@@ -155,6 +162,7 @@ const CommentBoxWithReplies = (props: { data: IComment }) => {
         {props.data.replies?.map((comment: IComment) => <li className="py-3" key={comment.id}>
           <CommentBox data={comment} handleReplyAction={handleReplyAction} />
         </li>)}
+        {commentAdding}
       </ul>
       {isOpenReplyForm && <div className="ml-18 border-l-2 border-transparent">
         <FormWriteComment parentId={props.data.id} />
@@ -174,15 +182,27 @@ const Comment = () => {
     // eslint-disable-next-line
   }, [mangaId]);
 
+  let commentLoading;
+  if (comment.isLoading || comment.isError) {
+    commentLoading = <CommentBoxSkeleton />
+  }
+
+  let commentAdding;
+  if (comment.add.isLoading && typeof comment.add.parentId !== 'number' ) {
+    commentAdding = <SingleCommentBoxSkeleton />
+  }
+
   return(
     <section>
       <h2 className='text-2xl mt-4 mb-2'>Bình luận</h2>
       <FormWriteComment />
+      {commentAdding}
       <ul className="divide-y">
         {comment.data.map((item: IComment) => <li className="py-4" key={item.id} >
           <CommentBoxWithReplies data={item} />
         </li>)}
       </ul>
+      {commentLoading}
     </section>
   );
 }

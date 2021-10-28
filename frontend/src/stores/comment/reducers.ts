@@ -52,7 +52,8 @@ const authReducer: Reducer = (state: ICommentStore = initialState, action: IActi
         ...state, 
         add: {
           ...state.add,
-          isLoading: true
+          isLoading: true,
+          parentId: action.payload.parentId
         }
       }
     case ActionTypes.AddCommentSuccess:
@@ -64,7 +65,12 @@ const authReducer: Reducer = (state: ICommentStore = initialState, action: IActi
               cmt?.replies?.push(action.payload);
             }
             return cmt;
-          })
+          }),
+          add: {
+            ...state.add,
+            isLoading: false, 
+            isError: false
+          }
         }
       } else {
         state.data.unshift(action.payload);
