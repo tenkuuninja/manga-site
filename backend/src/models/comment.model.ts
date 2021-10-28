@@ -54,24 +54,34 @@ class Comment extends Model<CommentAttributes> implements CommentAttributes {
       include: 'manga'
     });
     Comment.addScope('includeUser', {
-      include: 'user',
-      attributes: {
-        exclude: ['password', 'verify_token', 'reset_token', 'setting']
+      include: {
+        model: User.scope(['hideSensitive', 'includeRole']),
+        as: 'user',
       }
     });
     Comment.addScope('includeReply', {
-      include: 'replies',
-      order: [['replies', 'createdAt', 'DESC']]
+      include: 'replies'
+    });
+    Comment.addScope('includeReplyWithUser', {
+      include: {
+        model: Comment,
+        as: 'replies',
+        include: [{
+          model: User.scope(['hideSensitive', 'includeRole']),
+          as: 'user',
+        }]
+      }
     });
     Comment.addScope('sortQuery', (orders: string | string[]) => {
       if (typeof orders === 'string') orders = orders.split(',')
-      let order: [string, string][] = []
+      let order: any[] = []
       for (let value of orders) {
-        if (!/^(\-|\+)[a-zA-Z0-9_-]+$/g.test(value)) continue;
+        if (!/^(\-|\+)[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)?$/g.test(value)) continue;
         let orderType = value.substr(0, 1) == '+' ? 'ASC' : 'DESC';
-        let orderName = value.substr(1);
-        order.push([orderName, orderType]);
+        let orderName = value.substr(1).split('.');
+        order.push([...orderName, orderType]);
       }
+      console.log('order', order)
       return { order }
     });
     Comment.addScope('searchQuery', (search: string) => {

@@ -20,8 +20,6 @@ class Validatior {
   commentValid = () => [
     check('mangaId')
       .isInt().withMessage("manga id phai la so"),
-    check('userId')
-      .isInt().withMessage("id nguoi dung phai la so"),
     check('content')
       .exists().withMessage("noi dung khong duoc rong"),
   ]

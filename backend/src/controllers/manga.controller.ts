@@ -124,15 +124,16 @@ class MangaController {
     try {
       let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
       let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
-      let scope: any[] = ['includeUser', 'includeManga', 'includeReply', { method: ['paging', page, size] }];
+      let scope: any[] = ['includeUser', 'includeManga', 'includeReplyWithUser', { method: ['paging', page, size] }];
       if (typeof req.query.sort === 'string') {
         scope.push({ method: ['sortQuery', req.query.sort] });
       } else {
-        scope.push({ method: ['sortQuery', '-createdAt'] });
+        scope.push({ method: ['sortQuery', '-createdAt,+replies.createdAt'] });
       }
       let options: FindOptions = {
         where: {
-          mangaId: +req.params.id
+          mangaId: +req.params.id,
+          parentId: null
         }
       };
       const result = await Comment.scope(scope).findAll(options);
