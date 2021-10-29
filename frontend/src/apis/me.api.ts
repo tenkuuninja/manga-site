@@ -2,7 +2,6 @@ import { AxiosRequestConfig } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
 import { IManga, IPage, ISearchObject } from 'interfaces';
-import { followManga } from 'stores/manga/actions';
 
 const path = 'api/me';
 
