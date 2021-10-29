@@ -28,6 +28,28 @@ const authReducer: Reducer = (state: IChapterStore = initialState, action: IActi
         isLoading: false, 
         isError: true
       }
+    case ActionTypes.FollowManga:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          manga: {
+            ...state.data.manga,
+            isFollowing: 1
+          }
+        }
+      }
+    case ActionTypes.UnfollowManga:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          manga: {
+            ...state.data.manga,
+            isFollowing: 0
+          }
+        }
+      }
     default:
       return state;
   }

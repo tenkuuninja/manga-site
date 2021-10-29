@@ -3,6 +3,7 @@ import { ISearchObject } from 'interfaces'
 import axios, { CancelTokenSource } from 'axios';
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
+import { ActionTypes as ChapterActionTypes } from '../chapter/types';
 import { MeApi } from 'apis';
 
 let cancelTokenSource: CancelTokenSource;
@@ -22,6 +23,7 @@ export const fetchManga = (id: number, option?: ISearchObject) => async (dispatc
 export const followManga = (id: number) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: ActionTypes.FollowManga });
+    dispatch({ type: ChapterActionTypes.FollowManga });
     await MeApi.followManga(id);
   } catch (error) {
     
@@ -31,6 +33,7 @@ export const followManga = (id: number) => async (dispatch: Dispatch) => {
 export const unfollowManga = (id: number) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: ActionTypes.UnfollowManga });
+    dispatch({ type: ChapterActionTypes.UnfollowManga });
     await MeApi.unfollowManga(id);
   } catch (error) {
     
