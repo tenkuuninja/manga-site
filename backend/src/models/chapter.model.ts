@@ -100,7 +100,13 @@ Chapter.init({
     defaultValue: '',
     get() {
       const rawValue = this.getDataValue('content');
-      return rawValue.split(',').filter(e => e.length > 0);
+      const chapterId = this.getDataValue('id');
+      const mangaId = this.getDataValue('mangaId');
+      const domain = process.env.DOMAIN_GET_IMAGE || 'http://localhost:5000';
+      return rawValue.split(',').filter(e => e.length > 0).map((item: string, i) => {
+        let key = Buffer.from('http://'+item.replace(/^\/+/g, '')).toString('base64');
+        return `${domain.replace(/\/$/g, '')}/images/content/${mangaId}/${chapterId}/${i+1}.jpg?key=${key}`;
+      });
     },
     set(value: string | string[]) {
       if (typeof value != 'string') value = value.join(',');

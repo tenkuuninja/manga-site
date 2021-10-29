@@ -277,6 +277,13 @@ Manga.init({
     field: 'image_url',
     type: DataTypes.STRING,
     defaultValue: '',
+    get() {
+      const rawValue = this.getDataValue('imageUrl');
+      const id = this.getDataValue('id');
+      const domain = process.env.DOMAIN_GET_IMAGE || 'localhost:5000';
+      let key = Buffer.from('http://'+rawValue.replace(/^\/+/g, '')).toString('base64');
+      return `${domain.replace(/\/$/g, '')}/images/cover/${id}.jpg?key=${key}`;
+    },
   },
   description: {
     field: 'description',

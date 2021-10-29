@@ -7,6 +7,7 @@ import { RoleRoutes } from './role.routes';
 import { UserRoutes } from './user.routes';
 import { AuthRoutes } from './auth.routes';
 import { YourSelfRoutes } from './me.routes';
+import { ImageRoutes } from './image.routes';
 import AuthMiddleware from '../middlewares/auth.middleware';
 
 export default (app: Application): void => {
@@ -19,4 +20,5 @@ export default (app: Application): void => {
   new UserRoutes(app);
   new AuthRoutes(app);
   new YourSelfRoutes(app);
+  new ImageRoutes(app);
 }
