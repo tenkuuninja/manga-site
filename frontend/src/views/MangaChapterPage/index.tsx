@@ -111,8 +111,11 @@ const MangaChapterPage = () => {
         )}
       </div>
       {navigationButton}
-      {/* <Comment /> */}
-      <section className={`fixed bottom-0 left-0 ${isShowControlBar && 'transform translate-y-full'} transition-transform ease-out duration-200 h-14 py-2 w-full bg-gray-50 border-t border-gray-300 font-light`}>
+      <Comment />
+      <div className={`${isShowControlBar ? 'fixed' : "hidden"} bottom-16 right-4 w-12 h-12 opacity-50 hover:opacity-80 transition-opacity duration-200 bg-black text-white text-5xl text-center font-semibold rounded-xl cursor-pointer`} onClick={scrollToTop}>
+        <Icon icon="bx:bx-arrow-to-top" />
+      </div>
+      <section className={`fixed bottom-0 left-0 ${!isShowControlBar && 'transform translate-y-full'} transition-transform ease-out duration-200 h-14 py-2 w-full bg-gray-50 border-t border-gray-300 font-light`}>
         <div className='container px-2 h-10 flex justify-between text-lg'>
           <div className=''>
             <Link to='/' className="flex items-center h-10 space-x-2">
