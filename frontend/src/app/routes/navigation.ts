@@ -3,6 +3,7 @@ import { RouteProps } from 'react-router-dom';
 const HomePageComponent = lazy(() => import('views/HomePage'));
 const MangaListPageComponent = lazy(() => import('views/ListPage'));
 const MangaDetailPageComponent = lazy(() => import('views/MangaDetailPage'));
+const MangaChapterPageComponent = lazy(() => import('views/MangaChapterPage'));
 const LoginPageComponent = lazy(() => import('views/LoginPage'));
 const RegisterPageComponent = lazy(() => import('views/RegisterPage'));
 
@@ -47,7 +48,7 @@ const navigation: RouteCustomProps[] =  [
   {
     path: '/doc-truyen-:mangaId(\\d+)-:chapterId(\\d+)-:mangaSlug([a-z0-9-]+)-chap-:chapterNumber([0-9]+-?[0-9]{0,2}).html',
     exact: true,
-    component: MangaDetailPageComponent,
+    component: MangaChapterPageComponent,
     guard: 'none'
   },
   {

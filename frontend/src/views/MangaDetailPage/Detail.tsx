@@ -1,7 +1,6 @@
 import React from 'react';
 import { IAppState } from 'interfaces';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { countryType } from 'utils/static';
 import { 
@@ -23,7 +22,6 @@ interface IDetailProps {
 
 const Detail = (props: IDetailProps) => {
   const manga = useSelector((store: IAppState) => store.manga);
-  const match = useRouteMatch<IParams>();
 
   const { 
     title, 

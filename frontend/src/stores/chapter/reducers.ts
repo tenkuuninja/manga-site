@@ -18,7 +18,7 @@ const authReducer: Reducer = (state: IChapterStore = initialState, action: IActi
     case ActionTypes.FetchChapterSuccess:
       return {
         ...state,
-        data: action.payload.content,  
+        data: action.payload,  
         isLoading: false, 
         isError: false
       }

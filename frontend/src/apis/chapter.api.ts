@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import axios from './instance';
 import qs from 'query-string';
-import { IChapter } from 'interfaces';
+import { IChapter, ISearchObject } from 'interfaces';
 
 const path = 'api/chapters';
 
@@ -10,7 +10,7 @@ export const ChapterApi = {
     return axios.post<IChapter>(path, payload, config);
   },
   byId: (id: number) => ({
-    fetch: (options?: any, config: AxiosRequestConfig = {}) => {
+    fetch: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
       if (typeof options === 'undefined') options = {}
       const query: string = qs.stringify(options);
       return axios.get<IChapter>(path+'/'+id+'?'+query, config);

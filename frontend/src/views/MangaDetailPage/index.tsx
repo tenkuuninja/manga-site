@@ -15,12 +15,15 @@ interface IParams {
 }
 
 const MangaDetailPage = () => {
-  const manga = useSelector((store: IAppState) => store.manga);
+  const { auth, manga } = useSelector((store: IAppState) => store);
   const dispatch = useDispatch();
   const match = useRouteMatch<IParams>();
   const mangaId = +match.params.mangaId;
 
   function handleFollow() {
+    if (!auth.isLoggedIn) {
+      return;
+    }
     if (manga.data.isFollowing === 0) {
       dispatch(followManga(mangaId));
     } else if (manga.data.isFollowing === 1) {
