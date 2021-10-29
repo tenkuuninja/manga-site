@@ -153,11 +153,9 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
     });
     Manga.addScope('includeChapter', {
       include: 'chapters',
-      order: [['chapters', 'number', 'DESC']]
     });
     Manga.addScope('includeComment', {
       include: 'comments',
-      order: [['comments', 'updatedAt', 'DESC']]
     });
     Manga.addScope('includeReads', (userId: number, required: boolean = false) =>  ({
       include: [{
@@ -186,10 +184,10 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
       if (typeof orders === 'string') orders = orders.split(',')
       let order: any[] = [];
       for (let value of orders) {
-        if (!/^(\-|\+)[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)?$/g.test(value)) continue;
+        if (!/^(\-|\+)[a-zA-Z0-9_\.]+$/g.test(value)) continue;
         let orderType = value.substr(0, 1) == '+' ? 'ASC' : 'DESC';
-        let orderName = value.substr(1).split('.');
-        order.push([...orderName, orderType]);
+        let orderColumn = value.substr(1);
+        order.push([seq.literal('`'+orderColumn+'`'), orderType]);
       }
       return { order }
     });

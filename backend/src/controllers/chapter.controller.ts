@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Op } from 'sequelize';
+import seq, { Op } from 'sequelize';
 import Chapter from '../models/chapter.model';
 import Manga from '../models/manga.model';
 import User from '../models/user.model';
@@ -52,7 +52,8 @@ class ChapterController {
         include: [{
           model: Manga.scope(mangaScope),
           as: 'manga'
-        }]
+        }],
+        order: [ [seq.literal('`manga.chapters.number`'), 'ASC'] ]
       }); 
       if (include.includes('navigation') && result !== null) {
         let [prevChapter, nextChapter] = await Promise.all([

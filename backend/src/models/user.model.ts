@@ -1,5 +1,5 @@
 import sequelize from '../configs/mysql.connect';
-import { 
+import seq, { 
   DataTypes, 
   Model, 
   Op ,
@@ -96,12 +96,12 @@ class User extends Model<UserAttributes> implements UserAttributes {
     });
     User.addScope('sortQuery', (orders: string | string[]) => {
       if (typeof orders === 'string') orders = orders.split(',')
-      let order: [string, string][] = []
+      let order: [any, string][] = []
       for (let value of orders) {
-        if (!/^(\-|\+)[a-zA-Z0-9_-]+$/g.test(value)) continue;
+        if (!/^(\-|\+)[a-zA-Z0-9_\.]+$/g.test(value)) continue;
         let orderType = value.substr(0, 1) == '+' ? 'ASC' : 'DESC';
-        let orderName = value.substr(1);
-        order.push([orderName, orderType]);
+        let orderColumn = value.substr(1);
+        order.push([seq.literal('`'+orderColumn+'`'), orderType]);
       }
       return { order }
     });
