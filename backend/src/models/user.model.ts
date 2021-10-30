@@ -96,12 +96,12 @@ class User extends Model<UserAttributes> implements UserAttributes {
     });
     User.addScope('sortQuery', (orders: string | string[]) => {
       if (typeof orders === 'string') orders = orders.split(',')
-      let order: [any, string][] = []
+      let order: any[] = []
       for (let value of orders) {
-        if (!/^(\-|\+)[a-zA-Z0-9_\.]+$/g.test(value)) continue;
+        if (!/^(\-|\+)[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)?$/g.test(value)) continue;
         let orderType = value.substr(0, 1) == '+' ? 'ASC' : 'DESC';
-        let orderColumn = value.substr(1);
-        order.push([seq.literal('`'+orderColumn+'`'), orderType]);
+        let orderName = value.substr(1).split('.');
+        order.push([...orderName, orderType]);
       }
       return { order }
     });

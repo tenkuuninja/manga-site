@@ -1,7 +1,6 @@
 import { Op } from 'sequelize';
-import seq from 'sequelize';
 import sequelize from '../configs/mysql.connect';
-import { Model, DataTypes } from 'sequelize';
+import seq, { Model, DataTypes } from 'sequelize';
 import Manga from './manga.model';
 import User from './user.model';
 
@@ -65,22 +64,18 @@ class Comment extends Model<CommentAttributes> implements CommentAttributes {
     });
     Comment.addScope('includeReplyWithUser', {
       include: {
-        model: Comment,
-        as: 'replies',
-        include: [{
-          model: User.scope(['hideSensitive', 'includeRole']),
-          as: 'user',
-        }]
+        model: Comment.scope('includeUser'),
+        as: 'replies'
       }
     });
     Comment.addScope('sortQuery', (orders: string | string[]) => {
       if (typeof orders === 'string') orders = orders.split(',')
       let order: any[] = []
       for (let value of orders) {
-        if (!/^(\-|\+)[a-zA-Z0-9_\.]+$/g.test(value)) continue;
+        if (!/^(\-|\+)[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)?$/g.test(value)) continue;
         let orderType = value.substr(0, 1) == '+' ? 'ASC' : 'DESC';
-        let orderColumn = value.substr(1);
-        order.push([seq.literal('`'+orderColumn+'`'), orderType]);
+        let orderName = value.substr(1).split('.');
+        order.push([...orderName, orderType]);
       }
       console.log('order', order)
       return { order }
