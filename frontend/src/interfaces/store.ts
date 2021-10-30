@@ -2,58 +2,38 @@ import { IUser, IManga, IChapter, IComment, IGenre } from '../interfaces';
 
 export interface IAuthStore {
   isLoggedIn: boolean;
-  user: IUser | null, 
-  isLoading: boolean, 
-  isError: boolean
+  user: IUser | null;
+  isLoading: boolean; 
+  isError: boolean;
 }
 
-export interface IListMangaStore {
-  data: IManga[],
-  page: number,
-  totalPage: number,
-  isLoading: boolean, 
-  isError: boolean
+export interface IListDataStore<T> {
+  data: T[];
+  isLoading: boolean;
+  isError: boolean;
 }
 
-export interface IMangaStore {
-  data: IManga,
-  isLoading: boolean, 
-  isError: boolean
+export interface IDataStore<T> {
+  data: T;
+  isLoading: boolean;
+  isError: boolean;
 }
 
-export interface IMangaListStore {
-  data: IManga[],
-  isLoading: boolean, 
-  isError: boolean
+export interface IListMangaStore extends IListDataStore<IManga> {
+  page: number;
+  totalPage: number;
 }
 
-export interface IChapterStore {
-  data: IChapter,
-  isLoading: boolean, 
-  isError: boolean
-}
-
-export interface ICommentStore {
-  data: IComment[],
-  current: {
-    data: IComment;
-    isLoading: boolean; 
-    isError: boolean;
-  };
+export interface ICommentsStore extends IListDataStore<IComment> {
+  data: IComment[]
   add: {
     isLoading: boolean;
     isError: boolean;
     parentId: number | null;
   };
-  page: number,
-  count: number,
-  isLoading: boolean, 
-  isError: boolean
-}
-
-export interface IGenreStore {
-  data: IGenre[],
-  isLoading: boolean, 
+  page: number;
+  count: number;
+  isLoading: boolean; 
   isError: boolean
 }
 
@@ -64,28 +44,26 @@ export interface ILocalCommon {
 
 export interface ICommonStore {
   top: {
-    all: IManga[],
-    month: IManga[],
-    week: IManga[],
-    day: IManga[],
-    isLoading: boolean, 
+    all: IManga[];
+    month: IManga[];
+    week: IManga[];
+    day: IManga[];
+    isLoading: boolean; 
     isError: boolean
-  },
-  follow: IMangaListStore,
-  readed: IMangaListStore,
-  autoComplete: IMangaListStore,
+  };
+  follow: IListDataStore<IManga>;
+  readed: IListDataStore<IManga>;
+  autoComplete: IListDataStore<IManga>;
   local: ILocalCommon;
   topLoading: number
 }
 
 export interface IAppState {
-  auth: IAuthStore,
-  listManga: IListMangaStore,
-  manga: IMangaStore,
-  // similar: IMangaListStore,
-  chapter: IChapterStore,
-  common: ICommonStore,
-  genre: IGenreStore,
-  comment: ICommentStore
-
+  auth: IAuthStore;
+  common: ICommonStore;
+  genres: IListDataStore<IGenre>;
+  mangas: IListMangaStore;
+  manga: IDataStore<IManga>;
+  chapter: IDataStore<IChapter>;
+  comments: ICommentsStore;
 }

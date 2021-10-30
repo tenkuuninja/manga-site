@@ -1,14 +1,14 @@
-import { IAction, IGenreStore } from 'interfaces';
+import { IAction, IGenre, IListDataStore } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
-let initialState: IGenreStore = {
+let initialState: IListDataStore<IGenre> = {
   data: [],
   isLoading: false, 
   isError: false
 }
 
-const authReducer: Reducer = (state: IGenreStore = initialState, action: IAction): IGenreStore => {
+const authReducer: Reducer = (state: IListDataStore<IGenre> = initialState, action: IAction): IListDataStore<IGenre> => {
   switch(action.type) {
     case ActionTypes.FetchGenreRequest:
       return {

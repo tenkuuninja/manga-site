@@ -4,21 +4,21 @@ import { createLogger } from 'redux-logger';
 import { IAppState } from 'interfaces';
 
 import authReducer from './auth/reducers';
-import catalogReducer from './listManga/reducers';
+import catalogReducer from './mangas/reducers';
 import chapterReducer from './chapter/reducers';
-import commentReducer from './comment/reducers';
-import genreReducer from './genre/reducers';
+import commentReducer from './comments/reducers';
+import genreReducer from './genres/reducers';
 import commonReducer from './common/reducers';
 import mangaReducer from './manga/reducers';
 
-const rootReducer: Reducer = combineReducers({
+const rootReducer: Reducer<IAppState> = combineReducers({
   auth: authReducer,
-  listManga: catalogReducer,
-  chapter: chapterReducer,
-  comment: commentReducer,
-  genre: genreReducer,
   common: commonReducer,
+  genres: genreReducer,
   manga: mangaReducer,
+  mangas: catalogReducer,
+  chapter: chapterReducer,
+  comments: commentReducer,
 })
 
 const logger = createLogger({

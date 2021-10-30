@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IAppState, IComment } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
-import { addComment, fetchListCommentByMangaId } from 'stores/comment/actions';
+import { addComment, fetchListCommentByMangaId } from 'stores/comments/actions';
 import { Icon } from '@iconify/react';
 import { TextField } from '@mui/material';
 import Avatar from '../Avatar';
@@ -141,7 +141,7 @@ const CommentBox = (props: ICommentBoxProps) => {
 }
 
 const CommentBoxWithReplies = (props: { data: IComment }) => {
-  const { add } = useSelector((store: IAppState) => store.comment);
+  const { add } = useSelector((store: IAppState) => store.comments);
   const [isOpenReplyForm, setOpenReplyForm] = useState<boolean>(false);
 
   function handleReplyAction() {
@@ -172,7 +172,7 @@ const CommentBoxWithReplies = (props: { data: IComment }) => {
 }
 
 const Comment = () => {
-  const comment = useSelector((store: IAppState) => store.comment);
+  const comments = useSelector((store: IAppState) => store.comments);
   const dispatch = useDispatch();
   const match = useRouteMatch<IParams>();
   const mangaId = +match.params.mangaId;
@@ -182,13 +182,13 @@ const Comment = () => {
     // eslint-disable-next-line
   }, [mangaId]);
 
-  let commentLoading;
-  if (comment.isLoading || comment.isError) {
-    commentLoading = <CommentBoxSkeleton />
+  let commentsLoading;
+  if (comments.isLoading || comments.isError) {
+    commentsLoading = <CommentBoxSkeleton />
   }
 
   let commentAdding;
-  if (comment.add.isLoading && typeof comment.add.parentId !== 'number' ) {
+  if (comments.add.isLoading && typeof comments.add.parentId !== 'number' ) {
     commentAdding = <SingleCommentBoxSkeleton />
   }
 
@@ -198,11 +198,11 @@ const Comment = () => {
       <FormWriteComment />
       {commentAdding}
       <ul className="divide-y">
-        {comment.data.map((item: IComment) => <li className="py-4" key={item.id} >
+        {comments.data.map((item: IComment) => <li className="py-4" key={item.id} >
           <CommentBoxWithReplies data={item} />
         </li>)}
       </ul>
-      {commentLoading}
+      {commentsLoading}
     </section>
   );
 }

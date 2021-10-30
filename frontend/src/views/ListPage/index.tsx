@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router';
 import qs from 'query-string';
-import { fetchListManga, fetchListMangaFollow, fetchListMangaReaded } from 'stores/listManga/actions';
+import { fetchListManga, fetchListMangaFollow, fetchListMangaReaded } from 'stores/mangas/actions';
 import { IAppState, IManga } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
 import { Pagination } from '@mui/material';
@@ -15,7 +15,7 @@ interface IParams {
 }
 
 const ListPage = () => {
-  const { listManga, genre } = useSelector((store: IAppState) => store)
+  const { mangas, genres } = useSelector((store: IAppState) => store)
   const dispatch = useDispatch();
   const match = useRouteMatch<IParams>();
   const location = useLocation<IParams>();
@@ -89,7 +89,7 @@ const ListPage = () => {
         }
         break;
       case '/the-loai-:genreId(\\d+)-:genreSlug([a-z-]+).html':
-        let thisGenre = genre.data.filter(i => i.id === +match.params.genreId)
+        let thisGenre = genres.data.filter(i => i.id === +match.params.genreId)
         if (thisGenre.length > 0) {
           dispatch(fetchListManga({ page, genre: match.params.genreId }));
           setTitle('Thể loại '+thisGenre[0].title);
@@ -102,7 +102,7 @@ const ListPage = () => {
         break;
     }
     // eslint-disable-next-line
-  }, [match.url, page, genre.data.length]);
+  }, [match.url, page, genres.data.length]);
 
   useEffect(function() {
     setPage(1);
@@ -140,12 +140,12 @@ const ListPage = () => {
   }
 
   let listContent: JSX.Element = <></>
-  if (listManga.isLoading || listManga.isError) {
+  if (mangas.isLoading || mangas.isError) {
     listContent = <ListVerticalCardSkeleton />
   } else {
     listContent = 
     <ul className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 py-4'>
-      {listManga.data.map((manga: IManga) => <li key={manga.id}>
+      {mangas.data.map((manga: IManga) => <li key={manga.id}>
         <MangaCardVertical 
           data={manga} 
           overlay={overlayCard(manga)}
@@ -162,7 +162,7 @@ const ListPage = () => {
       {listContent}
       <div className="my-4">
         <Pagination 
-          count={listManga.totalPage} 
+          count={mangas.totalPage} 
           showFirstButton 
           showLastButton 
           page={page}

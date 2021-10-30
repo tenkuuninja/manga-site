@@ -12,12 +12,12 @@ const countries = [
 ];
 
 const Genre = function() {
-  const genre = useSelector((store: IAppState) => store.genre);
+  const genres = useSelector((store: IAppState) => store.genres);
   
   let content;
-  if (genre.isLoading) {
+  if (genres.isLoading) {
     content = <GenreSkeleton />
-  } else if (genre.isError) {
+  } else if (genres.isError) {
     content = <GenreSkeleton />
   } else {
     content = <div className="grid w-180 mt-1 divide-x" style={{gridTemplateColumns: '100px auto'}}>
@@ -29,7 +29,7 @@ const Genre = function() {
         </li>)}
       </ul>
       <ul className="grid grid-flow-col grid-rows-6 my-2">
-        {genre.data.map(item => <li key={item.id}>
+        {genres.data.map(item => <li key={item.id}>
           <Link to={`/the-loai-${item.id}-${item.titleSlug}.html`} className="block px-4 py-2 text-center hover:text-blue-700 transition duration-100">
             {item.title}
           </Link>

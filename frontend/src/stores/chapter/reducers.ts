@@ -1,14 +1,14 @@
-import { IAction, IChapterStore } from 'interfaces';
+import { IAction, IChapter, IDataStore } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
-let initialState: IChapterStore = {
+let initialState: IDataStore<IChapter> = {
   data: { mangaId: 0, number: 0, content: [] },
   isLoading: false, 
   isError: false
 }
 
-const authReducer: Reducer = (state: IChapterStore = initialState, action: IAction): IChapterStore => {
+const authReducer: Reducer = (state: IDataStore<IChapter> = initialState, action: IAction): IDataStore<IChapter> => {
   switch(action.type) {
     case ActionTypes.FetchChapterRequest:
       return {

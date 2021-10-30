@@ -1,14 +1,9 @@
-import { IAction, IComment, ICommentStore } from 'interfaces';
+import { IAction, IComment, ICommentsStore } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
-let initialState: ICommentStore = {
+let initialState: ICommentsStore = {
   data: [],
-  current: {
-    data: {},
-    isLoading: false,
-    isError: false,
-  },
   add: {
     isLoading: false,
     isError: false,
@@ -20,7 +15,7 @@ let initialState: ICommentStore = {
   isError: false
 }
 
-const authReducer: Reducer = (state: ICommentStore = initialState, action: IAction): ICommentStore => {
+const authReducer: Reducer = (state: ICommentsStore = initialState, action: IAction): ICommentsStore => {
   switch(action.type) {
     case ActionTypes.ClearCommentData:
       return {

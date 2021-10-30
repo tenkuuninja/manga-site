@@ -28,7 +28,7 @@ const countries = [
 ]
 
 function MenuContent(props: { isDrawerOpen: boolean }) {
-  const { auth, genre } = useSelector((store: IAppState) => store);
+  const { auth, genres } = useSelector((store: IAppState) => store);
   const dispatch = useDispatch();
   const [isOpenCategory, setOpenCategory] = useState<boolean>(false);
   const [isOpenRank, setOpenRank] = useState<boolean>(false);
@@ -172,7 +172,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
           <span className="ml-4">Menu</span>
         </div>
         <ul>
-          {genre.data.map((item: IGenre, i) => <li key={i}>
+          {genres.data.map((item: IGenre, i) => <li key={i}>
             <Link to={`/the-loai-${item.id}-${item.titleSlug}.html`} className="block px-4 py-2">
               {item.title}
             </Link>

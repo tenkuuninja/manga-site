@@ -1,14 +1,14 @@
-import { IAction, IMangaStore } from 'interfaces';
+import { IAction, IDataStore, IManga } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
-let initialState: IMangaStore = {
+let initialState: IDataStore<IManga> = {
   data: {},
   isLoading: false, 
   isError: false
 }
 
-const authReducer: Reducer = (state: IMangaStore = initialState, action: IAction): IMangaStore => {
+const authReducer: Reducer = (state: IDataStore<IManga> = initialState, action: IAction): IDataStore<IManga> => {
   switch(action.type) {
     case ActionTypes.FetchMangaRequest:
       return {

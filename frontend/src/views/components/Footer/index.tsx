@@ -23,11 +23,11 @@ const follow = [
 
 
 const Footer = () => {
-  const genre = useSelector((store: IAppState) => store.genre);
+  const genres = useSelector((store: IAppState) => store.genres);
   const genreRan: IGenre[] = [];
-  if (genre.data.length) {
+  if (genres.data.length) {
     for (let i = 0; i<4; i++) {
-      genreRan.push(genre.data[Math.floor(Math.random()*genre.data.length)])
+      genreRan.push(genres.data[Math.floor(Math.random()*genres.data.length)])
     }
   }
 
