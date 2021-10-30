@@ -10,11 +10,6 @@ import {
 import { Icon } from '@iconify/react';
 import { DetailSkeleton } from './Skeleton';
 
-interface IParams {
-  mangaId: string;
-  mangaSlug: string;
-}
-
 interface IDetailProps {
   handleFollow: () => void;
   handleIncreaseFavorite: () => void;

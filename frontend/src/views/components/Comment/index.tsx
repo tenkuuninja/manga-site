@@ -165,7 +165,7 @@ const CommentBoxWithReplies = (props: { data: IComment }) => {
         {commentAdding}
       </ul>
       {isOpenReplyForm && <div className="ml-18 border-l-2 border-transparent">
-        <FormWriteComment parentId={props.data.id} />
+        <FormWriteComment parentId={props.data.id} ref={replyFormRef} />
       </div>}
     </React.Fragment>
   );
