@@ -88,6 +88,9 @@ class MangaController {
         scope.push({ method: ['showIsFollowingById', +req.user.id] });
         scope.push({ method: ['includeReads', +req.user.id] });
       }
+      if (typeof req.query.sort === 'string') {
+        scope.push({ method: ['sortQuery', req.query.sort] });
+      }
       const result = await Manga.scope(scope).findByPk(+req.params.id);
       res.status(200).json(result);
     } catch (error) {

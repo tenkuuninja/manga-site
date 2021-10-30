@@ -189,6 +189,7 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
         let orderName = value.substr(1).split('.');
         order.push([...orderName, orderType]);
       }
+      console.log(order)
       return { order }
     });
     Manga.addScope('searchQuery', (search: string) => {

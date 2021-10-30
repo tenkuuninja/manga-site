@@ -53,7 +53,7 @@ class ChapterController {
           model: Manga.scope(mangaScope),
           as: 'manga'
         }],
-        order: [ [seq.literal('`manga.chapters.number`'), 'ASC'] ]
+        order: [ [seq.literal('`manga.chapters.number`'), 'DESC'] ]
       }); 
       if (include.includes('navigation') && result !== null) {
         let [prevChapter, nextChapter] = await Promise.all([

@@ -77,7 +77,6 @@ class Comment extends Model<CommentAttributes> implements CommentAttributes {
         let orderName = value.substr(1).split('.');
         order.push([...orderName, orderType]);
       }
-      console.log('order', order)
       return { order }
     });
     Comment.addScope('searchQuery', (search: string) => {
