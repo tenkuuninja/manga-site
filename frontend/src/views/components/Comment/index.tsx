@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IAppState, IComment } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';

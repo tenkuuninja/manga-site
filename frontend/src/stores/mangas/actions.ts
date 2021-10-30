@@ -19,6 +19,19 @@ export const fetchListManga = (filter?: ISearchObject) => async (dispatch: Dispa
   }
 }
 
+export const fetchListMangaFollowAfterUnfolowWithoutStatus = (id: number, filter?: ISearchObject) => async (dispatch: Dispatch) => {
+  if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
+  cancelTokenSource = axios.CancelToken.source();
+  try {
+    dispatch({ type: ActionTypes.RemoveMangaById, payload: { id } });
+    await MeApi.unfollowManga(id);
+    let result = await MeApi.fetchManga(filter, { cancelToken: cancelTokenSource.token });
+    dispatch({ type: ActionTypes.FetchListMangaSuccess, payload: result.data });
+  } catch (error) {
+    
+  }
+}
+
 export const fetchListMangaFollow = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
   if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
   cancelTokenSource = axios.CancelToken.source();

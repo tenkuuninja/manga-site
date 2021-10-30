@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router';
 import qs from 'query-string';
-import { fetchListManga, fetchListMangaFollow, fetchListMangaReaded } from 'stores/mangas/actions';
+import { 
+  fetchListManga, 
+  fetchListMangaFollowAfterUnfolowWithoutStatus, 
+  fetchListMangaFollow, 
+  fetchListMangaReaded 
+} from 'stores/mangas/actions';
 import { IAppState, IGenre, IManga } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
 import { Pagination } from '@mui/material';
@@ -123,6 +128,7 @@ const ListPage = () => {
               className="rounded-full bg-white"
               onClick={(e) => {
                 e.preventDefault();
+                dispatch(fetchListMangaFollowAfterUnfolowWithoutStatus(manga.id||0, { page }));
               }}
             />
           </span>

@@ -32,6 +32,27 @@ const authReducer: Reducer = (state: IListMangaStore = initialState, action: IAc
         isLoading: false, 
         isError: true
       }
+    case ActionTypes.FollowManga:
+      return {
+        ...state,
+        data: state.data.map(item => {
+          if (action.payload.id === item.id) item.isFollowing = 1;
+          return item;
+        })
+      }
+    case ActionTypes.UnfollowManga:
+      return {
+        ...state,
+        data: state.data.map(item => {
+          if (action.payload.id === item.id) item.isFollowing = 0;
+          return item;
+        })
+      }
+    case ActionTypes.RemoveMangaById:
+      return {
+        ...state,
+        data: state.data.filter(item => item.id !== action.payload.id)
+      }
     default:
       return state;
   }
