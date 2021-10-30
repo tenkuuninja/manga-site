@@ -1,14 +1,15 @@
-import { IAction, IGenre, IListDataStore } from 'interfaces';
+import { IAction, IGenre, IListGenreStore } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
-let initialState: IListDataStore<IGenre> = {
+let initialState: IListGenreStore = {
   data: [],
+  byId: {},
   isLoading: false, 
   isError: false
 }
 
-const authReducer: Reducer = (state: IListDataStore<IGenre> = initialState, action: IAction): IListDataStore<IGenre> => {
+const authReducer: Reducer = (state: IListGenreStore = initialState, action: IAction): IListGenreStore => {
   switch(action.type) {
     case ActionTypes.FetchGenreRequest:
       return {
@@ -19,6 +20,10 @@ const authReducer: Reducer = (state: IListDataStore<IGenre> = initialState, acti
       return {
         ...state,
         data: action.payload,  
+        byId: action.payload?.reduce(function(prev: { [id: number]: IGenre }, curr: IGenre) {
+          prev[curr.id||0] = curr;
+          return prev;
+        }, {}) || {},
         isLoading: false, 
         isError: false
       }

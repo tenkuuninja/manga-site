@@ -19,6 +19,12 @@ export interface IDataStore<T> {
   isError: boolean;
 }
 
+export interface IListGenreStore extends IListDataStore<IManga> {
+  byId: {
+    [id: number]: IGenre
+  }
+}
+
 export interface IListMangaStore extends IListDataStore<IManga> {
   page: number;
   totalPage: number;
@@ -61,7 +67,7 @@ export interface ICommonStore {
 export interface IAppState {
   auth: IAuthStore;
   common: ICommonStore;
-  genres: IListDataStore<IGenre>;
+  genres: IListGenreStore;
   mangas: IListMangaStore;
   manga: IDataStore<IManga>;
   chapter: IDataStore<IChapter>;

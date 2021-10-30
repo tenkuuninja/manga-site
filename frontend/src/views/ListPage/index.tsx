@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useRouteMatch } from 'react-router';
 import qs from 'query-string';
 import { fetchListManga, fetchListMangaFollow, fetchListMangaReaded } from 'stores/mangas/actions';
-import { IAppState, IManga } from 'interfaces';
+import { IAppState, IGenre, IManga } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
 import { Pagination } from '@mui/material';
 import { ListVerticalCardSkeleton } from './Skeleton';
@@ -68,7 +68,7 @@ const ListPage = () => {
         break;
       case '/tim-kiem.html':
         dispatch(fetchListManga({ page, search: qs.parse(location.search)?.q?.toString() || '' }));
-        setTitle('Kết quả tùm kiếm');
+        setTitle('Kết quả tìm kiếm');
         break;
       case '/tim-kiem-nang-cao.html':
         dispatch(fetchListManga({ page }));
@@ -89,10 +89,10 @@ const ListPage = () => {
         }
         break;
       case '/the-loai-:genreId(\\d+)-:genreSlug([a-z-]+).html':
-        let thisGenre = genres.data.filter(i => i.id === +match.params.genreId)
-        if (thisGenre.length > 0) {
+        let thisGenre: IGenre = genres.byId[+match.params.genreId]
+        if (thisGenre) {
           dispatch(fetchListManga({ page, genre: match.params.genreId }));
-          setTitle('Thể loại '+thisGenre[0].title);
+          setTitle('Thể loại '+thisGenre.title);
         } else {
           setNoContent(true);
         }
