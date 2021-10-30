@@ -1,7 +1,7 @@
 export enum ActionTypes  {
-  FetchGenreRequest = 'genre_FetchGenreRequest',
-  FetchGenreSuccess = 'genre_FetchGenreSuccess',
-  FetchGenreFailure = 'genre_FetchGenreFailure',
+  FetchGenreRequest = 'genres_FetchGenreRequest',
+  FetchGenreSuccess = 'genres_FetchGenreSuccess',
+  FetchGenreFailure = 'genres_FetchGenreFailure',
 }
 
 export default ActionTypes;

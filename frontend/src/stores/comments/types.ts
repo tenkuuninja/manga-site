@@ -1,11 +1,11 @@
 export enum ActionTypes  {
-  ClearCommentData    = 'comment_ClearCommentData',
-  FetchCommentRequest = 'comment_FetchCommentRequest',
-  FetchCommentSuccess = 'comment_FetchCommentSuccess',
-  FetchCommentFailure = 'comment_FetchCommentFailure',
-  AddCommentRequest = 'comment_AddCommentRequest',
-  AddCommentSuccess = 'comment_AddCommentSuccess',
-  AddCommentFailure = 'comment_AddCommentFailure',
+  ClearCommentData    = 'comments_ClearCommentData',
+  FetchCommentRequest = 'comments_FetchCommentRequest',
+  FetchCommentSuccess = 'comments_FetchCommentSuccess',
+  FetchCommentFailure = 'comments_FetchCommentFailure',
+  AddCommentRequest = 'comments_AddCommentRequest',
+  AddCommentSuccess = 'comments_AddCommentSuccess',
+  AddCommentFailure = 'comments_AddCommentFailure',
 }
 
 export default ActionTypes;
