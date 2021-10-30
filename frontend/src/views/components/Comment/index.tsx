@@ -16,7 +16,7 @@ interface IParams {
 }
 
 interface IFormWriteCommentProps {
-  ref?: React.RefObject<HTMLDivElement>;
+  autoFocus?: boolean;
   parentId?: number;
 }
 
@@ -85,6 +85,7 @@ const FormWriteComment = (props: IFormWriteCommentProps) => {
             minRows={2}
             multiline
             onChange={(e) => setContent(e.target.value)}
+            autoFocus={props.autoFocus}
           />
         </div>
         <div className=' '>
@@ -142,7 +143,6 @@ const CommentBox = (props: ICommentBoxProps) => {
 const CommentBoxWithReplies = (props: { data: IComment }) => {
   const { add } = useSelector((store: IAppState) => store.comment);
   const [isOpenReplyForm, setOpenReplyForm] = useState<boolean>(false);
-  const replyFormRef = useRef<HTMLDivElement>(null);
 
   function handleReplyAction() {
     if (!isOpenReplyForm) {
@@ -165,7 +165,7 @@ const CommentBoxWithReplies = (props: { data: IComment }) => {
         {commentAdding}
       </ul>
       {isOpenReplyForm && <div className="ml-18 border-l-2 border-transparent">
-        <FormWriteComment parentId={props.data.id} ref={replyFormRef} />
+        <FormWriteComment parentId={props.data.id} autoFocus />
       </div>}
     </React.Fragment>
   );
