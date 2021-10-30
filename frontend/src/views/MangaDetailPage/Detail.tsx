@@ -22,6 +22,7 @@ const Detail = (props: IDetailProps) => {
     title, 
     titleSynonym, 
     description, 
+    imageUrl,
     favorite, 
     isFinish, 
     country, 
@@ -44,24 +45,26 @@ const Detail = (props: IDetailProps) => {
 
   return (
     <React.Fragment>
-      <Breadcrumbs className="mb-2 text-sm font-bold" >
-        <Link to="/" className="flex items-center">
-          <Icon icon="bx:bx-home" className="mr-1 text-base" />
-          Trang chủ
-        </Link>
-        <Link to="/truyen-moi-cap-nhat.html" className="flex items-center">
-          <Icon icon="bi:grid-3x3-gap-fill" className="mr-1 text-base" />
-          Danh sách
-        </Link>
-        <p className="truncate cursor-pointer text-gray-600">
-          {title}
-        </p>
-      </Breadcrumbs>
-      <div>
-        <div className='hidden -md:block'>
-          {/* <AvatarMobile /> */}
+      <section>
+        <div className='lg:hidden w-52 mx-auto mb-4 -mt-32 p-2 rounded-sm bg-white'>
+          <div className='overflow-hidden relative bg-no-repeat bg-center bg-cover border border-black border-opacity-20' style={{ paddingTop: '133%', backgroundImage: `url(https://img.idesign.vn/2018/10/23/id-loading-1.gif)` }}>
+            <img className="absolute top-0 object-cover w-full h-full" src={imageUrl} alt=" " />
+          </div>
         </div>
         <div className='space-y-1'>
+        <Breadcrumbs className="mb-2 text-sm font-bold" >
+          <Link to="/" className="flex items-center">
+            <Icon icon="bx:bx-home" className="mr-1 text-base" />
+            Trang chủ
+          </Link>
+          <Link to="/truyen-moi-cap-nhat.html" className="flex items-center">
+            <Icon icon="bi:grid-3x3-gap-fill" className="mr-1 text-base" />
+            Danh sách
+          </Link>
+          <p className="truncate cursor-pointer text-gray-600">
+            {title}
+          </p>
+        </Breadcrumbs>
           <h1 className='text-4xl font-black py-1'>{title}</h1>
           {titleSynonym?.length ? <p className='text-xl font-light'>{titleSynonym.join(', ')}</p> : null}
           <div className='flex items-center space-x-2'>
@@ -109,7 +112,7 @@ const Detail = (props: IDetailProps) => {
             </li>
           </ul>
         </div>
-      </div>
+      </section>
     </React.Fragment>
   );
 }
