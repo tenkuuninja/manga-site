@@ -16,12 +16,12 @@ const Search = function() {
   const [isAutoComplete, setAutoComplete] = useState<boolean>(false);
   const [placeholder, setPlaceholder] = useState<string>('Nhập tên truyện...');
   const formRef = useRef<HTMLFormElement>(null);
-
-  const search = debounce(function(text: string) {
+  
+  const searchRef = useRef(debounce(function(text: string) {
     if (text.length > 0) {
       dispatch(fetchAutoComplete(text.replace(' ', '+')));
     }
-  }, 500);
+  }, 300));
 
   function onSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -41,10 +41,11 @@ const Search = function() {
     }
   }
 
-  useEffect(function() {
-    search(text);
-    // eslint-disable-next-line
-  }, [text]);
+  function handleSearchTextChange(e: React.ChangeEvent<HTMLInputElement>) {
+    let { value } = e.target;
+    setText(value);
+    searchRef.current(value);
+  }
 
   useEffect(function() {
     window.addEventListener('click', closeAutoComplete);
@@ -98,7 +99,7 @@ const Search = function() {
       <input 
         className="flex-grow outline-none ml-4 mr-1" 
         placeholder={placeholder}
-        onChange={(e) => setText(e.target.value)}
+        onChange={handleSearchTextChange}
         onClick={() => setAutoComplete(true)}
         onKeyPress={(e) => {
           if (e.code === "Enter") {

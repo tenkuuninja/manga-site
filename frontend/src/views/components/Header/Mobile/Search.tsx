@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,11 +15,11 @@ const Search = function() {
   const [isOpenSearch, setOpenSearch] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
 
-  const search = debounce(function(text: string) {
+  const searchRef = useRef(debounce(function(text: string) {
     if (text.length > 0) {
       dispatch(fetchAutoComplete(text.replace(' ', '+')));
     }
-  }, 500);
+  }, 300));
 
   function onSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -33,10 +33,11 @@ const Search = function() {
     }
   }
 
-  useEffect(function() {
-    search(text);
-    // eslint-disable-next-line
-  }, [text]);
+  function handleSearchTextChange(e: React.ChangeEvent<HTMLInputElement>) {
+    let { value } = e.target;
+    setText(value);
+    searchRef.current(value);
+  }
 
   let autoCompleteContent;
 
@@ -82,7 +83,7 @@ const Search = function() {
         <input 
           className="flex-grow outline-none text-base mx-1" 
           placeholder="Nhập tên truyện..." 
-          onChange={(e) => setText(e.target.value)}
+          onChange={handleSearchTextChange}
           onKeyPress={(e) => {
             if (e.code === "Enter") {
               redirectToSearchPage();
