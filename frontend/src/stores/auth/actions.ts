@@ -1,3 +1,4 @@
+import axios from 'apis/instance';
 import AuthApi from 'apis/auth.api';
 import { IUser } from 'interfaces';
 import { Dispatch } from 'redux';
@@ -21,7 +22,9 @@ export const login = (body: {username: string, password: string}) => async (disp
   dispatch({ type: ActionTypes.LoginRequest });
   try {
     let result = await AuthApi.loginWithPassword(body);
-    localStorage.setItem('token', 'Bearer '+result.data.accessToken);
+    let token = 'Bearer '+result.data.accessToken;
+    localStorage.setItem('token', token);
+    axios.defaults.headers.common['Authorization'] = token;
     dispatch({ type: ActionTypes.LoginSuccess, payload: {
       token: result.data.accessToken,
       user: result.data.user
