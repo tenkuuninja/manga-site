@@ -54,18 +54,34 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
     case ActionTypes.FetchAutoCompleteFailure:
       return {...state, autoComplete: {...state.autoComplete, isError: true}}
     case ActionTypes.AddReaded:
-      state.readed.data.unshift(action.payload.story);
+      state.readed.data = state.readed.data.filter(item => item.id !== action.payload.data);
+      state.readed.data.unshift(action.payload.data);
       return state;
+    case ActionTypes.FollowManga:
+      return {
+        ...state,
+        follow: {
+          ...state.follow,
+          data: [
+            action.payload.data,
+            ...state.follow.data.filter(item => item.id !== action.payload.data)
+          ]
+        }
+      };
+    case ActionTypes.UnfollowManga:
+      return {
+        ...state,
+        follow: {
+          ...state.follow,
+          data: state.follow.data.filter(item => item.id !== action.payload.id)
+        }
+      };
     case ActionTypes.SyncWithLocalstorage:
       return {...state, local: action.payload.data}
     case ActionTypes.SetLocalName:
       return {...state, local: {...state.local, name: action.payload.name}}
     case ActionTypes.SetLocalEmail:
       return {...state, local: {...state.local, email: action.payload.email}}
-    case ActionTypes.IncreaseTopLoading:
-      return { ...state, topLoading: state.topLoading+1 }
-    case ActionTypes.DecreaseTopLoading:
-      return { ...state, topLoading: Math.max(state.topLoading-1, 0) }
     default:
       return state;
   }

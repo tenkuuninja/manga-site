@@ -1,7 +1,7 @@
 import { MangaApi, MeApi } from 'apis';
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
-import { ISearchObject, ILocalCommon } from 'interfaces';
+import { ISearchObject, ILocalCommon, IManga } from 'interfaces';
 
 export const fetchTopManga = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.FetchTopMangaRequest });
@@ -56,9 +56,9 @@ export const fetchAutoComplete = (search: string) => async (dispatch: Dispatch) 
   }
 }
 
-// export const addHistory = (data) => async dispatch => {
-//   dispatch({ type: ADD_READED, payload: { story: data } });
-// }
+export const addReadedManga = (data: IManga) => ({ type: ActionTypes.AddReaded, payload: { data } })
+export const followMangaInCommon = (data: IManga) => ({ type: ActionTypes.FollowManga, payload: { data } }) 
+export const unfollowMangaInCommon = (id: number) => ({ type: ActionTypes.UnfollowManga, payload: { id } })
 
 export const syncWithLocalStorage = () => async (dispatch: Dispatch) => {
   const defaultData: ILocalCommon = {
@@ -101,8 +101,4 @@ export const setLocalEmail = (email: string) => async (dispatch: Dispatch) => {
     dispatch({ type: ActionTypes.SetLocalEmail, payload: { email } });
   }
 }
-
-export const increaseTopLoading = () => ({ type: ActionTypes.IncreaseTopLoading })
-export const decreaseTopLoading = () => ({ type: ActionTypes.DecreaseTopLoading })
-
 

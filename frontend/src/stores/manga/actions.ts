@@ -2,9 +2,6 @@ import MangaApi from 'apis/manga.api';
 import axios, { CancelTokenSource } from 'axios';
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
-import { ActionTypes as ChapterActionTypes } from '../chapter/types';
-import { ActionTypes as MangasActionTypes } from '../mangas/types';
-import { MeApi } from 'apis';
 
 let cancelTokenSource: CancelTokenSource;
 
@@ -20,27 +17,8 @@ export const fetchManga = (id: number) => async (dispatch: Dispatch) => {
   }
 }
 
-export const followManga = (id: number) => async (dispatch: Dispatch) => {
-  try {
-    dispatch({ type: ActionTypes.FollowManga });
-    dispatch({ type: ChapterActionTypes.FollowManga });
-    dispatch({ type: MangasActionTypes.FollowManga });
-    await MeApi.followManga(id);
-  } catch (error) {
-    
-  }
-}
-
-export const unfollowManga = (id: number) => async (dispatch: Dispatch) => {
-  try {
-    dispatch({ type: ActionTypes.UnfollowManga });
-    dispatch({ type: ChapterActionTypes.UnfollowManga });
-    dispatch({ type: MangasActionTypes.UnfollowManga });
-    await MeApi.unfollowManga(id);
-  } catch (error) {
-    
-  }
-}
+export const followMangaInDetail = () => ({ type: ActionTypes.FollowManga });
+export const unfollowMangaInDetail = () => ({ type: ActionTypes.UnfollowManga });
 
 export const increaseFavorite = (id: number) => async (dispatch: Dispatch) => {
   try {

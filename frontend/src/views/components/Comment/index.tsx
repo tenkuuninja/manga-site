@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IAppState, IComment } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
-import { addComment, fetchListCommentByMangaId } from 'stores/comments/actions';
+import { addComment, fetchCommentByMangaId } from 'stores/comments/actions';
 import { Icon } from '@iconify/react';
 import { TextField } from '@mui/material';
 import Avatar from '../Avatar';
@@ -178,7 +178,7 @@ const Comment = () => {
   const mangaId = +match.params.mangaId;
 
   useEffect(function() {
-    dispatch(fetchListCommentByMangaId(mangaId));
+    dispatch(fetchCommentByMangaId(mangaId));
     // eslint-disable-next-line
   }, [mangaId]);
 

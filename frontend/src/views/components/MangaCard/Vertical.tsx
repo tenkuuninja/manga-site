@@ -5,18 +5,20 @@ import { countryType } from 'utils/static';
 import PopupHover from '../PopupHover';
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { useWindowSize } from 'hooks';
+import { Icon } from '@iconify/react';
 
 interface MangaCardVerticalProps {
   data: IManga,
   className?: string,
-  overlay?: string | JSX.Element
+  overlay?: string | JSX.Element;
+  handleFollow?: () => void;
 }
 
 export const MangaCardVertical = function(props: MangaCardVerticalProps) {
   const [placement, setPlacement] = useState<'left'|'right'>('right');
   const cardRef = useRef<HTMLDivElement>(null);
   const [width] = useWindowSize();
-  const { id, title, titleSlug, imageUrl, description, chapter, isFinish, country, updatedAt = '', genres } = props.data
+  const { id, title, titleSlug, imageUrl, description, chapter, isFinish, country, updatedAt = '', isFollowing, genres } = props.data
 
   useEffect(function() {
     let remain = width - ((cardRef.current?.offsetLeft||0) + (cardRef.current?.offsetWidth||0))
@@ -51,10 +53,14 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
             </li>)}
           </ul>
           <p className='truncate-lines line-clamp-10 leading-5 mt-1'>{description}</p>
-          <div className='text-lg mt-1'>
-            <div className='inline-block w-full text-center font-bold py-1 rounded-lg text-red-500 border-red-500 border-2 hover:border-red-600 hover:text-white hover:bg-red-600 transition'>
-              <Link className='block' to={`/truyen-tranh-${id}-${titleSlug}.html`}>Thông tin truyện</Link>
-            </div>
+          <div className='flex items-center text-lg mt-2'>
+            <Link 
+              className='flex-grow block text-white text-center font-bold rounded py-1 bg-blue-500 opacity-90 hover:opacity-100 transition' 
+              to={`/truyen-tranh-${id}-${titleSlug}.html`}
+            >
+              Thông tin truyện
+            </Link>
+            <Icon className="text-2xl ml-4" icon={isFollowing ? "bi:heart-fill" : "bi:heart"} onClick={props.handleFollow} />
           </div>
         </div>
       </div>

@@ -5,9 +5,10 @@ import { IAppState, IChapter } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
-import { fetchChapter } from 'stores/chapter/actions';
+import { fetchChapter, followMangaInChapter, unfollowMangaInChapter } from 'stores/chapter/actions';
 import Comment from 'views/components/Comment';
-import { followManga, unfollowManga } from 'stores/manga/actions';
+import { followMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
+import { MeApi } from 'apis';
 
 interface IParams {
   mangaId: string;
@@ -39,9 +40,13 @@ const MangaChapterPage = () => {
       return;
     }
     if (manga?.isFollowing === 0) {
-      dispatch(followManga(+mangaId));
+      dispatch(followMangaInChapter());
+      dispatch(followMangaInCommon(manga));
+      MeApi.followManga(+mangaId);
     } else if (manga?.isFollowing === 1) {
-      dispatch(unfollowManga(+mangaId));
+      dispatch(unfollowMangaInChapter());
+      dispatch(unfollowMangaInCommon(+mangaId));
+      MeApi.unfollowManga(+mangaId);
     }
   }
 
@@ -105,9 +110,8 @@ const MangaChapterPage = () => {
       </section>
       <div className="my-10">
         {chapter.data.content?.map((item: string, i) => 
-          <div className="">
+          <div className="" key={i}>
             <img 
-              key={i}
               className="mx-auto text-center max-w-full min-h-full"
               src={`${item}`} 
               alt={`Hình ảnh ${i} của ${manga?.title} chap ${chapter.data.number}`}

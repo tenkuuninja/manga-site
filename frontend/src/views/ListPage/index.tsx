@@ -6,7 +6,9 @@ import {
   fetchListManga, 
   fetchListMangaFollowAfterUnfolowWithoutStatus, 
   fetchListMangaFollow, 
-  fetchListMangaReaded 
+  fetchListMangaReaded, 
+  followMangaInList,
+  unfollowMangaInList
 } from 'stores/mangas/actions';
 import { IAppState, IGenre, IManga } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
@@ -14,19 +16,40 @@ import { Pagination } from '@mui/material';
 import { ListVerticalCardSkeleton } from './Skeleton';
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { Icon } from '@iconify/react';
+import { followMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
+import { MeApi } from 'apis';
 
 interface IParams {
   [index: string]: string
 }
 
 const ListPage = () => {
-  const { mangas, genres } = useSelector((store: IAppState) => store)
+  const { auth, mangas, genres } = useSelector((store: IAppState) => store)
   const dispatch = useDispatch();
   const match = useRouteMatch<IParams>();
   const location = useLocation<IParams>();
   const [title, setTitle] = useState<string>('');
   const [noContent, setNoContent] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
+
+  function handleFollow(manga: IManga) {
+    if (!auth.isLoggedIn) {
+      return;
+    }
+    if (manga?.isFollowing === 0) {
+      dispatch(followMangaInList(manga.id||0));
+      dispatch(followMangaInCommon(manga));
+      MeApi.followManga(manga.id||0);
+    } else if (manga?.isFollowing === 1) {
+      dispatch(unfollowMangaInCommon(manga.id||0));
+      if (match.path === '/truyen-dang-theo-doi.html') {
+        dispatch(fetchListMangaFollowAfterUnfolowWithoutStatus(manga.id||0));
+      } else {
+        dispatch(unfollowMangaInList(manga.id||0));
+        MeApi.unfollowManga(manga.id||0);
+      }
+    }
+  }
 
   useEffect(function() {
     setNoContent(false);
@@ -129,6 +152,7 @@ const ListPage = () => {
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(fetchListMangaFollowAfterUnfolowWithoutStatus(manga.id||0, { page }));
+                dispatch(unfollowMangaInCommon(manga.id||0));
               }}
             />
           </span>
@@ -151,10 +175,11 @@ const ListPage = () => {
   } else {
     listContent = 
     <ul className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-6 py-4'>
-      {mangas.data.map((manga: IManga) => <li key={manga.id}>
+      {mangas.data.map((manga: IManga, i) => <li key={i}>
         <MangaCardVertical 
           data={manga} 
           overlay={overlayCard(manga)}
+          handleFollow={() => {handleFollow(manga)}}
         />
       </li>)}
     </ul>

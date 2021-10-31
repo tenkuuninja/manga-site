@@ -17,17 +17,21 @@ let initialState: ICommentsStore = {
 
 const authReducer: Reducer = (state: ICommentsStore = initialState, action: IAction): ICommentsStore => {
   switch(action.type) {
-    case ActionTypes.ClearCommentData:
-      return {
-        ...state, 
-        data: []
-      }
     case ActionTypes.FetchCommentRequest:
       return {
         ...state, 
         isLoading: true
       }
     case ActionTypes.FetchCommentSuccess:
+      return {
+        ...state,
+        data: action.payload.content, 
+        page: action.payload.page, 
+        count: action.payload.totalPage, 
+        isLoading: false, 
+        isError: false
+      }
+    case ActionTypes.FetchMoreCommentSuccess:
       return {
         ...state,
         data: state.data.concat(action.payload.content), 

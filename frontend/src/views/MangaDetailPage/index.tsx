@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
-import { fetchManga, followManga, increaseFavorite, unfollowManga } from 'stores/manga/actions';
+import { fetchManga, followMangaInDetail, increaseFavorite, unfollowMangaInDetail } from 'stores/manga/actions';
 import st from './detail.module.css';
 import Detail from './Detail';
 import ChapterList from './ChapterList';
 import Comment from 'views/components/Comment';
 import AsideSticky from './AsideSticky';
 import { IAppState } from 'interfaces';
+import { followMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
 
 interface IParams {
   mangaId: string;
@@ -25,9 +26,11 @@ const MangaDetailPage = () => {
       return;
     }
     if (manga.data.isFollowing === 0) {
-      dispatch(followManga(mangaId));
+      dispatch(followMangaInDetail());
+      dispatch(followMangaInCommon(manga.data));
     } else if (manga.data.isFollowing === 1) {
-      dispatch(unfollowManga(mangaId));
+      dispatch(unfollowMangaInDetail());
+      dispatch(unfollowMangaInCommon(+mangaId));
     }
   }
 
