@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcrypt';
 import Manga from '../models/manga.model';
 import User from '../models/user.model';
 import MangaReaded from '../models/manga_readed.model';
-import { FindOptions, where } from 'sequelize/types';
+import { FindOptions } from 'sequelize/types';
 import Sequelize from 'sequelize';
+import { unlinkSync } from 'fs';
+
+const imgbbUploader = require("imgbb-uploader");
 
 class UserController {
 
@@ -17,6 +20,45 @@ class UserController {
       res.status(200).json(user);
     } catch (error) {
       res.status(500).json({});
+    }
+  }
+  
+  updatePassword = async (req: Request, res: Response) => {
+    try {
+      if (req.user instanceof User) {
+        const match = await bcrypt.compare(req.body.oldPassword, req.user.password);
+        if (match) {
+          req.user?.update({ password: req.body.password });
+          const user = await User.scope(['includeRole', 'hideSensitive']).findByPk(req.user.id);
+          return res.status(200).json(user);
+        }
+        return res.status(500).json({
+          msg: "Mật khẩu cũ không đúng"
+        });
+      }
+      return res.status(500).json({
+        msg: "Người dùng không tồn tại"
+      });
+    } catch (error) {
+      res.status(500).json({ msg: 'Lỗi không xác định' });
+    }
+  }
+
+  updateAvatar = async (req: Request, res: Response) => {
+    try {
+      if (typeof req.file?.path !== 'string') {
+        return res.status(500).json({ msg: "no such or direactory" });
+      }
+      if (req.user === undefined) {
+        unlinkSync(req.file.path);
+        return res.status(401).json({ msg: "Unauthenticated" });
+      }
+      let image = await imgbbUploader(process.env.IMGBB_API_KEY||'', req.file?.path);
+      await req.user.update({ avatar: image.url });
+      unlinkSync(req.file.path);
+      res.status(200).json(req.user);
+    } catch (error) {
+      res.status(500).json({ msg: 'Lỗi không xác định' });
     }
   }
 
