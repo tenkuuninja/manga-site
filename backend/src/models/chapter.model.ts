@@ -8,6 +8,7 @@ import seq, {
 } from 'sequelize';
 import Manga from './manga.model';
 import Genre from './genre.model';
+import { caesarCipher } from '../utils/string';
 
 interface ChapterAttributes {
   id: number,
@@ -104,8 +105,12 @@ Chapter.init({
       const mangaId = this.getDataValue('mangaId');
       const domain = process.env.DOMAIN_GET_IMAGE || 'http://localhost:5000';
       return rawValue.split(',').filter(e => e.length > 0).map((item: string, i) => {
-        let key = Buffer.from('http://'+item.replace(/^\/+/g, '')).toString('base64');
-        return `${domain.replace(/\/$/g, '')}/images/content/${mangaId}/${chapterId}/${i+1}.jpg?key=${key}`;
+        let data = 'http://'+item.replace(/^\/+/g, '');
+        if (process.env.DOMAIN_REFERER) {
+          data += '|*|'+process.env.DOMAIN_REFERER;
+        }
+        let key = caesarCipher().encode(data);
+        return `${domain.replace(/\/$/g, '')}/images/b/content/${mangaId}/${chapterId}/${i+1}.jpg?key=${key}`;
       });
     },
     set(value: string | string[]) {

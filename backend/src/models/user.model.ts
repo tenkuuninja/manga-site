@@ -14,6 +14,7 @@ import Manga from './manga.model';
 import MangaReaded from './manga_readed.model';
 import Comment from './comment.model';
 import Role from './role.model';
+import { caesarCipher } from '../utils/string';
 
 interface UserAttributes {
   id: number,
@@ -25,7 +26,7 @@ interface UserAttributes {
   status: string,
   verifyToken: string,
   resetToken: string,
-  setting: string | object
+  setting: string;
 }
 
 class User extends Model<UserAttributes> implements UserAttributes {
@@ -38,7 +39,7 @@ class User extends Model<UserAttributes> implements UserAttributes {
   public status!: string;
   public verifyToken!: string;
   public resetToken!: string;
-  public setting!: string | object;
+  public setting!: string;;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -171,7 +172,14 @@ User.init({
   avatar: {
     field: 'avatar',
     type: DataTypes.STRING,
-    defaultValue: ''
+    defaultValue: '',
+    get() {
+      const rawValue = this.getDataValue('avatar');
+      const id = this.getDataValue('id');
+      const domain = process.env.DOMAIN_GET_IMAGE || 'localhost:5000';
+      let key = caesarCipher().encode(rawValue);
+      return `${domain.replace(/\/$/g, '')}/images/b/avatar/${id}.webp?key=${key}`;
+    },
   },
   roleId: {
     field: 'role_id',

@@ -9,7 +9,7 @@ export class ImageRoutes extends RoutesConfig {
 
   configureRoutes(router: Router) {
 
-    router.get('/*', ImageController.getImageFromNTUrl);
+    router.get('/b/*', ImageController.getImageFromNTUrl);
     
     return router;
   }

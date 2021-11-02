@@ -1,20 +1,23 @@
 import { Request, Response } from 'express';
-import request from 'request';
+import request, { CoreOptions } from 'request';
+import { caesarCipher } from '../utils/string';
 
 class ImageController {
 
   getImageFromNTUrl = async (req: Request, res: Response) => {
     if (typeof req.query.key === 'string') {
-      let url = Buffer.from(req.query.key, 'base64').toString('ascii');
-      request({
-        url,
+      let data = caesarCipher().decode(req.query.key).split('|*|');
+      let options: CoreOptions = {
         method: 'get',
-        headers: {
-          origin: process.env.DOMAIN_REFERER || '', 
-          Referer: process.env.DOMAIN_REFERER || ''
-        },
         encoding: 'binary'
-      }, function(error, response, body) {
+      }
+      let url = '';
+      if (data.length>=1) url = data[0];
+      if (data.length>=2) options.headers = {
+        origin: data[1], 
+        Referer: data[1]
+      };
+      request(url, options, function(error, response, body) {
         if (error) {
           console.log('image controller get img error >>', error)
           res.status(500).json({

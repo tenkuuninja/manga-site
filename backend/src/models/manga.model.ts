@@ -24,7 +24,7 @@ import Chapter from './chapter.model';
 import Comment from './comment.model';
 import User from './user.model';
 import MangaReaded from './manga_readed.model';
-import { changeToSlug } from '../utils/string';
+import { caesarCipher, changeToSlug } from '../utils/string';
 
 interface MangaAttributes {
   id: number,
@@ -189,7 +189,6 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
         let orderName = value.substr(1).split('.');
         order.push([...orderName, orderType]);
       }
-      console.log(order)
       return { order }
     });
     Manga.addScope('searchQuery', (search: string) => {
@@ -280,8 +279,8 @@ Manga.init({
       const rawValue = this.getDataValue('imageUrl');
       const id = this.getDataValue('id');
       const domain = process.env.DOMAIN_GET_IMAGE || 'localhost:5000';
-      let key = Buffer.from('http://'+rawValue.replace(/^\/+/g, '')).toString('base64');
-      return `${domain.replace(/\/$/g, '')}/images/cover/${id}.jpg?key=${key}`;
+      let key = caesarCipher().encode('http://'+rawValue.replace(/^\/+/g, ''));
+      return `${domain.replace(/\/$/g, '')}/images/b/cover/${id}.jpg?key=${key}`;
     },
   },
   description: {
