@@ -15,11 +15,11 @@ export const MeApi = {
     return axios.patch<IUser>(path+'/avatar', formData, config);
   },
   fetchManga: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-    const query = qs.stringify(options || {});
+    const query = qs.stringify(options || {}, { arrayFormat: 'bracket' });
     return axios.get<IPage<IManga>>(path+'/mangas?'+query, config);
   },
   fetchReaded: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-    const query = qs.stringify(options || {});
+    const query = qs.stringify(options || {}, { arrayFormat: 'bracket' });
     return axios.get<IPage<IManga>>(path+'/reads?'+query, config);
   },
   followManga: (mangaId: number, config: AxiosRequestConfig = {}) => {

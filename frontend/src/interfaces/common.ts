@@ -12,7 +12,7 @@ export interface ISearchObject {
   filter?: string | string[];
   genre?: string;
   notgenre?: string;
-  sort?: string;
+  sort?: string | string[];
   page?: number;
   size?: number;
   include?: string | string[]

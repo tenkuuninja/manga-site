@@ -11,8 +11,7 @@ export const ChapterApi = {
   },
   byId: (id: number) => ({
     fetch: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-      if (typeof options === 'undefined') options = {}
-      const query: string = qs.stringify(options);
+      const query: string = qs.stringify(options || {}, { arrayFormat: 'bracket' });
       return axios.get<IChapter>(path+'/'+id+'?'+query, config);
     },
     update: (payload: IChapter, config: AxiosRequestConfig = {}) => {

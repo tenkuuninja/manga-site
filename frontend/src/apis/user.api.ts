@@ -14,11 +14,11 @@ interface IUserForCheck {
 
 export const UserApi = {
   fetchList: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-    const query: string = qs.stringify(options || {});
+    const query: string = qs.stringify(options || {}, { arrayFormat: 'bracket' });
     return axios.get<IPage<IUser>>(path+'?'+query, config);
   },
   isExist: (options?: IUserForCheck, config: AxiosRequestConfig = {}) => {
-    const query: string = qs.stringify(options || {});
+    const query: string = qs.stringify(options || {}, { arrayFormat: 'bracket' });
     return axios.get<boolean>(path+'/exists?'+query, config);
   },
   create: (payload: IUser, config: AxiosRequestConfig = {}) => {

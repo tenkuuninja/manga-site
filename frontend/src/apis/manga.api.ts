@@ -7,7 +7,7 @@ const path = 'api/mangas';
 
 export const MangaApi = {
   fetchList: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-    const query: string = qs.stringify(options || {});
+    const query: string = qs.stringify(options || {}, { arrayFormat: 'bracket' });
     return axios.get<IPage<IManga>>(path+'?'+query, config);
   },
   fetchTop: (config: AxiosRequestConfig = {}) => {
@@ -18,15 +18,15 @@ export const MangaApi = {
   },
   byId: (id: number) => ({
     fetch: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-      const query: string = qs.stringify(options || {});
+      const query: string = qs.stringify(options || {}, { arrayFormat: 'bracket' });
       return axios.get<IManga>(path+'/'+id+'?'+query, config);
     },
     fetchChapter: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-      const query: string = qs.stringify(options || {});
+      const query: string = qs.stringify(options || {}, { arrayFormat: 'bracket' });
       return axios.get<IPage<IChapter>>(path+'/'+id+'/chapters?'+query, config);
     },
     fetchComment: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-      const query: string = qs.stringify(options || {});
+      const query: string = qs.stringify(options || {}, { arrayFormat: 'bracket' });
       return axios.get<IPage<IComment>>(path+'/'+id+'/comments?'+query, config);
     },
     update: (payload: IManga, config: AxiosRequestConfig = {}) => {

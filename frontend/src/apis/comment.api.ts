@@ -25,8 +25,7 @@ export const addRateManga = (id: number, config: AxiosRequestConfig = {}) => {
 
 export const CommentApi = {
   fetchList: (options?: ISearchObject, config: AxiosRequestConfig = {}) => {
-    if (typeof options === 'undefined') options = {}
-    const query: string = qs.stringify(options);
+    const query: string = qs.stringify(options || {}, { arrayFormat: 'bracket' });
     return axios.get<IPage<IComment>>(path+'?'+query, config);
   },
   createComment: (payload: IComment, config: AxiosRequestConfig = {}) => {
