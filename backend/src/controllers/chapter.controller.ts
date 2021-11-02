@@ -37,7 +37,7 @@ class ChapterController {
 
   fetchById = async (req: Request, res: Response) => {
     try {
-      let mangaScope: any[] = ['includeGenre', 'includeChapter', 'showTotalFollowing', 'hideSrcLeech'];
+      let mangaScope: any[] = ['includeGenre', 'includeChapter', 'hideSrcLeech'];
       let include: string | string[] = req.query.include as string | string[] || '';
       if (typeof include === 'string') {
         include = [include];
