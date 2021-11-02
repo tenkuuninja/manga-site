@@ -9,6 +9,7 @@ import Comment from 'views/components/Comment';
 import AsideSticky from './AsideSticky';
 import { IAppState } from 'interfaces';
 import { followMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
+import { MeApi } from 'apis';
 
 interface IParams {
   mangaId: string;
@@ -28,9 +29,11 @@ const MangaDetailPage = () => {
     if (manga.data.isFollowing === 0) {
       dispatch(followMangaInDetail());
       dispatch(followMangaInCommon(manga.data));
+      MeApi.followManga(mangaId);
     } else if (manga.data.isFollowing === 1) {
       dispatch(unfollowMangaInDetail());
       dispatch(unfollowMangaInCommon(+mangaId));
+      MeApi.unfollowManga(mangaId);
     }
   }
 

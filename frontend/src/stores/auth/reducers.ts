@@ -5,6 +5,7 @@ import { ActionTypes } from './types';
 let initialState: IAuthStore = {
   isLoggedIn: false, 
   user: {}, 
+  token: localStorage.getItem('token') || '',
   isLoading: false, 
   isError: false
 }
@@ -20,6 +21,7 @@ const authReducer: Reducer = (state: IAuthStore = initialState, action: IAction)
       return {
         isLoggedIn: true, 
         user: action.payload.user, 
+        token: action.payload.token,
         isLoading: false, 
         isError: false
       }

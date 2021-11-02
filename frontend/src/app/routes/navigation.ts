@@ -6,6 +6,7 @@ const MangaDetailPageComponent = lazy(() => import('views/MangaDetailPage'));
 const MangaChapterPageComponent = lazy(() => import('views/MangaChapterPage'));
 const LoginPageComponent = lazy(() => import('views/LoginPage'));
 const RegisterPageComponent = lazy(() => import('views/RegisterPage'));
+const ProfileManagePageComponent = lazy(() => import('views/ProfileManagePage'));
 
 interface RouteCustomProps extends RouteProps {
   guard?: string
@@ -62,7 +63,13 @@ const navigation: RouteCustomProps[] =  [
     exact: true,
     component: RegisterPageComponent,
     guard: 'none'
-  }
+  },
+  {
+    path: '/tai-khoan',
+    exact: false,
+    component: ProfileManagePageComponent,
+    guard: 'none'
+  },
 ]
 
 export default navigation;

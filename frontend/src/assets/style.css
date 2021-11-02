@@ -9,6 +9,15 @@ svg {
   display: inline-block;
 }
 
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
 .truncate-lines {
   overflow: hidden;
   text-overflow: ellipsis;

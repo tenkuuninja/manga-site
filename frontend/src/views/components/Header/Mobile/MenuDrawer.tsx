@@ -42,10 +42,10 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
       title: 'Tài khoản',
       auth: true,
       child: [
-        { title: 'Quản lý tài khoản', url: '' },
+        { title: 'Quản lý tài khoản', url: '/tai-khoan/quan-ly-ho-so.html' },
         { title: 'Truyện đang theo dõi', url: '/truyen-dang-theo-doi.html' },
         { title: 'Lịch sử đọc truyện', url: '/lich-su-doc-truyen.html' },
-        { title: 'Thông báo', url: '' },
+        { title: 'Thông báo', url: '/tai-khoan/quan-ly-thong-bao.html' },
       ]
     }, 
     {
@@ -59,13 +59,13 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
         { title: 'Tìm kiến nâng cao', url: '/tim-kiem-nang-cao.html'},
       ]
     },
-    {
-      title: 'Khác',
-      auth: false,
-      child: [
-        { title: 'Cài đặt', url: '' }
-      ]
-    }
+    // {
+    //   title: 'Khác',
+    //   auth: false,
+    //   child: [
+    //     { title: 'Cài đặt', url: '' }
+    //   ]
+    // },
   ]
 
   useEffect(function() {
@@ -93,7 +93,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
     </div>;
   } else {
     headMenu = <Link to="/" className="flex items-center p-4">
-      <Avatar size="lg" src="" alt={auth.user?.username} />
+      <Avatar size="lg" src={auth.user?.avatar || ''} alt={auth.user?.username} />
       <div className="flex-grow pl-2 overflow-hidden">
         <span className="truncate-lines line-clamp-1 text-lg font-bold">
           {auth.user?.username}

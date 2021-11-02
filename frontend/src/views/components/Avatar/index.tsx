@@ -25,7 +25,9 @@ function stringToColor(string: string) {
 const sizeAvatar = {
   sm: 24,
   md: 42,
-  lg: 56
+  lg: 56,
+  xl: 72,
+  xxl: 96,
 }
 
 interface AvatarProps {
@@ -48,7 +50,8 @@ const Avatar = function(props: AvatarProps) {
       sx={{
         bgcolor: stringToColor(alt),
         width: sizeAvatar[size],
-        height: sizeAvatar[size]
+        height: sizeAvatar[size],
+        fontSize: sizeAvatar[size]/sizeAvatar['md']*100+'%'
       }} 
       className={`${border && 'border border-gray-300'} font-bold ${className}`} 
     >

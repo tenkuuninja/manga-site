@@ -10,15 +10,15 @@ import { Icon } from '@iconify/react';
 
 const menu = [
   [
-    { title: 'Truyện đang theo dõi', url: '', icon: '' },
-    { title: 'Lịch sử đọc truyện', url: '', icon: '' },
-    { title: 'Tìm kiếm nâng cao', url: '', icon: '' },
+    { title: 'Truyện đang theo dõi', url: '/truyen-dang-theo-doi.html', icon: '' },
+    { title: 'Lịch sử đọc truyện', url: '/lich-su-doc-truyen.html', icon: '' },
+    { title: 'Tìm kiếm nâng cao', url: '/tim-kiem-nang-cao.html', icon: '' },
     
   ],
   [
-    { title: 'Quản lý tài khoản', url: '', icon: '' },
-    { title: 'Thông báo', url: '', icon: '' },
-    { title: 'Cài đặt', url: '', icon: '' }
+    { title: 'Quản lý tài khoản', url: '/tai-khoan/quan-ly-ho-so.html', icon: '' },
+    { title: 'Thông báo', url: '/tai-khoan/quan-ly-thong-bao.html', icon: '' },
+    // { title: 'Cài đặt', url: '', icon: '' },
   ]
 ];
 
@@ -58,7 +58,7 @@ const Personal = function() {
       overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >
         <div className="w-60 shadow divide-y z-30 select-none">
           <Link to="/" className="flex items-center p-4">
-            <Avatar size="lg" src="" alt={auth.user?.username} />
+            <Avatar size="lg" src={auth.user?.avatar || ''} alt={auth.user?.username} />
             <div className="flex-grow pl-2 overflow-hidden">
               <span className="truncate-lines line-clamp-1 text-lg font-bold">
                 {auth.user?.username}
@@ -83,7 +83,7 @@ const Personal = function() {
     >
       <div className="h-18 select-none">
         <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
-          <Avatar src="" alt={auth.user?.username} />
+          <Avatar src={auth.user?.avatar || ''} alt={auth.user?.username} />
         </div>
       </div>
     </Dropdown>
