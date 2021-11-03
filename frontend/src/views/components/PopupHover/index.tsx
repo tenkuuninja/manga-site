@@ -1,5 +1,5 @@
 import { useWindowSize } from 'hooks';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import st from './popup.module.css';
 
@@ -16,16 +16,19 @@ function PopupHover({overlay, children, placement='bottomLeft', spacing = 0}: Po
   const triggerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setOpen] = useState<boolean>(false);
   const [width] = useWindowSize();
 
   const handleMouseIn = (e: React.MouseEvent) => {
     wrapperRef.current?.classList.add(st.active)
     contentRef.current?.classList.add(st['pop-in'])
+    setOpen(true);
   }
   
   const handleMouseOut = (e: React.MouseEvent) => {
     wrapperRef.current?.classList.remove(st.active)
     contentRef.current?.classList.remove(st['pop-in'])
+    setOpen(false);
   }
   
   useEffect(function() {
@@ -71,7 +74,7 @@ function PopupHover({overlay, children, placement='bottomLeft', spacing = 0}: Po
       }
     }
     // eslint-disable-next-line
-  }, [placement, width]);
+  }, [placement, width, isOpen]);
 
   useEffect(function() {
     if (contentRef.current) {
