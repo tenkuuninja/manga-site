@@ -29,39 +29,41 @@ function PopupHover({overlay, children, placement='bottomLeft', spacing = 0}: Po
   }
   
   useEffect(function() {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && triggerRef.current) {
+      let triggerClient = triggerRef.current.getBoundingClientRect();
+      let wrapperClient = wrapperRef.current.getBoundingClientRect();
       switch (placement) {
         case 'top':
-          wrapperRef.current.style.top = `${(triggerRef.current?.offsetTop||0)-(wrapperRef.current?.offsetHeight||0)}px`;
-          wrapperRef.current.style.left = `${(triggerRef.current?.offsetLeft||0)+(triggerRef.current?.offsetWidth||0)/2-(wrapperRef.current?.offsetWidth||0)/2}px`;
+          wrapperRef.current.style.top = `${triggerClient.top-wrapperClient.height}px`;
+          wrapperRef.current.style.left = `${triggerClient.left+triggerClient.width/2-wrapperClient.width/2}px`;
           break;
         case 'topLeft':
-          wrapperRef.current.style.top = `${(triggerRef.current?.offsetTop||0)-(wrapperRef.current?.offsetHeight||0)}px`
-          wrapperRef.current.style.left = `${(triggerRef.current?.offsetLeft||0)}px`
+          wrapperRef.current.style.top = `${triggerClient.top-wrapperClient.height}px`
+          wrapperRef.current.style.left = `${triggerClient.left}px`
           break;
         case 'topRight':
-          wrapperRef.current.style.top = `${(triggerRef.current?.offsetTop||0)-(wrapperRef.current?.offsetHeight||0)}px`
-          wrapperRef.current.style.left =`${(triggerRef.current?.offsetLeft||0)+(triggerRef.current?.offsetWidth||0)-(wrapperRef.current?.offsetWidth||0)}px`
+          wrapperRef.current.style.top = `${triggerClient.top-wrapperClient.height}px`
+          wrapperRef.current.style.left =`${triggerClient.left+triggerClient.width-wrapperClient.width}px`
           break;
         case 'bottom':
-          wrapperRef.current.style.top = `${(triggerRef.current?.offsetTop||0)+(triggerRef.current?.offsetHeight||0)}px`
-          wrapperRef.current.style.left =`${(triggerRef.current?.offsetLeft||0)+(triggerRef.current?.offsetWidth||0)/2-(wrapperRef.current?.offsetWidth||0)/2}px`
+          wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height}px`
+          wrapperRef.current.style.left =`${triggerClient.left+triggerClient.width/2-wrapperClient.width/2}px`
           break;
         case 'bottomLeft':
-          wrapperRef.current.style.top = `${(triggerRef.current?.offsetTop||0)+(triggerRef.current?.offsetHeight||0)}px`
-          wrapperRef.current.style.left = `${(triggerRef.current?.offsetLeft||0)}px`
+          wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height}px`
+          wrapperRef.current.style.left = `${triggerClient.left}px`
           break;
         case 'bottomRight':
-          wrapperRef.current.style.top = `${(triggerRef.current?.offsetTop||0)+(triggerRef.current?.offsetHeight||0)}px`
-          wrapperRef.current.style.left = `${(triggerRef.current?.offsetLeft||0)+(triggerRef.current?.offsetWidth||0)-(wrapperRef.current?.offsetWidth||0)}px`
+          wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height}px`
+          wrapperRef.current.style.left = `${triggerClient.left+triggerClient.width-wrapperClient.width}px`
           break;
         case 'left':
-          wrapperRef.current.style.top = `${(triggerRef.current?.offsetTop||0)+(triggerRef.current?.offsetHeight||0)/2-(wrapperRef.current?.offsetHeight||0)/2}px`
-          wrapperRef.current.style.left = `${(triggerRef.current?.offsetLeft||0)-(wrapperRef.current?.offsetWidth||0)}px`
+          wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height/2-wrapperClient.height/2}px`
+          wrapperRef.current.style.left = `${triggerClient.left-wrapperClient.width}px`
           break;
         case 'right':
-          wrapperRef.current.style.top = `${(triggerRef.current?.offsetTop||0)+(triggerRef.current?.offsetHeight||0)/2-(wrapperRef.current?.offsetHeight||0)/2}px`
-          wrapperRef.current.style.left = `${(triggerRef.current?.offsetLeft||0)+(triggerRef.current?.offsetWidth||0)}px`
+          wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height/2-wrapperClient.height/2}px`
+          wrapperRef.current.style.left = `${triggerClient.left+triggerClient.width}px`
           break;
       
         default:

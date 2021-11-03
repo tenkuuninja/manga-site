@@ -92,7 +92,7 @@ function MenuContent(props: { isDrawerOpen: boolean }) {
       </div>
     </div>;
   } else {
-    headMenu = <Link to="/" className="flex items-center p-4">
+    headMenu = <Link to="/tai-khoan/quan-ly-ho-so.html" className="flex items-center p-4">
       <Avatar size="lg" src={auth.user?.avatar || ''} alt={auth.user?.username} />
       <div className="flex-grow pl-2 overflow-hidden">
         <span className="truncate-lines line-clamp-1 text-lg font-bold">

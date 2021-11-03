@@ -2,7 +2,7 @@ import React from 'react';
 
 export const DetailSkeleton = () => {
   return (
-    <div>
+    <div className="animate-pulse">
       <section>
       
       </section>
@@ -39,7 +39,7 @@ export const ChapterListSkeleton = () => {
     </li>);
   }
   return(
-    <div>
+    <div className="animate-pulse">
       <div className='rounded h-7 my-5 bg-skeleton w-64'></div>
       <ul className='divide-y clear-both overflow-hidden'>
         {items}
@@ -50,7 +50,7 @@ export const ChapterListSkeleton = () => {
 
 export const AsideStickySkeleton = () => {
   return (
-    <div className="sticky top-5">
+    <div className="sticky top-5 animate-pulse">
       <div className="relative mx-auto my-5 w-60 h-80 bg-skeleton"></div>  
     </div>
   );

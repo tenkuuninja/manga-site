@@ -84,6 +84,8 @@ const EditProfile = function() {
     if (!crop || !canvas) {
       return;
     }
+    setShowModal(false);
+    toast.info('Đang tải ảnh lên');
   
     canvas.toBlob((blob: Blob) => {
       let file = new File([blob], "avatar-"+Date.now()+'.webp', { type: 'image/webp' });
@@ -92,7 +94,7 @@ const EditProfile = function() {
           dispatch(updateAvatar(res.data.avatar||''));
           toast.success('Đổi ảnh đại diện thành công');
         })
-        .catch(err => {})
+        .catch(err => toast.success('Đổi ảnh đại diện không thành công'))
       
     }, 'image/webp', 1);
     

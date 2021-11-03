@@ -21,8 +21,7 @@ export const login = (body: {username: string, password: string}) => async (disp
   dispatch({ type: ActionTypes.LoginRequest });
   try {
     let result = await AuthApi.loginWithPassword(body);
-    let token = 'Bearer '+result.data.accessToken;
-    localStorage.setItem('token', token);
+    localStorage.setItem('token', result.data.accessToken || '');
     dispatch({ type: ActionTypes.LoginSuccess, payload: {
       token: result.data.accessToken,
       user: result.data.user
@@ -46,7 +45,7 @@ export const autoLogin = () => async (dispatch: Dispatch) => {
       user: result.data.user
     } });
   } catch (error) {
-    // dispatch({ type: ActionTypes.LoginFailure });
+    dispatch({ type: ActionTypes.LoginFailure });
   }
 }
 

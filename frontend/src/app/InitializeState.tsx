@@ -4,10 +4,9 @@ import { autoLogin } from 'stores/auth/actions';
 import { fetchListGenre } from 'stores/genres/actions';
 import { fetchTopManga, fetchReadedManga, fetchFollowManga, syncWithLocalStorage } from 'stores/common/actions';
 import { IAppState } from 'interfaces';
-import axios from 'apis/instance';
 
 export const InitializeState = function() {
-  const { isLoggedIn, token } = useSelector((store: IAppState) => store.auth);
+  const { isLoggedIn } = useSelector((store: IAppState) => store.auth);
   const dispatch = useDispatch();
 
   useEffect(function() {
@@ -23,13 +22,12 @@ export const InitializeState = function() {
   }, []);
 
   useEffect(function() {
-    if (isLoggedIn && token) {
-      axios.defaults.headers.common['Authorization'] = token;
+    if (isLoggedIn) {
       dispatch(fetchFollowManga());
       dispatch(fetchReadedManga());
     }
     // eslint-disable-next-line
-  }, [isLoggedIn, token])
+  }, [isLoggedIn])
 
   return(<></>);
 }

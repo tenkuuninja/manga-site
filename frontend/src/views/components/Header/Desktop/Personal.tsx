@@ -57,7 +57,7 @@ const Personal = function() {
       placement="bottom-right"
       overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >
         <div className="w-60 shadow divide-y z-30 select-none">
-          <Link to="/" className="flex items-center p-4">
+          <Link to="/tai-khoan/quan-ly-ho-so.html" className="flex items-center p-4">
             <Avatar size="lg" src={auth.user?.avatar || ''} alt={auth.user?.username} />
             <div className="flex-grow pl-2 overflow-hidden">
               <span className="truncate-lines line-clamp-1 text-lg font-bold">

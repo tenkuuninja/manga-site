@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { IGenre, IManga } from 'interfaces';
 import { Link } from 'react-router-dom';
 import { countryType } from 'utils/static';
-import PopupHover from '../PopupHover';
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { useWindowSize } from 'hooks';
 import { Icon } from '@iconify/react';
@@ -14,26 +14,74 @@ interface MangaCardVerticalProps {
   handleFollow?: () => void;
 }
 
-export const MangaCardVertical = function(props: MangaCardVerticalProps) {
-  const [placement, setPlacement] = useState<'left'|'right'>('right');
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [width] = useWindowSize();
-  const { id, title, titleSlug, imageUrl, description, chapter, isFinish, country, updatedAt = '', isFollowing, genres } = props.data
+interface PopupHoverProps {
+  overlay: JSX.Element;
+  children: any;
+}
 
+function PopupHover({ overlay, children }: PopupHoverProps) {
+  // const triggerRef = useRef<HTMLDivElement>(null);
+  // const [triggerRect, triggerRef] = useClientRect();
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [width] = useWindowSize();
+
+  const handleMouseIn = (e: React.MouseEvent) => {
+    setOpen(true);
+    wrapperRef.current?.classList.remove('invisible')
+    contentRef.current?.classList.add('animate-pop-in')
+  }
+  
+  const handleMouseOut = (e: React.MouseEvent) => {
+    setOpen(false);
+    wrapperRef.current?.classList.add('invisible')
+    contentRef.current?.classList.remove('animate-pop-in')
+  }
+  
   useEffect(function() {
-    let remain = width - ((cardRef.current?.offsetLeft||0) + (cardRef.current?.offsetWidth||0))
-    if (remain < 400 ) {
-      if (placement !== 'left') setPlacement('left');
-    } else {
-      if (placement !== 'right') setPlacement('right');
+    if (wrapperRef.current && triggerRef.current && contentRef.current) {
+      let triggerClient = triggerRef.current.getBoundingClientRect();
+      let wrapperClient = wrapperRef.current.getBoundingClientRect();
+      let remain = width - ((triggerClient.left||0) + (triggerClient.width||0))
+      if (remain < 400 ) {
+        wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height/2-wrapperClient.height/2}px`
+        wrapperRef.current.style.left = `${triggerClient.left-wrapperClient.width}px`
+        contentRef.current.style.marginRight = `${10}px`
+      } else {
+        wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height/2-wrapperClient.height/2}px`
+        wrapperRef.current.style.left = `${triggerClient.left+triggerClient.width}px`
+        contentRef.current.style.marginLeft = `${10}px`
+      }
     }
     // eslint-disable-next-line
-  }, [width]);
+  }, [width, isOpen]);
+
+  useEffect(function() {
+
+  });
+
+
+  return(
+    <div ref={triggerRef} onMouseOver={handleMouseIn} onMouseOut={handleMouseOut} >
+      {children}
+      {createPortal(
+        <div ref={wrapperRef} className="absolute invisible" >
+          <div ref={contentRef} >
+            {overlay}
+          </div>
+        </div>
+      , document.body)}
+    </div>
+  );
+}
+
+export const MangaCardVertical = function(props: MangaCardVerticalProps) {
+  const { id, title, titleSlug, imageUrl, description, chapter, isFinish, country, updatedAt = '', isFollowing, genres } = props.data;
 
   return(
     <PopupHover
-      placement={placement}
-      spacing={10}
       overlay={
       <div className={`hidden lg:block animate-pop-in z-20`}>
         <div className='overflow-hidden rounded-lg bg-white shadow-lg border border-gray-200 w-96 p-4'>
@@ -67,7 +115,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
       }
     >
       <Link to={`/truyen-tranh-${id}-${titleSlug}.html`}>
-        <div ref={cardRef} className='rounded-md overflow-hidden bg-white border-gray-200'>
+        <div className='rounded-md overflow-hidden bg-white border-gray-200'>
           <div className='overflow-hidden relative bg-no-repeat bg-center bg-cover border border-black border-opacity-20' style={{ paddingTop: '133%', backgroundImage: `url(https://img.idesign.vn/2018/10/23/id-loading-1.gif)` }}>
             <img className='absolute top-0 object-cover w-full h-full' src={imageUrl} alt=" " />
             <div className="absolute inset-0">{props.overlay}</div>

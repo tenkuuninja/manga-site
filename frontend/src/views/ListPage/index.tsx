@@ -87,11 +87,15 @@ const ListPage = () => {
         setTitle('Top truyện tranh ngày');
         break;
       case '/truyen-dang-theo-doi.html':
-        dispatch(fetchListMangaFollow({ page }));
+        if (auth.isLoggedIn) {
+          dispatch(fetchListMangaFollow({ page }));
+        }
         setTitle('Truyện đang theo dõi');
         break;
       case '/lich-su-doc-truyen.html':
-        dispatch(fetchListMangaReaded({ page }))
+        if (auth.isLoggedIn) {
+          dispatch(fetchListMangaReaded({ page }))
+        }
         setTitle('Lịch sử đọc truyện');
         break;
       case '/tim-kiem.html':
