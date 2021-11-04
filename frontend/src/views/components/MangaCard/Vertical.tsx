@@ -20,8 +20,6 @@ interface PopupHoverProps {
 }
 
 function PopupHover({ overlay, children }: PopupHoverProps) {
-  // const triggerRef = useRef<HTMLDivElement>(null);
-  // const [triggerRect, triggerRef] = useClientRect();
   const triggerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -29,15 +27,15 @@ function PopupHover({ overlay, children }: PopupHoverProps) {
   const [width] = useWindowSize();
 
   const handleMouseIn = (e: React.MouseEvent) => {
-    setOpen(true);
     wrapperRef.current?.classList.remove('invisible')
     contentRef.current?.classList.add('animate-pop-in')
+    setOpen(true);
   }
   
   const handleMouseOut = (e: React.MouseEvent) => {
-    setOpen(false);
     wrapperRef.current?.classList.add('invisible')
     contentRef.current?.classList.remove('animate-pop-in')
+    setOpen(false);
   }
   
   useEffect(function() {
@@ -46,22 +44,17 @@ function PopupHover({ overlay, children }: PopupHoverProps) {
       let wrapperClient = wrapperRef.current.getBoundingClientRect();
       let remain = width - ((triggerClient.left||0) + (triggerClient.width||0))
       if (remain < 400 ) {
-        wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height/2-wrapperClient.height/2}px`
+        wrapperRef.current.style.top = `${triggerClient.top+ window.scrollY+triggerClient.height/2-wrapperClient.height/2}px`
         wrapperRef.current.style.left = `${triggerClient.left-wrapperClient.width}px`
         contentRef.current.style.marginRight = `${10}px`
       } else {
-        wrapperRef.current.style.top = `${triggerClient.top+triggerClient.height/2-wrapperClient.height/2}px`
+        wrapperRef.current.style.top = `${triggerClient.top+ window.scrollY+triggerClient.height/2-wrapperClient.height/2}px`
         wrapperRef.current.style.left = `${triggerClient.left+triggerClient.width}px`
         contentRef.current.style.marginLeft = `${10}px`
       }
     }
     // eslint-disable-next-line
   }, [width, isOpen]);
-
-  useEffect(function() {
-
-  });
-
 
   return(
     <div ref={triggerRef} onMouseOver={handleMouseIn} onMouseOut={handleMouseOut} >

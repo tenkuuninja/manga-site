@@ -10,6 +10,7 @@ import commentReducer from './comments/reducers';
 import genreReducer from './genres/reducers';
 import commonReducer from './common/reducers';
 import mangaReducer from './manga/reducers';
+import homeReducer from './home/reducers';
 
 const rootReducer: Reducer<IAppState> = combineReducers({
   auth: authReducer,
@@ -19,6 +20,7 @@ const rootReducer: Reducer<IAppState> = combineReducers({
   mangas: catalogReducer,
   chapter: chapterReducer,
   comments: commentReducer,
+  home: homeReducer,
 })
 
 const logger = createLogger({

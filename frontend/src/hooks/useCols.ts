@@ -5,7 +5,7 @@ export function useCols() {
   let [width,] = useWindowSize();
   let [cols, setCols] = useState(0);
   useEffect(function() {
-    if(width < 576) {
+    if(width > 0 && width < 576) {
       setCols(2);
     } else if (width >= 576 && width < 768) {
       setCols(2);

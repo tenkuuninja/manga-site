@@ -12,7 +12,6 @@ let initialState: ICommonStore = {
     name: '',
     email: ''
   },
-  topLoading: 0
 }
 
 const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAction): ICommonStore => {

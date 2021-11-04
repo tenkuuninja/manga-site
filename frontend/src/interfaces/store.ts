@@ -62,7 +62,12 @@ export interface ICommonStore {
   readed: IListDataStore<IManga>;
   autoComplete: IListDataStore<IManga>;
   local: ILocalCommon;
-  topLoading: number
+}
+
+export interface IHomeStore {
+  lastest: IListDataStore<IManga>;
+  newest: IListDataStore<IManga>;
+  finish: IListDataStore<IManga>;
 }
 
 export interface IAppState {
@@ -73,4 +78,5 @@ export interface IAppState {
   manga: IDataStore<IManga>;
   chapter: IDataStore<IChapter>;
   comments: ICommentsStore;
+  home: IHomeStore;
 }
