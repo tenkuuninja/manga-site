@@ -41,7 +41,7 @@ const Carousel = ({
     if (container.current) {
       container.current.style.height = `${(slider.current?.clientHeight||0)}px`
     }
-  }, [width, columnsPerSlide, columnSpacing]);
+  }, [width, columnsPerSlide, columnSpacing, children.length]);
 
 
   return(

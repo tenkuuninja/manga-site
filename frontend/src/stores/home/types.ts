@@ -8,6 +8,8 @@ export enum ActionTypes  {
   FetchFinishRequest          = 'home_FetchFinishRequest',
   FetchFinishSuccess          = 'home_FetchFinishSuccess',
   FetchFinishFailure          = 'home_FetchFinishFailure',
+  FollowManga                 = 'home_FollowManga',
+  UnfollowManga               = 'home_UnfollowManga',
 }
 
 export default ActionTypes;

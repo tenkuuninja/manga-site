@@ -14,6 +14,8 @@ export enum ActionTypes  {
   FetchAutoCompleteSuccess    = 'common_FetchAutoCompleteSuccess',
   FetchAutoCompleteFailure    = 'common_FetchAutoCompleteFailure',
   AddReaded                   = 'common_AddReaded',
+  AddFollowManga              = 'common_AddFollowManga',
+  RemoveFollowManga           = 'common_RemoveFollowManga',
   FollowManga                 = 'common_FollowManga',
   UnfollowManga               = 'common_UnfollowManga',
   SyncWithLocalstorage        = 'common_SyncWithLocalstorage',

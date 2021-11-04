@@ -7,7 +7,7 @@ import { useHistory, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import { fetchChapter, followMangaInChapter, unfollowMangaInChapter } from 'stores/chapter/actions';
 import Comment from 'views/components/Comment';
-import { followMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
+import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
 
 interface IParams {
@@ -41,11 +41,11 @@ const MangaChapterPage = () => {
     }
     if (manga?.isFollowing === 0) {
       dispatch(followMangaInChapter());
-      dispatch(followMangaInCommon(manga));
+      dispatch(addFollowMangaInCommon(manga));
       MeApi.followManga(+mangaId);
     } else if (manga?.isFollowing === 1) {
       dispatch(unfollowMangaInChapter());
-      dispatch(unfollowMangaInCommon(+mangaId));
+      dispatch(removeFollowMangaInCommon(+mangaId));
       MeApi.unfollowManga(+mangaId);
     }
   }

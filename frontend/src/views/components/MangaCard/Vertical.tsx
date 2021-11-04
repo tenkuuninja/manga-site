@@ -11,7 +11,7 @@ interface MangaCardVerticalProps {
   data: IManga,
   className?: string,
   overlay?: string | JSX.Element;
-  handleFollow?: () => void;
+  handleFollow?: (data: IManga) => void;
 }
 
 interface PopupHoverProps {
@@ -101,7 +101,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
             >
               Thông tin truyện
             </Link>
-            <Icon className="text-2xl ml-4" icon={isFollowing ? "bi:heart-fill" : "bi:heart"} onClick={props.handleFollow} />
+            <Icon className="text-2xl ml-4" icon={isFollowing ? "bi:heart-fill" : "bi:heart"} onClick={() => props.handleFollow && props.handleFollow(props.data)} />
           </div>
         </div>
       </div>

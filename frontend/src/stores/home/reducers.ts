@@ -1,4 +1,4 @@
-import { IAction, IHomeStore } from 'interfaces';
+import { IAction, IHomeStore, IManga } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
@@ -99,6 +99,46 @@ const authReducer: Reducer = (state: IHomeStore = initialState, action: IAction)
           isLoading: false,
           isError: true
         }
+      }
+    case ActionTypes.FollowManga:
+      let handleFollow = (item: IManga) => {
+        if (action.payload.id === item.id) item.isFollowing = 1;
+        return item;
+      }
+      return {
+        ...state, 
+        lastest: {
+          ...state.lastest,
+          data: state.lastest.data.map(handleFollow)
+        },
+        newest: {
+          ...state.newest,
+          data: state.newest.data.map(handleFollow)
+        },
+        finish: {
+          ...state.finish,
+          data: state.finish.data.map(handleFollow)
+        },
+      }
+    case ActionTypes.FollowManga:
+      let handleUnfollow = (item: IManga) => {
+        if (action.payload.id === item.id) item.isFollowing = 0;
+        return item;
+      }
+      return {
+        ...state, 
+        lastest: {
+          ...state.lastest,
+          data: state.lastest.data.map(handleUnfollow)
+        },
+        newest: {
+          ...state.newest,
+          data: state.newest.data.map(handleUnfollow)
+        },
+        finish: {
+          ...state.finish,
+          data: state.finish.data.map(handleUnfollow)
+        },
       }
     default:
       return state;

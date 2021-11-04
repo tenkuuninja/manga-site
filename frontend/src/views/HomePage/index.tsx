@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MangaCardVertical } from 'views/components/MangaCard';
 import Carousel from "views/components/Carousel";
 import { useCols } from 'hooks';
-import { fetchLastestUpdateManga, fetchNewestManga } from 'stores/home/actions';
+import { fetchLastestUpdateManga, fetchNewestManga, followMangaInHome, unfollowMangaInHome } from 'stores/home/actions';
 import { Link } from 'react-router-dom';
+import { getRelativeTimeFromNow } from 'utils/helper';
+import { MeApi } from 'apis';
+import { addFollowMangaInCommon, followMangaInCommon, removeFollowMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
 
 interface CommonMangaCardCarouselProps {
   title: string;
@@ -13,26 +16,28 @@ interface CommonMangaCardCarouselProps {
   isLoading: boolean;
   isError: boolean;
   cols: number;
+  overlay: (manga: IManga) => JSX.Element;
+  handleFollow: (manga: IManga) => void;
 }
 
 const CommonMangaCardCarousel = (props: CommonMangaCardCarouselProps) => {
+  if (props.isLoading || props.isError) {
+    return <></>
+  }
+
   return (
     <section className="container max-w-335 px-4 mx-auto">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold my-4">
         {props.title}
       </h2>
       <Carousel columnsPerSlide={props.cols} columnsPerScroll={props.cols} columnSpacing={16} >
-        {props.data.map((item, i) => <MangaCardVertical data={item} key={i} /> )}
+        {props.data.map((item, i) => 
+          <MangaCardVertical key={i} data={item} overlay={props.overlay(item)} handleFollow={props.handleFollow} /> 
+        )}
       </Carousel>
     </section>
   );
 }
-
-const action = [
-  { title: 'truyện mới cập nhật', url: '/truyen-moi-cap-nhat.html' },
-  { title: 'truyện mới cập nhật', url: '/truyen-moi-cap-nhat.html' },
-  { title: 'truyện mới cập nhật', url: '/truyen-moi-cap-nhat.html' },
-]
 
 
 const HomePage = function() {
@@ -42,9 +47,38 @@ const HomePage = function() {
   const cols = useCols();
 
   useEffect(function() {
-    dispatch(fetchLastestUpdateManga());
-    dispatch(fetchNewestManga());
+    if (home.lastest.data.length === 0) dispatch(fetchLastestUpdateManga());
+    if (home.newest.data.length === 0) dispatch(fetchNewestManga());
   }, []);
+
+  const handleFollow = (manga: IManga) => {
+    if (!auth.isLoggedIn) {
+      return;
+    }
+    if (manga?.isFollowing === 0) {
+      dispatch(addFollowMangaInCommon(manga));
+      dispatch(followMangaInCommon(manga.id||0));
+      dispatch(followMangaInHome(manga.id||0));
+      MeApi.followManga(manga.id||0);
+    } else if (manga?.isFollowing === 1) {
+      dispatch(removeFollowMangaInCommon(manga.id||0));
+      dispatch(unfollowMangaInCommon(manga.id||0));
+      dispatch(unfollowMangaInHome(manga.id||0));
+      MeApi.unfollowManga(manga.id||0);
+    }
+  }
+
+  const updatedOverlay = (manga: IManga) => <div className="p-2">
+    <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">
+      {getRelativeTimeFromNow(manga.updatedAt||'')}
+    </span>
+  </div>
+
+  const readedOverlay = (manga: IManga) => <div className="p-2">
+    <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">
+      {getRelativeTimeFromNow(manga?.reads?.length  ? manga?.reads[0].updatedAt :  manga.updatedAt || '')}
+    </span>
+  </div>
 
   const genreCarousel = genres.isLoading || genres.isError ? '' :
     <section className="container max-w-335 px-4 mx-auto">
@@ -97,7 +131,13 @@ const HomePage = function() {
           </span>
       </div>
       <Carousel columnsPerSlide={cols} columnsPerScroll={cols} columnSpacing={16} >
-        {common.top[typeTop].map((item, i) => <MangaCardVertical data={item} key={i} /> )}
+        {common.top[typeTop].map((item, i) => <MangaCardVertical 
+            key={i} 
+            data={item} 
+            overlay={updatedOverlay(item)} 
+            handleFollow={handleFollow}
+          /> 
+        )}
       </Carousel>
     </section>
   
@@ -105,12 +145,15 @@ const HomePage = function() {
   return(
     <React.Fragment>
       <div className="space-y-8 my-8">
-        {auth.isLoggedIn && <CommonMangaCardCarousel 
+        {auth.isLoggedIn && 
+        <CommonMangaCardCarousel 
           title="Tiếp tục đọc"
           data={common.readed.data}
           isLoading={common.readed.isLoading}
           isError={common.readed.isLoading}
           cols={cols}
+          overlay={readedOverlay}
+          handleFollow={handleFollow}
         />}
         <CommonMangaCardCarousel 
           title="Truyện mới cập nhật"
@@ -118,6 +161,8 @@ const HomePage = function() {
           isLoading={home.lastest.isLoading}
           isError={home.lastest.isError}
           cols={cols}
+          overlay={updatedOverlay}
+          handleFollow={handleFollow}
         />
         {genreCarousel}
         <CommonMangaCardCarousel 
@@ -126,6 +171,8 @@ const HomePage = function() {
           isLoading={home.newest.isLoading}
           isError={home.newest.isError}
           cols={cols}
+          overlay={updatedOverlay}
+          handleFollow={handleFollow}
         />
         <CommonMangaCardCarousel 
           title="Truyện được xem nhiều"
@@ -133,6 +180,8 @@ const HomePage = function() {
           isLoading={common.top.isLoading}
           isError={common.top.isError}
           cols={cols}
+          overlay={updatedOverlay}
+          handleFollow={handleFollow}
         />
         {topMangaCarousel}
       </div>

@@ -34,6 +34,13 @@ export const fetchReadedManga = (options?: ISearchObject) => async (dispatch: Di
   dispatch({ type: ActionTypes.FetchReadedMangaRequest });
   try {
     let result = await MeApi.fetchReaded(options);
+    result.data.content.sort((a, b) => {
+      if (a.reads && b.reads && a.reads?.length > 0 && b.reads?.length > 0) {
+        let [da, db] = [Date.parse(a.reads[0].updatedAt||''), Date.parse(b.reads[0].updatedAt||'')];
+        return db-da
+      }
+      return 0
+    });
     dispatch({ type: ActionTypes.FetchReadedMangaSuccess, payload: {
       readed: result.data.content
     } });
@@ -57,7 +64,9 @@ export const fetchAutoComplete = (search: string) => async (dispatch: Dispatch) 
 }
 
 export const addReadedManga = (data: IManga) => ({ type: ActionTypes.AddReaded, payload: { data } })
-export const followMangaInCommon = (data: IManga) => ({ type: ActionTypes.FollowManga, payload: { data } }) 
+export const addFollowMangaInCommon = (data: IManga) => ({ type: ActionTypes.AddFollowManga, payload: { data } }) 
+export const removeFollowMangaInCommon = (id: number) => ({ type: ActionTypes.RemoveFollowManga, payload: { id } })
+export const followMangaInCommon = (id: number) => ({ type: ActionTypes.FollowManga, payload: { id } }) 
 export const unfollowMangaInCommon = (id: number) => ({ type: ActionTypes.UnfollowManga, payload: { id } })
 
 export const syncWithLocalStorage = () => async (dispatch: Dispatch) => {

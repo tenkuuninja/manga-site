@@ -16,7 +16,7 @@ import { Pagination } from '@mui/material';
 import { ListVerticalCardSkeleton } from './Skeleton';
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { Icon } from '@iconify/react';
-import { followMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
+import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
 
 interface IParams {
@@ -38,10 +38,10 @@ const ListPage = () => {
     }
     if (manga?.isFollowing === 0) {
       dispatch(followMangaInList(manga.id||0));
-      dispatch(followMangaInCommon(manga));
+      dispatch(addFollowMangaInCommon(manga));
       MeApi.followManga(manga.id||0);
     } else if (manga?.isFollowing === 1) {
-      dispatch(unfollowMangaInCommon(manga.id||0));
+      dispatch(removeFollowMangaInCommon(manga.id||0));
       if (match.path === '/truyen-dang-theo-doi.html') {
         dispatch(fetchListMangaFollowAfterUnfolowWithoutStatus(manga.id||0));
       } else {
@@ -156,7 +156,7 @@ const ListPage = () => {
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(fetchListMangaFollowAfterUnfolowWithoutStatus(manga.id||0, { page }));
-                dispatch(unfollowMangaInCommon(manga.id||0));
+                dispatch(removeFollowMangaInCommon(manga.id||0));
               }}
             />
           </span>
@@ -183,7 +183,7 @@ const ListPage = () => {
         <MangaCardVertical 
           data={manga} 
           overlay={overlayCard(manga)}
-          handleFollow={() => {handleFollow(manga)}}
+          handleFollow={handleFollow}
         />
       </li>)}
     </ul>

@@ -1,7 +1,4 @@
-import { MeApi } from 'apis';
 import MangaApi from 'apis/manga.api';
-import axios, { CancelTokenSource } from 'axios';
-import { ISearchObject } from 'interfaces'
 import { Dispatch } from 'redux';
 import { ActionTypes } from './types';
 
@@ -34,3 +31,7 @@ export const fetchFinishManga = () => async (dispatch: Dispatch) => {
     dispatch({ type: ActionTypes.FetchFinishFailure });
   }
 }
+
+export const followMangaInHome = (id: number) => ({ type: ActionTypes.FollowManga, payload: { id } });
+export const unfollowMangaInHome = (id: number) => ({ type: ActionTypes.UnfollowManga, payload: { id } });
+

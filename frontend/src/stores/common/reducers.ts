@@ -1,4 +1,4 @@
-import { IAction, ICommonStore } from 'interfaces';
+import { IAction, ICommonStore, IManga } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
 
@@ -56,7 +56,7 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
       state.readed.data = state.readed.data.filter(item => item.id !== action.payload.data);
       state.readed.data.unshift(action.payload.data);
       return state;
-    case ActionTypes.FollowManga:
+    case ActionTypes.AddFollowManga:
       return {
         ...state,
         follow: {
@@ -67,7 +67,7 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
           ]
         }
       };
-    case ActionTypes.UnfollowManga:
+    case ActionTypes.RemoveFollowManga:
       return {
         ...state,
         follow: {
@@ -75,6 +75,42 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
           data: state.follow.data.filter(item => item.id !== action.payload.id)
         }
       };
+    case ActionTypes.FollowManga:
+      let handleFollow = (item: IManga) => {
+        if (action.payload.id === item.id) item.isFollowing = 1;
+        return item;
+      }
+      return {
+        ...state, 
+        readed: {
+          ...state.readed,
+          data: state.readed.data.map(handleFollow)
+        },
+        top: {
+          ...state.top,
+          day: state.top.day.map(handleFollow),
+          week: state.top.week.map(handleFollow),
+          month: state.top.month.map(handleFollow),
+        }
+      }
+    case ActionTypes.UnfollowManga:
+      let handleUnfollow = (item: IManga) => {
+        if (action.payload.id === item.id) item.isFollowing = 0;
+        return item;
+      }
+      return {
+        ...state, 
+        readed: {
+          ...state.readed,
+          data: state.readed.data.map(handleUnfollow)
+        },
+        top: {
+          ...state.top,
+          day: state.top.day.map(handleUnfollow),
+          week: state.top.week.map(handleUnfollow),
+          month: state.top.month.map(handleUnfollow),
+        }
+      }
     case ActionTypes.SyncWithLocalstorage:
       return {...state, local: action.payload.data}
     case ActionTypes.SetLocalName:
