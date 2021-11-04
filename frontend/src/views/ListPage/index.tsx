@@ -191,7 +191,7 @@ const ListPage = () => {
 
   return(
     <div className="max-w-335 mx-auto my-4 p-4">
-      <h1 className='text-3xl lg:text-4xl font-bold mb-2'>
+      <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold mb-2'>
         {title}
       </h1>
       {listContent}

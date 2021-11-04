@@ -18,7 +18,7 @@ interface CommonMangaCardCarouselProps {
 const CommonMangaCardCarousel = (props: CommonMangaCardCarouselProps) => {
   return (
     <section className="container max-w-335 px-4 mx-auto">
-      <h2 className="text-3xl font-bold my-4">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold my-4">
         {props.title}
       </h2>
       <Carousel columnsPerSlide={props.cols} columnsPerScroll={props.cols} columnSpacing={16} >
@@ -48,7 +48,7 @@ const HomePage = function() {
 
   const genreCarousel = genres.isLoading || genres.isError ? '' :
     <section className="container max-w-335 px-4 mx-auto">
-      <h2 className="text-3xl font-bold my-4">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold my-4">
         Các thể loại
       </h2>
       <Carousel columnsPerSlide={cols-1} columnsPerScroll={cols-1} columnSpacing={8} >
@@ -73,7 +73,7 @@ const HomePage = function() {
 
   const topMangaCarousel = common.top.isLoading ? '' :
     <section className="container max-w-335 px-4 mx-auto">
-      <h2 className="text-3xl font-bold mt-4">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4">
         Xếp hạng truyện
       </h2>
       <div className="my-2 ml-2 text-lg space-x-4 font-bold">
