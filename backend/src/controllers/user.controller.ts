@@ -48,6 +48,9 @@ class UserController {
   fetchById = async (req: Request, res: Response) => {
     try {
       const result = await User.scope(['includeRole', 'hideSensitive']).findByPk(+req.params.id);
+      if (result === null) {
+        return res.status(404).json({ msg: 'Người dùng không tồn tại' });
+      }
       res.status(200).json(result);
     } catch (error) {
       res.status(500).json({

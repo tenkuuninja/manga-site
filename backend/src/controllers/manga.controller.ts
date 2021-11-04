@@ -92,6 +92,9 @@ class MangaController {
         scope.push({ method: ['sortQuery', req.query.sort] });
       }
       const result = await Manga.scope(scope).findByPk(+req.params.id);
+      if (result === null) {
+        return res.status(404).json({ msg: 'Nội dung không tồn tại' });
+      }
       res.status(200).json(result);
     } catch (error) {
       console.log('manga controller fetch error >>', error)
@@ -217,7 +220,7 @@ class MangaController {
 
   addRate = async (req: Request, res: Response) => {
     try {
-      const manga = await Manga.findByPk(+req.params.id,);
+      const manga = await Manga.findByPk(+req.params.id);
       let rate: any = manga?.rate;
       const star = +req.body.star;
       if (1<=star && star>=5) {

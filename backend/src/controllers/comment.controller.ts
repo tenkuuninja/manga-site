@@ -48,6 +48,9 @@ class CommentController {
   fetchById = async (req: Request, res: Response) => {
     try {
       const result = await Comment.scope(['includeUser', 'includeManga', 'includeReply']).findByPk(+req.params.id);
+      if (result === null) {
+        return res.status(404).json({ msg: 'Nội dung không tồn tại' });
+      }
       res.status(200).json(result);
     } catch (error) {
       res.status(500).json({

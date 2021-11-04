@@ -55,6 +55,9 @@ class ChapterController {
         }],
         order: [ [seq.literal('`manga.chapters.number`'), 'DESC'] ]
       }); 
+      if (result === null) {
+        return res.status(404).json({ msg: 'Nội dung không tồn tại' });
+      }
       if (include.includes('navigation') && result !== null) {
         let [prevChapter, nextChapter] = await Promise.all([
           Chapter.findOne({
