@@ -6,6 +6,7 @@ import MangaReaded from '../models/manga_readed.model';
 import { FindOptions } from 'sequelize/types';
 import Sequelize from 'sequelize';
 import { unlinkSync } from 'fs';
+import Chapter from '../models/chapter.model';
 
 const imgbbUploader = require("imgbb-uploader");
 
@@ -132,30 +133,48 @@ class UserController {
   read = async (req: Request, res: Response) => {
     try {
       if (req.user === undefined) throw Error();
-      if (Number.isNaN(+req.params.chapter)) {
-        res.status(500).send(false);
+      let chapter = await Chapter.findByPk(req.body.chapterId);
+      if (chapter === null) {
+        return res.status(500).send(false);
       }
       let record = await MangaReaded.findOne({
         where: {
-          mangaId: req.body.mangaId,
+          mangaId: chapter.mangaId,
           userId: req.user.id
         }
       });
       if (record !== null) {
         let readed = typeof record.readed === 'string' ? record.readed.split(',').map(i => +i) : record.readed;
-        readed.push(+req.params.chapter);
+        readed.push(chapter.number);
         readed = [...new Set(readed)];
         readed.sort((a, b) => a-b);
-        await record.update({
-          lastChapterId: req.body.lastChapterId,
-          lastChapter: req.body.lastChapter,
-          readed: readed
+        await MangaReaded.update({
+          userId: req.user.id,
+          mangaId: chapter.mangaId,
+          lastChapterId: chapter.id,
+          lastChapter: chapter.number,
+          readed: readed,
+        }, {
+          where: {
+            mangaId: chapter.mangaId,
+            userId: req.user.id
+          }
         });
       } else {
-        let record = await MangaReaded.create({...req.body, readed: req.params.chapter, userId: req.user.id});
+        let newRecord = {
+          userId: req.user.id,
+          user_id: req.user.id,
+          mangaId: chapter.mangaId,
+          manga_id: chapter.mangaId,
+          lastChapterId: chapter.id,
+          lastChapter: chapter.number,
+          readed: [chapter.number], 
+        }
+        await MangaReaded.create(newRecord);
       }
       res.status(201).send(true);
     } catch (error) {
+      console.log('me api read manga >>',error)
       res.status(500).send(false);
     }
   }

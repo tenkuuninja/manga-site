@@ -44,7 +44,8 @@ interface MangaAttributes {
   viewWeek: number,
   viewMonth: number,
   leechType: string,
-  leechUrl: string
+  leechUrl: string,
+  readed: MangaReaded,
 }
 
 interface MangaCreationAttributes extends Optional<MangaAttributes, "id"> {}
@@ -68,6 +69,8 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
   public viewMonth!: number;
   public leechType!: string;
   public leechUrl!: string;
+  
+  public readed!: MangaReaded;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -157,14 +160,6 @@ class Manga extends Model<MangaAttributes, MangaCreationAttributes> implements M
     Manga.addScope('includeComment', {
       include: 'comments',
     });
-    Manga.addScope('includeReads', (userId: number, required: boolean = false) =>  ({
-      include: [{
-        model: MangaReaded,
-        as: 'reads',
-        where: { userId: userId },
-        required: required
-      }]
-    }));
     Manga.addScope('showTotalFollowing', {
       attributes: {
         include: [[seq.literal("(SELECT COUNT(`manga_user`.`user_id`) AS `count` FROM `manga_user` AS `manga_user` WHERE `manga_user`.`manga_id` = `Manga`.`id`)"), 'totalFollowing']]
@@ -381,6 +376,9 @@ Manga.init({
   leechUrl: {
     field: 'leech_url',
     type: DataTypes.STRING,
+  },
+  readed: {
+    type: DataTypes.VIRTUAL
   }
 }, {
   sequelize,

@@ -6,6 +6,7 @@ import { changeToSlug } from '../utils/string';
 import User from '../models/user.model';
 import Chapter from '../models/chapter.model';
 import Comment from '../models/comment.model';
+import MangaReaded from '../models/manga_readed.model';
 
 class MangaController {
 
@@ -86,7 +87,6 @@ class MangaController {
       let scope: any[] = ['includeGenre', 'includeChapter', 'showTotalFollowing', 'hideSrcLeech']
       if (req.user instanceof User) {
         scope.push({ method: ['showIsFollowingById', +req.user.id] });
-        scope.push({ method: ['includeReads', +req.user.id] });
       }
       if (typeof req.query.sort === 'string') {
         scope.push({ method: ['sortQuery', req.query.sort] });
@@ -94,6 +94,17 @@ class MangaController {
       const result = await Manga.scope(scope).findByPk(+req.params.id);
       if (result === null) {
         return res.status(404).json({ msg: 'Nội dung không tồn tại' });
+      }
+      if (req.user instanceof User) {
+        const readed = await MangaReaded.findOne({
+          where: {
+            userId: req.user.id,
+            mangaId: result.id
+          }
+        });
+        if (readed) {
+          result.readed = readed;
+        }
       }
       res.status(200).json(result);
     } catch (error) {
