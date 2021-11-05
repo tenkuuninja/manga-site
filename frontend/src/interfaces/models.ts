@@ -61,7 +61,7 @@ export interface IManga {
   
   isFollowing?: number;
   totalFollowing?: number;
-  readed?: IMangaReaded[],
+  readed?: IMangaReaded,
   reads?: IMangaReaded[],
   chapters?: IChapter[];
   genres?: IGenre[];
@@ -98,6 +98,7 @@ export interface IMangaReaded {
   mangaId?: number
   userId?: number
   readed?: number[]
+  readedObj?: { [k: number]: true }
   lastChapter?: number
   lastChapterId?: number
   updatedAt?: string

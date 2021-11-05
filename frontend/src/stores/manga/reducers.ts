@@ -52,6 +52,20 @@ const authReducer: Reducer = (state: IDataStore<IManga> = initialState, action: 
           favorite: (state.data?.favorite||0) + 1
         }
       }
+    case ActionTypes.AddReadedManga:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          readed: {
+            readed: [...state.data.readed?.readed||[], action.payload.chapter],
+            readedObj: {
+              ...state.data.readed?.readedObj,
+              [action.payload.chapter]: true
+            }
+          }
+        }
+      }
     default:
       return state;
   }

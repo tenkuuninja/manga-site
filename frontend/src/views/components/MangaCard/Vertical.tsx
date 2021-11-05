@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { IGenre, IManga } from 'interfaces';
 import { Link } from 'react-router-dom';
 import { countryType } from 'utils/static';
-import { getRelativeTimeFromNow } from 'utils/helper';
+import { convertNumberToHumanRead, getRelativeTimeFromNow } from 'utils/helper';
 import { useWindowSize } from 'hooks';
 import { Icon } from '@iconify/react';
 
@@ -71,7 +71,7 @@ function PopupHover({ overlay, children }: PopupHoverProps) {
 }
 
 export const MangaCardVertical = function(props: MangaCardVerticalProps) {
-  const { id, title, titleSlug, imageUrl, description, chapter, isFinish, country, updatedAt = '', isFollowing, genres } = props.data;
+  const { id, title, titleSlug, imageUrl, description, favorite, rate, view, chapter, isFinish, country, updatedAt = '', isFollowing, genres } = props.data;
 
   return(
     <PopupHover
@@ -81,19 +81,25 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
           <h3 className='font-semibold text-lg'>{title}</h3>
           <p className='text-xs text-green-500'>Cập nhật từ <span className='text-sm text-green-600 font-semibold'>{getRelativeTimeFromNow(updatedAt)}</span></p>
           <p className=' text-sm'>{chapter} chương &bull; {isFinish ? 'Đã hoàn thành' : 'Đang cập nhật'}</p>
-          <ul className='text-sm font-medium'>
-            <li className='inline-block px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl mr-1 mt-1'>
+          <p className="text-sm space-x-8">
+            <span ><Icon icon="bi:eye" /> {convertNumberToHumanRead(view||0)}</span>
+            <span ><Icon icon="bi:heart" /> {convertNumberToHumanRead(favorite||0)}</span>
+            <span ><Icon icon="bi:star" /> {(rate?.all||5).toFixed(1)}</span>
+          </p>
+          <ul className='text-sm font-medium my-2'>
+            <li className='inline-block px-2 py-0.5 border border-red-500 text-red-500 hover:text-white hover:bg-red-500 rounded-2xl transition mr-1 mt-1'>
               <Link className='block' to={`/quoc-gia-${countryType[country as keyof typeof countryType].slug}.html`}>
                 {countryType[country as keyof typeof countryType].title}
               </Link>
             </li>
-            {genres?.map((genre: IGenre) => <li className='inline-block px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl mr-1 mt-1' key={genre.id}>
+            {genres?.map((genre: IGenre) => 
+            <li className='inline-block px-2 py-0.5 border border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 rounded-2xl transition mr-1 mt-1' key={genre.id}>
               <Link className='block' to={`/the-loai-${genre.id}-${genre.titleSlug}.html`}>
                 {genre.title}
               </Link>
             </li>)}
           </ul>
-          <p className='truncate-lines line-clamp-10 leading-5 mt-1'>{description}</p>
+          <p className='truncate-lines line-clamp-10 leading-5 text-sm mt-1'>{description}</p>
           <div className='flex items-center text-lg mt-2'>
             <Link 
               className='flex-grow block text-white text-center font-bold rounded py-1 bg-blue-500 opacity-90 hover:opacity-100 transition' 

@@ -27,7 +27,10 @@ export const MeApi = {
   },
   unfollowManga: (mangaId: number, config: AxiosRequestConfig = {}) => {
     return axios.delete<boolean>(path+'/mangas/'+mangaId, config);
-  }
+  },
+  read: (chapterId: number, config: AxiosRequestConfig = {}) => {
+    return axios.post<boolean>(path+'/reads/', { chapterId }, config);
+  },
 }
 
 export default MeApi;

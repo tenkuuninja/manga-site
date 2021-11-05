@@ -22,3 +22,16 @@ export const getRelativeTimeFromNow = (dateStr?: string, sec?: number) => {
   return moment(dateStr).locale('vi').startOf('seconds').fromNow();
 }
 
+export const convertNumberToHumanRead = (num: number, fixed: number = 2) => {
+  let units = ['','K','M','B','T','Q'];
+	let count = 0
+  while (num >=1000) {
+		num /= 1000
+		count++
+	}
+  for (let i=0; i<fixed; i++) {
+    if (num === +num.toFixed(i)) return num.toFixed(i)+units[count]
+  }
+	return num.toFixed(2)+units[count]
+}
+

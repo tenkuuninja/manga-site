@@ -9,6 +9,7 @@ import { fetchChapter, followMangaInChapter, unfollowMangaInChapter } from 'stor
 import Comment from 'views/components/Comment';
 import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
+import { fetchManga } from 'stores/manga/actions';
 
 interface IParams {
   mangaId: string;
@@ -18,13 +19,13 @@ interface IParams {
 }
 
 const MangaChapterPage = () => {
-  const { auth, chapter } = useSelector((store: IAppState) => store);
+  const { auth, chapter, manga } = useSelector((store: IAppState) => store);
   const dispatch = useDispatch();
   const match = useRouteMatch<IParams>();
   const history = useHistory();
   const [isShowControlBar, setShowControlBar] = useState<boolean>(true);
   const yRef = useRef<number>(0);
-  const { manga, navigation} = chapter.data;
+  const { navigation} = chapter.data;
   const { mangaId, mangaSlug, chapterId, chapterNumber } = match.params;
 
   function scrollToTop() {
@@ -39,11 +40,11 @@ const MangaChapterPage = () => {
     if (!auth.isLoggedIn) {
       return;
     }
-    if (manga?.isFollowing === 0) {
+    if (manga.data?.isFollowing === 0) {
       dispatch(followMangaInChapter());
-      dispatch(addFollowMangaInCommon(manga));
+      dispatch(addFollowMangaInCommon(manga.data));
       MeApi.followManga(+mangaId);
-    } else if (manga?.isFollowing === 1) {
+    } else if (manga.data?.isFollowing === 1) {
       dispatch(unfollowMangaInChapter());
       dispatch(removeFollowMangaInCommon(+mangaId));
       MeApi.unfollowManga(+mangaId);
@@ -62,8 +63,13 @@ const MangaChapterPage = () => {
 
   useEffect(function() {
     dispatch(fetchChapter(+chapterId));
+    dispatch(fetchManga(+mangaId));
     // eslint-disable-next-line
   }, [mangaId, chapterId]);
+
+  if (chapter.isLoading || chapter.isError || manga.isLoading || manga.isError) {
+    <></>
+  }
 
   const navigationButton = <div className="text-center space-x-4 clear-both">
     <Link 
@@ -95,16 +101,16 @@ const MangaChapterPage = () => {
             <Icon icon="bi:grid-3x3-gap-fill" className="mr-1 text-base" />
             Danh sách
           </Link>
-          <Link to={`/truyen-tranh-${manga?.id}-${manga?.titleSlug}.html`} className="flex items-center">
+          <Link to={`/truyen-tranh-${manga.data?.id}-${manga.data?.titleSlug}.html`} className="flex items-center">
             <Icon icon="bx:bx-book-alt" className="mr-1 text-base" />
-            {manga?.title}
+            {manga.data?.title}
           </Link>
           <p className="truncate cursor-pointer text-gray-600">
             Chap {chapterNumber.replace('-','.')}
           </p>
         </Breadcrumbs>
         <h1 className="text-3xl font-bold my-4">
-          Đọc truyện {manga?.title} chap {chapter.data.number}
+          Đọc truyện {manga.data?.title} chap {chapter.data.number}
         </h1> 
         {navigationButton}
       </section>
@@ -114,7 +120,7 @@ const MangaChapterPage = () => {
             <img 
               className="mx-auto text-center max-w-full min-h-full"
               src={`${item}`} 
-              alt={`Hình ảnh ${i} của ${manga?.title} chap ${chapter.data.number}`}
+              alt={`Hình ảnh ${i} của ${manga.data?.title} chap ${chapter.data.number}`}
             />
           </div>
         )}
@@ -145,7 +151,7 @@ const MangaChapterPage = () => {
                   defaultValue={getChapterUrl(chapter.data)} 
                   onChange={(e) => history.push(e.target.value)}
                 >
-                  {manga?.chapters?.map((c, i) => 
+                  {manga.data?.chapters?.map((c, i) => 
                     <option 
                       value={getChapterUrl(c)} 
                       disabled={getChapterUrl(chapter.data) === getChapterUrl(c)}
@@ -163,8 +169,8 @@ const MangaChapterPage = () => {
             </div>
             <div className=''>
               <div className="flex items-center h-10 space-x-2 cursor-pointer" onClick={handleFollow}>
-                <Icon icon={manga?.isFollowing ? "bi:heart-fill" : "bi:heart"} className="text-xl" />
-                <span className="hidden md:inline">{manga?.isFollowing ? "Hủy theo dõi" : "Theo dõi"}</span>
+                <Icon icon={manga.data?.isFollowing ? "bi:heart-fill" : "bi:heart"} className="text-xl" />
+                <span className="hidden md:inline">{manga.data?.isFollowing ? "Hủy theo dõi" : "Theo dõi"}</span>
               </div>
             </div>
           </div>

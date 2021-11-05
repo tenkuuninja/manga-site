@@ -53,9 +53,16 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
     case ActionTypes.FetchAutoCompleteFailure:
       return {...state, autoComplete: {...state.autoComplete, isError: true}}
     case ActionTypes.AddReaded:
-      state.readed.data = state.readed.data.filter(item => item.id !== action.payload.data);
-      state.readed.data.unshift(action.payload.data);
-      return state;
+      return {
+        ...state,
+        readed: {
+          ...state.readed,
+          data: [
+            action.payload,
+            ...state.readed.data.filter(item => item?.id !== action.payload.id)
+          ]
+        }
+      };
     case ActionTypes.AddFollowManga:
       return {
         ...state,

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { ChapterListSkeleton } from './Skeleton';
+import { Icon } from '@iconify/react';
 const amountItemShowPreview = 10;
 
 const MangaDetailPage = () => {
@@ -30,7 +31,10 @@ const MangaDetailPage = () => {
             <div className='float-left'>
               <span>Chapter {chapter.number}{chapter.title? ': ' + chapter.title : ''}</span>
             </div>
-            <div className='float-right text-sm'>
+            <div className='float-right text-sm space-x-4'>
+              {manga.data.readed?.readedObj?.[chapter?.number||0] &&
+                <span><Icon icon="bi:eye" /></span>
+              }
               <span>{getRelativeTimeFromNow(chapter.updatedAt)}</span>
             </div>
           </Link>

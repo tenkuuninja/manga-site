@@ -5,6 +5,7 @@ export enum ActionTypes  {
   FollowManga       = 'manga_FollowManga',
   UnfollowManga     = 'manga_UnfollowManga',
   IncreaseFavorite  = 'manga_IncreaseFavorite',
+  AddReadedManga    = 'manga_AddReadedManga',
 }
 
 export default ActionTypes;

@@ -19,7 +19,9 @@ const Detail = (props: IDetailProps) => {
   const manga = useSelector((store: IAppState) => store.manga);
 
   const { 
+    id,
     title, 
+    titleSlug,
     titleSynonym, 
     description, 
     imageUrl,
@@ -32,6 +34,8 @@ const Detail = (props: IDetailProps) => {
     view, 
     isFollowing, 
     genres, 
+    chapters,
+    readed,
     updatedAt 
   } = manga.data;
 
@@ -81,7 +85,7 @@ const Detail = (props: IDetailProps) => {
             <span><Icon icon="bi:heart" /> {favorite}</span>
           </p>
           {author?.length ? <p>Tác giả: {author.join(', ')}</p> : null}
-          <ul className='text-sm font-medium space-x-1'>
+          <ul className='text-base font-semibold space-x-1'>
             <li className='inline-block py-2 pr-1 text-red-500 hover:text-red-600'>
               <Link className='block' to={`/quoc-gia-${countryType[country as keyof typeof countryType || 'jp'].slug}.html`}>
                 {countryType[country as keyof typeof countryType || 'jp'].title}
@@ -93,22 +97,35 @@ const Detail = (props: IDetailProps) => {
               </Link>
             </li>)}
           </ul>
-          <p>{description}</p>
+          <p className="">{description}</p>
           <ul className='block font-medium pt-2'>
-            <li className='inline-block px-4 py-1 bg-green-500 hover:bg-green-600 text-white rounded-2xl mr-1 mt-1'>
-              <Link className='block' to={`/the-loai-.html`}> Đọc từ đầu</Link>
-            </li>
+            {!!readed &&
+              <li className='inline-block px-4 py-1 bg-pink-500 hover:bg-pink-600 text-white rounded-2xl mr-1 mt-1'>
+                <Link className='block' to={`/doc-truyen-${id}-${readed.lastChapterId}-${titleSlug}-chap-${(''+readed.lastChapter).replace('.', '-')}.html`}>
+                  <Icon icon="bi:book" /> Đọc tiếp
+                </Link>
+              </li>
+            }
+            {chapters && chapters.length > 1 &&
+              <li className='inline-block px-4 py-1 bg-green-500 hover:bg-green-600 text-white rounded-2xl mr-1 mt-1'>
+                <Link className='block' to={`/doc-truyen-${id}-${chapters[chapters.length-1].id}-${titleSlug}-chap-${(''+chapters[chapters.length-1].number).replace('.','-')}.html`}>
+                  <Icon icon="bi:book" /> Đọc từ đầu
+                </Link>
+              </li>
+            }
             <li 
               className='inline-block px-4 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl mr-1 mt-1 cursor-pointer' 
               onClick={props.handleFollow}
             >
-              <span className='block'>{!isFollowing ? 'Theo dõi' : 'Hủy Theo dõi'}</span>
+              <Icon icon={!isFollowing ? "bi:bookmark" : "bi:bookmark-check"} />
+              <span className='mr-1'>{!isFollowing ? 'Theo dõi' : 'Hủy Theo dõi'}</span>
             </li>
             <li 
               className='inline-block px-4 py-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl mr-1 mt-1 cursor-pointer' 
               onClick={props.handleIncreaseFavorite}
             >
-              <span className='block'> Thích</span>
+              <Icon icon={!isFollowing ? "bi:heart" : "bi:heart"} />
+              <span className='mr-1'> Thích</span>
             </li>
           </ul>
         </div>

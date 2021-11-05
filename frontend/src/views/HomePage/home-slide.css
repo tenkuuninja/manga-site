@@ -35,12 +35,12 @@
   opacity: 0;
   transform: rotate(55deg);
   left: -100%;
-  transition: all 400ms ease-out 200ms;
+  transition: all 500ms ease-out 200ms;
 }
 #slider .sfh-is-right .bg-block-secondary {
   transform: rotate(35deg);
   right: -100%;
-  transition: all 400ms ease-out 200ms;
+  transition: all 500ms ease-out 200ms;
 }
 
 
