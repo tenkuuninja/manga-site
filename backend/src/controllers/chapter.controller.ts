@@ -53,7 +53,6 @@ class ChapterController {
           model: Manga.scope(mangaScope),
           as: 'manga'
         }],
-        order: [ [seq.literal('`manga.chapters.number`'), 'DESC'] ]
       }); 
       if (result === null) {
         return res.status(404).json({ msg: 'Nội dung không tồn tại' });
