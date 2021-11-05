@@ -120,7 +120,7 @@ const authReducer: Reducer = (state: IHomeStore = initialState, action: IAction)
           data: state.finish.data.map(handleFollow)
         },
       }
-    case ActionTypes.FollowManga:
+    case ActionTypes.UnfollowManga:
       let handleUnfollow = (item: IManga) => {
         if (action.payload.id === item.id) item.isFollowing = 0;
         return item;

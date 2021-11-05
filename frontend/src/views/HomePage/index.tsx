@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { MeApi } from 'apis';
 import { addFollowMangaInCommon, followMangaInCommon, removeFollowMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
+import SlideShow from './SlideShow';
 
 interface CommonMangaCardCarouselProps {
   title: string;
@@ -49,6 +50,7 @@ const HomePage = function() {
   useEffect(function() {
     if (home.lastest.data.length === 0) dispatch(fetchLastestUpdateManga());
     if (home.newest.data.length === 0) dispatch(fetchNewestManga());
+    // eslint-disable-next-line
   }, []);
 
   const handleFollow = (manga: IManga) => {
@@ -141,51 +143,50 @@ const HomePage = function() {
       </Carousel>
     </section>
   
-
+  
   return(
-    <React.Fragment>
-      <div className="space-y-8 my-8">
-        {auth.isLoggedIn && 
-        <CommonMangaCardCarousel 
-          title="Tiếp tục đọc"
-          data={common.readed.data}
-          isLoading={common.readed.isLoading}
-          isError={common.readed.isLoading}
-          cols={cols}
-          overlay={readedOverlay}
-          handleFollow={handleFollow}
-        />}
-        <CommonMangaCardCarousel 
-          title="Truyện mới cập nhật"
-          data={home.lastest.data}
-          isLoading={home.lastest.isLoading}
-          isError={home.lastest.isError}
-          cols={cols}
-          overlay={updatedOverlay}
-          handleFollow={handleFollow}
-        />
-        {genreCarousel}
-        <CommonMangaCardCarousel 
-          title="Truyện tranh mới"
-          data={home.newest.data}
-          isLoading={home.newest.isLoading}
-          isError={home.newest.isError}
-          cols={cols}
-          overlay={updatedOverlay}
-          handleFollow={handleFollow}
-        />
-        <CommonMangaCardCarousel 
-          title="Truyện được xem nhiều"
-          data={common.top.all}
-          isLoading={common.top.isLoading}
-          isError={common.top.isError}
-          cols={cols}
-          overlay={updatedOverlay}
-          handleFollow={handleFollow}
-        />
-        {topMangaCarousel}
-      </div>
-    </React.Fragment>
+    <div className="space-y-8 mb-8">
+      <SlideShow />
+      {auth.isLoggedIn && 
+      <CommonMangaCardCarousel 
+        title="Tiếp tục đọc"
+        data={common.readed.data}
+        isLoading={common.readed.isLoading}
+        isError={common.readed.isLoading}
+        cols={cols}
+        overlay={readedOverlay}
+        handleFollow={handleFollow}
+      />}
+      <CommonMangaCardCarousel 
+        title="Truyện mới cập nhật"
+        data={home.lastest.data}
+        isLoading={home.lastest.isLoading}
+        isError={home.lastest.isError}
+        cols={cols}
+        overlay={updatedOverlay}
+        handleFollow={handleFollow}
+      />
+      {genreCarousel}
+      <CommonMangaCardCarousel 
+        title="Truyện tranh mới"
+        data={home.newest.data}
+        isLoading={home.newest.isLoading}
+        isError={home.newest.isError}
+        cols={cols}
+        overlay={updatedOverlay}
+        handleFollow={handleFollow}
+      />
+      <CommonMangaCardCarousel 
+        title="Truyện được xem nhiều"
+        data={common.top.all}
+        isLoading={common.top.isLoading}
+        isError={common.top.isError}
+        cols={cols}
+        overlay={updatedOverlay}
+        handleFollow={handleFollow}
+      />
+      {topMangaCarousel}
+    </div>
   );
 }
 
