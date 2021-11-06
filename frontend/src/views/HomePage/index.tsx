@@ -10,6 +10,7 @@ import { getRelativeTimeFromNow } from 'utils/helper';
 import { MeApi } from 'apis';
 import { addFollowMangaInCommon, followMangaInCommon, removeFollowMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
 import SlideShow from './SlideShow';
+import { CarouselGenreSkeleton, CarouselMangaSkeleton } from './Skeleton';
 
 interface CommonMangaCardCarouselProps {
   title: string;
@@ -23,7 +24,7 @@ interface CommonMangaCardCarouselProps {
 
 const CommonMangaCardCarousel = (props: CommonMangaCardCarouselProps) => {
   if (props.isLoading || props.isError) {
-    return <></>
+    return <CarouselMangaSkeleton />
   }
 
   return (
@@ -82,7 +83,7 @@ const HomePage = function() {
     </span>
   </div>
 
-  const genreCarousel = genres.isLoading || genres.isError ? '' :
+  const genreCarousel = genres.isLoading || genres.isError ? <CarouselGenreSkeleton /> :
     <section className="container max-w-335 px-4 mx-auto">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold my-4">
         Các thể loại
@@ -107,7 +108,7 @@ const HomePage = function() {
       </Carousel>
     </section>
 
-  const topMangaCarousel = common.top.isLoading ? '' :
+  const topMangaCarousel = common.top.isLoading || common.top.isError ? <CarouselMangaSkeleton /> :
     <section className="container max-w-335 px-4 mx-auto">
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4">
         Xếp hạng truyện

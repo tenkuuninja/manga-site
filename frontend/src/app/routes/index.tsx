@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Switch,
-  Route
+  Route,
+  Redirect
 } from 'react-router-dom';
 import routes from './navigation'
 
@@ -11,6 +12,7 @@ const Routes = function() {
       {routes.map((route, i) => {
         return <Route key={i} {...route} />
       })}
+      <Redirect to="/" />
     </Switch>
   );
 }

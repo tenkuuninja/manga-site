@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { DetailSkeleton } from './Skeleton';
+import { getRelativeTimeFromNow } from 'utils/helper';
 
 interface IDetailProps {
   handleFollow: () => void;
@@ -77,7 +78,7 @@ const Detail = (props: IDetailProps) => {
           </div>
           <p className='space-x-2'>
             <span className='inline-block'><Icon icon="grommet-icons:update" /></span>
-            <span>Cập nhật từ {(updatedAt)}</span>
+            <span>Cập nhật từ {getRelativeTimeFromNow(updatedAt, 259200)}</span>
           </p>
           <p className=''><Icon icon="bi:book" /> {chapter} chương &bull; {isFinish ? 'Đã hoàn thành' : 'Đang cập nhật'}</p>
           <p className='space-x-4'>

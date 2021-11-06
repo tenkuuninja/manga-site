@@ -10,6 +10,8 @@ import Comment from 'views/components/Comment';
 import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
 import { fetchManga } from 'stores/manga/actions';
+import { MangaReadSkeleton } from './Skeleton';
+import Error from 'views/components/Error';
 
 interface IParams {
   mangaId: string;
@@ -67,8 +69,12 @@ const MangaChapterPage = () => {
     // eslint-disable-next-line
   }, [mangaId, chapterId]);
 
-  if (chapter.isLoading || chapter.isError || manga.isLoading || manga.isError) {
-    <></>
+  if (chapter.isLoading || manga.isLoading) {
+    return <MangaReadSkeleton />
+  }
+
+  if (chapter.isError || manga.isError) {
+    return <Error />
   }
 
   const navigationButton = <div className="text-center space-x-4 clear-both">
@@ -128,54 +134,54 @@ const MangaChapterPage = () => {
       <section className="container mx-auto p-4">
         {navigationButton}
         <Comment />
-        <div className={`${isShowControlBar ? 'fixed' : "hidden"} bottom-16 right-4 w-12 h-12 opacity-50 hover:opacity-80 transition-opacity duration-200 bg-black text-white text-5xl text-center font-semibold rounded-xl cursor-pointer`} onClick={scrollToTop}>
-          <Icon icon="bx:bx-arrow-to-top" />
-        </div>
-        <div className={`fixed bottom-0 left-0 ${!isShowControlBar && 'transform translate-y-full'} transition-transform ease-out duration-200 h-14 py-2 w-full bg-gray-50 border-t border-gray-300 font-light`}>
-          <div className='container px-2 h-10 flex justify-between text-lg'>
-            <div className=''>
-              <Link to='/' className="flex items-center h-10 space-x-2">
-                <Icon icon="bx:bx-home" className="text-xl" />
-                <span className="hidden md:inline">Trang chủ</span>
-              </Link>
+      </section>
+      <div className={`${isShowControlBar ? 'fixed' : "hidden"} bottom-16 right-4 w-12 h-12 opacity-50 hover:opacity-80 transition-opacity duration-200 bg-black text-white text-5xl text-center font-semibold rounded-xl cursor-pointer`} onClick={scrollToTop}>
+        <Icon icon="bx:bx-arrow-to-top" />
+      </div>
+      <div className={`fixed bottom-0 left-0 ${!isShowControlBar && 'transform translate-y-full'} transition-transform ease-out duration-200 h-14 py-2 w-full bg-gray-50 border-t border-gray-300 font-light`}>
+        <div className='container px-2 h-10 flex justify-between text-lg'>
+          <div className=''>
+            <Link to='/' className="flex items-center h-10 space-x-2">
+              <Icon icon="bx:bx-home" className="text-xl" />
+              <span className="hidden md:inline">Trang chủ</span>
+            </Link>
+          </div>
+          <div className='flex items-center h-10 space-x-3'>
+            <Icon 
+              icon="bi:arrow-left-circle" 
+              className={`text-3xl cursor-pointer ${!navigation?.previous && 'opacity-60'}`}
+              onClick={() => navigation?.previous && history.push(getChapterUrl(navigation?.previous))}
+            />
+            <div className="cursor-pointer text-base">
+              <select 
+                className='select-arrow inline-block text-sm -md:w-48 +lg:w-72 h-8 rounded-md border border-gray-400 appearance-none'
+                defaultValue={getChapterUrl(chapter.data)} 
+                onChange={(e) => history.push(e.target.value)}
+              >
+                {manga.data?.chapters?.map((c, i) => 
+                  <option 
+                    value={getChapterUrl(c)} 
+                    disabled={getChapterUrl(chapter.data) === getChapterUrl(c)}
+                    key={i}>
+                      Chapter {c.number}{c.title? ': ' + c.title : ''}
+                  </option>
+                )}
+              </select>
             </div>
-            <div className='flex items-center h-10 space-x-3'>
-              <Icon 
-                icon="bi:arrow-left-circle" 
-                className={`text-3xl cursor-pointer ${!navigation?.previous && 'opacity-60'}`}
-                onClick={() => navigation?.previous && history.push(getChapterUrl(navigation?.previous))}
-              />
-              <div className="cursor-pointer text-base">
-                <select 
-                  className='select-arrow inline-block text-sm -md:w-48 +lg:w-72 h-8 rounded-md border border-gray-400 appearance-none'
-                  defaultValue={getChapterUrl(chapter.data)} 
-                  onChange={(e) => history.push(e.target.value)}
-                >
-                  {manga.data?.chapters?.map((c, i) => 
-                    <option 
-                      value={getChapterUrl(c)} 
-                      disabled={getChapterUrl(chapter.data) === getChapterUrl(c)}
-                      key={i}>
-                        Chapter {c.number}{c.title? ': ' + c.title : ''}
-                    </option>
-                  )}
-                </select>
-              </div>
-              <Icon 
-                icon="bi:arrow-right-circle" 
-                className={`text-3xl cursor-pointer ${!navigation?.next && 'opacity-60'}`}
-                onClick={() => navigation?.next && history.push(getChapterUrl(navigation?.next))}
-              />
-            </div>
-            <div className=''>
-              <div className="flex items-center h-10 space-x-2 cursor-pointer" onClick={handleFollow}>
-                <Icon icon={manga.data?.isFollowing ? "bi:heart-fill" : "bi:heart"} className="text-xl" />
-                <span className="hidden md:inline">{manga.data?.isFollowing ? "Hủy theo dõi" : "Theo dõi"}</span>
-              </div>
+            <Icon 
+              icon="bi:arrow-right-circle" 
+              className={`text-3xl cursor-pointer ${!navigation?.next && 'opacity-60'}`}
+              onClick={() => navigation?.next && history.push(getChapterUrl(navigation?.next))}
+            />
+          </div>
+          <div className=''>
+            <div className="flex items-center h-10 space-x-2 cursor-pointer" onClick={handleFollow}>
+              <Icon icon={manga.data?.isFollowing ? "bi:heart-fill" : "bi:heart"} className="text-xl" />
+              <span className="hidden md:inline">{manga.data?.isFollowing ? "Hủy theo dõi" : "Theo dõi"}</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </React.Fragment>
   );
 }

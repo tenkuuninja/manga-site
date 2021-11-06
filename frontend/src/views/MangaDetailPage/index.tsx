@@ -10,6 +10,7 @@ import AsideSticky from './AsideSticky';
 import { IAppState } from 'interfaces';
 import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
+import Error from 'views/components/Error';
 
 interface IParams {
   mangaId: string;
@@ -47,6 +48,10 @@ const MangaDetailPage = () => {
     dispatch(fetchManga(+match.params.mangaId));
     // eslint-disable-next-line
   }, [match.params.mangaId]);
+
+  if (manga.isError) {
+    return <Error />
+  }
 
   return (
     <React.Fragment>

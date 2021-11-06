@@ -35,7 +35,7 @@ const MangaDetailPage = () => {
               {manga.data.readed?.readedObj?.[chapter?.number||0] &&
                 <span><Icon icon="bi:eye" /></span>
               }
-              <span>{getRelativeTimeFromNow(chapter.updatedAt)}</span>
+              <span>{getRelativeTimeFromNow(chapter.updatedAt, 259200)}</span>
             </div>
           </Link>
         </li>)}

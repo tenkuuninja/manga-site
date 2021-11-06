@@ -2,11 +2,11 @@ import React from 'react';
 
 export const DetailSkeleton = () => {
   return (
-    <div className="animate-pulse">
-      <section>
-      
+    <div className="">
+      <section className="-mt-32 md:hidden bg-white w-52 mx-auto h-72 p-2 rounded">
+        <div className="bg-skeleton w-full h-full animate-pulse"></div>
       </section>
-      <section className='clear-both'>
+      <section className='clear-both animate-pulse'>
         <div className='rounded h-3 bg-skeleton w-64'></div>
         <div className='rounded h-10 my-5 bg-skeleton w-4/5'></div>
         <div className='rounded h-4 my-3 bg-skeleton w-40'></div>
@@ -50,8 +50,12 @@ export const ChapterListSkeleton = () => {
 
 export const AsideStickySkeleton = () => {
   return (
-    <div className="sticky top-5 animate-pulse">
+    <div className="sticky top-5 animate-pulse space-y-4 px-8">
       <div className="relative mx-auto my-5 w-60 h-80 bg-skeleton"></div>  
+      <div className="h-6 bg-skeleton"></div>
+      <div className="h-8 bg-skeleton"></div>
+      <div className="h-8 bg-skeleton"></div>
+      <div className="h-8 bg-skeleton"></div>
     </div>
   );
 }
