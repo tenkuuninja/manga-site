@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useRouteMatch } from 'react-router';
+import { useHistory, useLocation, useRouteMatch } from 'react-router';
 import qs from 'query-string';
 import { 
   fetchListManga, 
@@ -28,9 +28,11 @@ const ListPage = () => {
   const dispatch = useDispatch();
   const match = useRouteMatch<IParams>();
   const location = useLocation<IParams>();
+  const history = useHistory();
   const [title, setTitle] = useState<string>('');
   const [noContent, setNoContent] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
+  const search = qs.parse(location.search);
+  const page = +`${search.page}` || 1;
 
   function handleFollow(manga: IManga) {
     if (!auth.isLoggedIn) {
@@ -49,6 +51,12 @@ const ListPage = () => {
         MeApi.unfollowManga(manga.id||0);
       }
     }
+  }
+
+  function getUrlByPage(page: number) {
+    let search = qs.parse(location.search);
+    search.page = `${page}`;
+    return location.pathname+'?'+qs.stringify(search);
   }
 
   useEffect(function() {
@@ -134,11 +142,7 @@ const ListPage = () => {
         break;
     }
     // eslint-disable-next-line
-  }, [match.url, page, genres.data.length]);
-
-  useEffect(function() {
-    setPage(1);
-  }, [match.path]);
+  }, [match.url, location.search, genres.data.length]);
 
   if (noContent) {
     
@@ -198,10 +202,12 @@ const ListPage = () => {
       <div className="my-4">
         <Pagination 
           count={mangas.totalPage} 
+          hidePrevButton
+          hideNextButton
           showFirstButton 
           showLastButton 
           page={page}
-          onChange={(e, value: number) => value !== null && setPage(value)}
+          onChange={(e, value: number) => value !== null && history.push(getUrlByPage(value))}
           className="flex justify-center"
         />
       </div>

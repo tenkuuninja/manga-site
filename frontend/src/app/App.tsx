@@ -13,22 +13,26 @@ import Footer from 'views/components/Footer';
 import 'assets/tailwind-build.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'assets/style.css';
+import ScrollToTop from './routes/ScrollToTop';
+import Loading from 'views/components/Loading';
 
 function App() {
   return (
     <Router>
-      <Provider store={store}>
-        <ThemeProvider theme={materialUiTheme} >
-          <InitializeState />
-          <TopLoading />
-          <Header />
-          <React.Suspense fallback={`loading`}>
-            <Routes />
-          </React.Suspense>
-          <Footer />
-          <ToastContainer />
-        </ThemeProvider>
-      </Provider>
+      <ScrollToTop>
+        <Provider store={store}>
+          <ThemeProvider theme={materialUiTheme} >
+            <InitializeState />
+            <TopLoading />
+            <Header />
+            <React.Suspense fallback={<Loading />}>
+              <Routes />
+            </React.Suspense>
+            <Footer />
+            <ToastContainer />
+          </ThemeProvider>
+        </Provider>
+      </ScrollToTop>
     </Router>
   );
 }
