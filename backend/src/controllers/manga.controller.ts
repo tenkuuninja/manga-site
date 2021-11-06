@@ -34,11 +34,11 @@ class MangaController {
       }
       if (typeof req.query.genre === 'string') {
         let genreIds = req.query.genre.split(',').filter(id => !isNaN(+id)).map(item => +item);
-        andClouse.push(...genreIds.map((id: number) => seq.literal("EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `manga`.`id`)")));
+        andClouse.push(...genreIds.map((id: number) => seq.literal("EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `Manga`.`id`)")));
       }
       if (typeof req.query.notgenre === 'string') {
         let notgenreIds = req.query.notgenre.split(',').filter(id => !isNaN(+id)).map(item => +item);
-        andClouse.push(...notgenreIds.map((id: number) => seq.literal("NOT EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `manga`.`id`)")));
+        andClouse.push(...notgenreIds.map((id: number) => seq.literal("NOT EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `Manga`.`id`)")));
       }
       if (typeof req.query.sort === 'string') {
         scope.push({ method: ['sortQuery', req.query.sort] });
