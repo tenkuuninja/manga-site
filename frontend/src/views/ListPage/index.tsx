@@ -10,7 +10,7 @@ import {
   followMangaInList,
   unfollowMangaInList
 } from 'stores/mangas/actions';
-import { IAppState, IGenre, IManga } from 'interfaces';
+import { IAppState, IGenre, IManga, ISearchObject } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
 import { Pagination } from '@mui/material';
 import { ListVerticalCardSkeleton } from './Skeleton';
@@ -18,6 +18,7 @@ import { getRelativeTimeFromNow } from 'utils/helper';
 import { Icon } from '@iconify/react';
 import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
+import FilterForm from './FilterForm';
 
 interface IParams {
   [index: string]: string
@@ -111,7 +112,33 @@ const ListPage = () => {
         setTitle('Kết quả tìm kiếm');
         break;
       case '/tim-kiem-nang-cao.html':
-        dispatch(fetchListManga({ page }));
+        let sortType = ['-updatedAt', '-createdAt', '-view', '-favorite'];
+        const search = qs.parse(location.search);
+        let searchObject: ISearchObject = { filter:[] }
+        if (!Array.isArray(searchObject.filter)) searchObject.filter = []
+        if (typeof search.g === 'string' && /^\d+(,\d+)*$/g.test(search.g)) {
+          searchObject.genre = search.g;
+        }
+        if (typeof search.ng === 'string' && /^\d+(,\d+)*$/g.test(search.ng)) {
+          searchObject.notgenre = search.ng;
+        }
+        if (typeof search.mc === 'string' && /^\d+$/g.test(search.mc)) {
+          searchObject.filter.push('chapter:gte:'+search.mc);
+        }
+        if (typeof search.c === 'string' && /^(jp|kr|cn)$/g.test(search.c)) {
+          searchObject.filter.push('country:eq:'+search.c);
+        }
+        if (typeof search.f === 'string' && /^\d+$/g.test(search.f)) {
+          searchObject.filter.push('isFinish:eq:'+search.f);
+        }
+        if (typeof search.s === 'string' && /^\d+$/g.test(search.s)) {
+          searchObject.sort = sortType?.[+search.s] || '';
+        }
+        if (typeof search.search === 'string') {
+          searchObject.search = search.search;
+        }
+        console.log(searchObject)
+        dispatch(fetchListManga({ page, ...searchObject }));
         setTitle('Tìm kiếm nâng cao');
         break;
       case '/quoc-gia-:countrySlug([a-z-]+).html':
@@ -193,11 +220,14 @@ const ListPage = () => {
     </ul>
   }
 
+  let filterForm = match.path === '/tim-kiem-nang-cao.html' ? <FilterForm /> : null;
+
   return(
     <div className="max-w-335 mx-auto my-4 p-4">
       <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold mb-2'>
         {title}
       </h1>
+      {filterForm}
       {listContent}
       <div className="my-4">
         <Pagination 

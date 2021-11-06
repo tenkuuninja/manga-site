@@ -20,7 +20,7 @@ export interface IDataStore<T> {
   isError: boolean;
 }
 
-export interface IListGenreStore extends IListDataStore<IManga> {
+export interface IListGenreStore extends IListDataStore<IGenre> {
   byId: {
     [id: number]: IGenre
   }
