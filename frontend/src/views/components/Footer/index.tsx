@@ -15,7 +15,7 @@ const categories = [
 ]
 
 const follow = [
-  { text: <><Icon icon="cib:facebook-f" /> Facebook</>, url: '#' },
+  { text: <a href="https://fb.com/tenkuuninja" target="_blank"><Icon icon="cib:facebook-f" /> Facebook</a>, url: '#' },
   { text: <><Icon icon="cib:telegram-plane" /> Telegram</>, url: '#' },
   { text: <><Icon icon="cib:tumblr" /> Tumblr</>, url: '#' },
   { text: <><Icon icon="simple-icons:onlyfans" /> Onlyfans</>, url: '#' },
@@ -56,9 +56,6 @@ const Footer = () => {
             {item.text}
           </p> )}
         </div>
-      </div>
-      <div className="max-w-335 text-center text-lg mx-auto py-4 border-t border-black border-opacity-20">
-        copyright @ {(new Date()).getFullYear()}
       </div>
     </div>
   );
