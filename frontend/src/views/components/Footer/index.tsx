@@ -15,7 +15,7 @@ const categories = [
 ]
 
 const follow = [
-  { text: <a href="https://fb.com/tenkuuninja" target="_blank"><Icon icon="cib:facebook-f" /> Facebook</a>, url: '#' },
+  { text: <a href="https://fb.com/tenkuuninja" rel="noreferrer" target="_blank"><Icon icon="cib:facebook-f" /> Facebook</a>, url: '#' },
   { text: <><Icon icon="cib:telegram-plane" /> Telegram</>, url: '#' },
   { text: <><Icon icon="cib:tumblr" /> Tumblr</>, url: '#' },
   { text: <><Icon icon="simple-icons:onlyfans" /> Onlyfans</>, url: '#' },
@@ -51,7 +51,7 @@ const Footer = () => {
           </Link> )}
         </div>
         <div>
-          <h3 className="text-2xl leading-6 font-semibold mb-4">Theo dõi</h3>
+          <h3 className="text-2xl leading-6 font-semibold mb-4">Liên hệ</h3>
           {follow.map((item, i) => <p className="flex items-center mt-1 hover:underline cursor-pointer" key={i} >
             {item.text}
           </p> )}
