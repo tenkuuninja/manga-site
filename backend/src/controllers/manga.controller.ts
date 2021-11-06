@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { FindOptions, Op } from 'sequelize';
+import seq, { FindOptions, Op } from 'sequelize';
 import Manga from '../models/manga.model';
 import Genre from '../models/genre.model';
 import { changeToSlug } from '../utils/string';
@@ -16,8 +16,11 @@ class MangaController {
 
   fetchList = async (req: Request, res: Response) => {
     try {
-      let scope: any[] = ['includeGenre', 'hideSrcLeech', 'showTotalFollowing', ];
+      let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
+      let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
+      let scope: any[] = ['includeGenre', 'hideSrcLeech', 'showTotalFollowing', { method: ['paging', page, size] }];
       let scopeCount: any[] = [];
+      const andClouse = [];
       if (req.user instanceof User) {
         scope.push({ method: ['showIsFollowingById', +req.user.id] })
       }
@@ -31,24 +34,24 @@ class MangaController {
       }
       if (typeof req.query.genre === 'string') {
         let genreIds = req.query.genre.split(',').filter(id => !isNaN(+id)).map(item => +item);
-        scope.push({ method: ['genreQuery', genreIds] })
-        scopeCount.push({ method: ['genreQuery', genreIds] })
+        andClouse.push(...genreIds.map((id: number) => seq.literal("EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `manga`.`id`)")));
       }
       if (typeof req.query.notgenre === 'string') {
         let notgenreIds = req.query.notgenre.split(',').filter(id => !isNaN(+id)).map(item => +item);
-        scope.push({ method: ['notgenreQuery', notgenreIds] })
-        scopeCount.push({ method: ['notgenreQuery', notgenreIds] })
+        andClouse.push(...notgenreIds.map((id: number) => seq.literal("NOT EXISTS ( SELECT * FROM `manga_genre` WHERE `manga_genre`.`genre_id` = "+id+" AND `manga_genre`.`manga_id` = `manga`.`id`)")));
       }
       if (typeof req.query.sort === 'string') {
         scope.push({ method: ['sortQuery', req.query.sort] });
       } else {
         scope.push({ method: ['sortQuery', this.sortDefault] });
       }
-      let page: number = typeof req.query.page === 'string' ? +req.query.page : this.pageDefault;
-      let size: number = typeof req.query.size === 'string' ? +req.query.size : this.pageSizeDefault;
-      scope.push({ method: ['paging', page, size] });
-      const result = await Manga.scope(scope).findAll();
-      const count = await Manga.scope(scopeCount).count();
+      const options: FindOptions = {
+        where: {
+          [Op.and]: andClouse
+        }
+      }      
+      const result = await Manga.scope(scope).findAll(options);
+      const count = await Manga.scope(scopeCount).count(options);
       res.status(200).json({
         content: result,
         count: count,
