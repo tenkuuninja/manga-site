@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useWindowSize } from 'hooks';
 import { Icon } from '@iconify/react';
 
@@ -21,19 +21,40 @@ const Carousel = ({
   const container = useRef<HTMLDivElement>(null);
   const slider = useRef<HTMLUListElement>(null);
   const [width] = useWindowSize();
-  const [currentColumn, setCurrentColumn] = useState<number>(0);
+  const nextButtonRef = useRef<HTMLDivElement>(null);
+  const prevButtonRef = useRef<HTMLDivElement>(null);
+  const currentColumnRef = useRef<number>(0);
 
   function go(page: 'prev' | 'next') {
     const total = children.length;
-    switch (page) {
-      case 'prev':
-        setCurrentColumn(currentSlide => Math.max(currentSlide-columnsPerScroll, 0));
-        break;
-      case 'next':
-        setCurrentColumn(currentSlide => Math.min(currentSlide+columnsPerScroll, total-columnsPerSlide));
-        break;
-      default:
-        break;
+    if (slider.current) {
+      switch (page) {
+        case 'prev':
+          currentColumnRef.current = Math.max(currentColumnRef.current-columnsPerScroll, 0);
+          break;
+        case 'next':
+          currentColumnRef.current = Math.min(currentColumnRef.current+columnsPerScroll, total-columnsPerSlide);
+          break;
+        default:
+          break;
+      }
+    }
+    updateCurrentColumn();
+  }
+
+  function updateCurrentColumn() {
+    if (slider.current) {
+      slider.current.style.left =  `-${(container.current?.clientWidth||0)/columnsPerSlide*currentColumnRef.current}px`;
+      if (currentColumnRef.current <= 0) {
+        prevButtonRef.current?.classList.add('hidden');
+      } else {
+        prevButtonRef.current?.classList.remove('hidden');
+      }
+      if (currentColumnRef.current >= children.length-columnsPerSlide) {
+        nextButtonRef.current?.classList.add('hidden');
+      } else {
+        nextButtonRef.current?.classList.remove('hidden');
+      }
     }
   }
 
@@ -41,6 +62,8 @@ const Carousel = ({
     if (container.current) {
       container.current.style.height = `${(slider.current?.clientHeight||0)}px`
     }
+    updateCurrentColumn();
+    // eslint-disable-next-line
   }, [width, columnsPerSlide, columnSpacing, children.length]);
 
 
@@ -51,7 +74,7 @@ const Carousel = ({
           ref={slider}
           className={`absolute top-0 flex select-none transition-all duration-300 ${className}`} 
           style={{ 
-            left: `-${(container.current?.clientWidth||0)/columnsPerSlide*currentColumn}px` 
+            left: `0px` 
           }} 
           >
           {children.map((item, i) =>  
@@ -70,7 +93,8 @@ const Carousel = ({
         </ul>
       </div>
         <div 
-          className={`absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 select-none p-2 bg-gray-900 rounded-full ${currentColumn <= 0 && 'hidden'}`} 
+          ref={prevButtonRef}
+          className={`absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 select-none p-2 bg-gray-900 rounded-full`} 
           onClick={() => go('prev')}
           style={{
             left: `${columnSpacing/2}px`
@@ -79,7 +103,8 @@ const Carousel = ({
           <Icon icon="akar-icons:chevron-left" className="leading-4 w-8 h-8 text-white" />
         </div>
         <div 
-          className={`absolute top-1/2 transform -translate-y-1/2 translate-x-1/2 select-none p-2 bg-gray-900 rounded-full ${currentColumn >= children.length-columnsPerSlide && 'hidden'}`} 
+          ref={nextButtonRef}
+          className={`absolute top-1/2 transform -translate-y-1/2 translate-x-1/2 select-none p-2 bg-gray-900 rounded-full`} 
           onClick={() => go('next')}
           style={{
             right: `${columnSpacing/2}px`

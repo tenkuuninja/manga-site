@@ -4,7 +4,6 @@ import { IGenre, IManga } from 'interfaces';
 import { Link } from 'react-router-dom';
 import { countryType } from 'utils/static';
 import { convertNumberToHumanRead, getRelativeTimeFromNow } from 'utils/helper';
-import { useWindowSize } from 'hooks';
 import { Icon } from '@iconify/react';
 
 interface MangaCardVerticalProps {
@@ -23,25 +22,37 @@ function PopupHover({ overlay, children }: PopupHoverProps) {
   const triggerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setOpen] = useState<boolean>(false);
-  const [width] = useWindowSize();
+  const isHover = useRef<boolean>(false);
+  const [portal, setPortal] = useState<React.ReactPortal | null>(null);
+
+  const o = <div ref={wrapperRef} className="absolute invisible" >
+      <div ref={contentRef} >
+        {overlay}
+      </div>
+    </div>
 
   const handleMouseIn = (e: React.MouseEvent) => {
-    wrapperRef.current?.classList.remove('invisible')
-    contentRef.current?.classList.add('animate-pop-in')
-    setOpen(true);
+    isHover.current = true;
+    if (!portal) {
+      setPortal(createPortal(o, document.body));
+    } else {
+      updatePosition();
+      wrapperRef.current?.classList.remove('invisible');
+      contentRef.current?.classList.add('animate-pop-in');
+    }
   }
   
   const handleMouseOut = (e: React.MouseEvent) => {
-    wrapperRef.current?.classList.add('invisible')
-    contentRef.current?.classList.remove('animate-pop-in')
-    setOpen(false);
+    isHover.current = false;
+    wrapperRef.current?.classList.add('invisible');
+    contentRef.current?.classList.remove('animate-pop-in');
   }
-  
-  useEffect(function() {
+
+  function updatePosition() {
     if (wrapperRef.current && triggerRef.current && contentRef.current) {
       let triggerClient = triggerRef.current.getBoundingClientRect();
       let wrapperClient = wrapperRef.current.getBoundingClientRect();
+      let width = window.innerWidth;
       let remain = width - ((triggerClient.left||0) + (triggerClient.width||0))
       if (remain < 400 ) {
         wrapperRef.current.style.top = `${triggerClient.top+ window.scrollY+triggerClient.height/2-wrapperClient.height/2}px`
@@ -53,19 +64,36 @@ function PopupHover({ overlay, children }: PopupHoverProps) {
         contentRef.current.style.marginLeft = `${10}px`
       }
     }
+  }
+  
+  useEffect(function() {
+    if(portal && isHover.current) {
+      updatePosition()
+      wrapperRef.current?.classList.remove('invisible')
+      contentRef.current?.classList.add('animate-pop-in')
+    }
     // eslint-disable-next-line
-  }, [width, isOpen]);
+  }, [portal]);
+
+  useEffect(function() {
+    if (portal) {
+      setPortal(createPortal(o, document.body));
+    }
+    // eslint-disable-next-line
+  }, [overlay]);
+
+  if (portal) {
+    return (
+      <div ref={triggerRef} onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut} >
+        {children}
+        {portal}
+      </div>
+    );
+  }
 
   return(
-    <div ref={triggerRef} onMouseOver={handleMouseIn} onMouseOut={handleMouseOut} >
+    <div ref={triggerRef} onMouseEnter={handleMouseIn} onMouseLeave={handleMouseOut} >
       {children}
-      {createPortal(
-        <div ref={wrapperRef} className="absolute invisible" >
-          <div ref={contentRef} >
-            {overlay}
-          </div>
-        </div>
-      , document.body)}
     </div>
   );
 }

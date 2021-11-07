@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { IAppState, IManga } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
-import { MangaCardVertical } from 'views/components/MangaCard';
 import Carousel from "views/components/Carousel";
 import { useCols } from 'hooks';
 import { fetchLastestUpdateManga, fetchNewestManga, followMangaInHome, unfollowMangaInHome } from 'stores/home/actions';
@@ -10,42 +9,12 @@ import { getRelativeTimeFromNow } from 'utils/helper';
 import { MeApi } from 'apis';
 import { addFollowMangaInCommon, followMangaInCommon, removeFollowMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
 import SlideShow from './SlideShow';
-import { CarouselGenreSkeleton, CarouselMangaSkeleton } from './Skeleton';
-
-interface CommonMangaCardCarouselProps {
-  title: string;
-  data: IManga[];
-  isLoading: boolean;
-  isError: boolean;
-  cols: number;
-  overlay: (manga: IManga) => JSX.Element;
-  handleFollow: (manga: IManga) => void;
-}
-
-const CommonMangaCardCarousel = (props: CommonMangaCardCarouselProps) => {
-  if (props.isLoading || props.isError) {
-    return <CarouselMangaSkeleton />
-  }
-
-  return (
-    <section className="container max-w-335 px-4 mx-auto">
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold my-4">
-        {props.title}
-      </h2>
-      <Carousel columnsPerSlide={props.cols} columnsPerScroll={props.cols} columnSpacing={16} >
-        {props.data.map((item, i) => 
-          <MangaCardVertical key={i} data={item} overlay={props.overlay(item)} handleFollow={props.handleFollow} /> 
-        )}
-      </Carousel>
-    </section>
-  );
-}
-
+import { CarouselGenreSkeleton } from './Skeleton';
+import { CommonMangaCardCarousel, TopMangaCardCarousel } from './MangaCardCarousel';
 
 const HomePage = function() {
   const { auth, common, genres, home } = useSelector((store: IAppState) => store);
   const dispatch = useDispatch();
-  const [typeTop, setTypeTop] = useState<'day' | 'week' | 'month'>('day');
   const cols = useCols();
 
   useEffect(function() {
@@ -106,44 +75,7 @@ const HomePage = function() {
           </div>
         )}
       </Carousel>
-    </section>
-
-  const topMangaCarousel = common.top.isLoading || common.top.isError ? <CarouselMangaSkeleton /> :
-    <section className="container max-w-335 px-4 mx-auto">
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4">
-        Xếp hạng truyện
-      </h2>
-      <div className="my-2 ml-2 text-lg space-x-4 font-bold">
-        <span 
-          className={`${typeTop === 'day' ? 'opacity-100' : 'opacity-70'} transition-opacity cursor-pointer`} 
-          onClick={() => setTypeTop('day')}
-        >
-          Hôm nay
-        </span>
-        <span 
-          className={`${typeTop === 'week' ? 'opacity-100' : 'opacity-70'} transition-opacity cursor-pointer`} 
-          onClick={() => setTypeTop('week')}
-        >
-          Tuần này
-        </span>
-        <span 
-          className={`${typeTop === 'month' ? 'opacity-100' : 'opacity-70'} transition-opacity cursor-pointer`} 
-          onClick={() => setTypeTop('month')}
-        >
-            Tháng này
-          </span>
-      </div>
-      <Carousel columnsPerSlide={cols} columnsPerScroll={cols} columnSpacing={16} >
-        {common.top[typeTop].map((item, i) => <MangaCardVertical 
-            key={i} 
-            data={item} 
-            overlay={updatedOverlay(item)} 
-            handleFollow={handleFollow}
-          /> 
-        )}
-      </Carousel>
-    </section>
-  
+    </section>  
   
   return(
     <div className="space-y-8 mb-8">
@@ -186,7 +118,11 @@ const HomePage = function() {
         overlay={updatedOverlay}
         handleFollow={handleFollow}
       />
-      {topMangaCarousel}
+      <TopMangaCardCarousel
+        cols={cols}
+        overlay={updatedOverlay}
+        handleFollow={handleFollow}
+      />
     </div>
   );
 }

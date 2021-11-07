@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import { IAppState, ISearchObject } from 'interfaces';
+import { IAppState } from 'interfaces';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
@@ -90,12 +90,14 @@ const FilterForm = () => {
         return acc;
       }, {})
     );
+    // eslint-disable-next-line
   }, [genres.data.length]);
 
   useEffect(function() {
     if (search.g || search.ng || search.c || search.mc || search.f || search.s) {
       setOpen(false);
     }
+    // eslint-disable-next-line
   }, []);
 
   if (genres.isLoading) return <></>;
