@@ -2,8 +2,8 @@
   content: '';
   margin: .2rem 0 0 0;
   display: block;
-  background-color: black;
+  background-color: currentColor;
   width: 5rem;
-  height: .2rem;
+  height: .15rem;
   clear: both;
 }

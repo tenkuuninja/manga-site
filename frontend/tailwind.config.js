@@ -1,7 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  important: true,
+  important: false,
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -20,7 +20,7 @@ module.exports = {
           DEFAULT: '#9CA3AF',
           dark: '#6B7280'
         },
-        primary: colors.green,
+        primary: colors.emerald,
         grey: colors.blueGray,
         gray: colors.blueGray,
       },
@@ -28,6 +28,7 @@ module.exports = {
         335: '83.75rem'
       },
       spacing: {
+        0.5: '0.125rem',
         18: '4.5rem',
         180: '45rem'
       },

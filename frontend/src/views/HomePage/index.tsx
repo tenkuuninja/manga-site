@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react';
 import { IAppState, IManga } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
-import Carousel from "views/components/Carousel";
 import { useCols } from 'hooks';
 import { fetchLastestUpdateManga, fetchNewestManga, followMangaInHome, unfollowMangaInHome } from 'stores/home/actions';
-import { Link } from 'react-router-dom';
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { MeApi } from 'apis';
 import { addFollowMangaInCommon, followMangaInCommon, removeFollowMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
 import SlideShow from './SlideShow';
-import { CarouselGenreSkeleton } from './Skeleton';
-import { CommonMangaCardCarousel, TopMangaCardCarousel } from './MangaCardCarousel';
+import { CommonMangaCardCarousel, GenreCardCarousel, TopMangaCardCarousel } from './MangaCardCarousel';
 
 const HomePage = function() {
-  const { auth, common, genres, home } = useSelector((store: IAppState) => store);
+  const { auth, common, home } = useSelector((store: IAppState) => store);
   const dispatch = useDispatch();
   const cols = useCols();
 
@@ -41,41 +38,16 @@ const HomePage = function() {
   }
 
   const updatedOverlay = (manga: IManga) => <div className="p-2">
-    <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">
+    <span className="inline-block text-sm font-semibold leading-4 bg-red-500 text-white px-2 py-1 rounded-full">
       {getRelativeTimeFromNow(manga.updatedAt||'')}
     </span>
   </div>
 
   const readedOverlay = (manga: IManga) => <div className="p-2">
-    <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">
+    <span className="inline-block text-sm font-semibold leading-4 bg-red-500 text-white px-2 py-1 rounded-full">
       {getRelativeTimeFromNow(manga?.reads?.length  ? manga?.reads[0].updatedAt :  manga.updatedAt || '')}
     </span>
   </div>
-
-  const genreCarousel = genres.isLoading || genres.isError ? <CarouselGenreSkeleton /> :
-    <section className="container max-w-335 px-4 mx-auto">
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold my-4">
-        Các thể loại
-      </h2>
-      <Carousel columnsPerSlide={cols-1} columnsPerScroll={cols-1} columnSpacing={8} >
-        {Array.from({length: Math.floor(genres.data.length/2)}, (_, i) => i*2).map((i) => 
-          <div className="text-center font-bold space-y-2" key={i}>
-            <Link 
-              to={`/the-loai-${genres.data[i]?.id}-${genres.data[i]?.titleSlug}.html`}
-              className="block px-2 py-3 border border-gray-200"
-            >
-              {genres.data[i]?.title}
-            </Link>
-            <Link 
-              to={`/the-loai-${genres.data[i+1]?.id}-${genres.data[i+1]?.titleSlug}.html`}
-              className="block px-2 py-3 border border-gray-200"
-            >
-              {genres.data[i+1]?.title}
-            </Link>
-          </div>
-        )}
-      </Carousel>
-    </section>  
   
   return(
     <div className="space-y-8 mb-8">
@@ -99,7 +71,7 @@ const HomePage = function() {
         overlay={updatedOverlay}
         handleFollow={handleFollow}
       />
-      {genreCarousel}
+      <GenreCardCarousel cols={cols-1} />
       <CommonMangaCardCarousel 
         title="Truyện tranh mới"
         data={home.newest.data}

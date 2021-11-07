@@ -16,9 +16,11 @@ const Modal = (props: ModalProps = ModalDefault) => {
   const { isOpen, children, handleOutsideClick } = props;
   return (
     <React.Fragment>
-      <div className={`fixed inset-0 bg-black opacity-0 transition-opacity pointer-events-none ${isOpen ? 'opacity-80 pointer-events-auto' : ''}`} onClick={handleOutsideClick}></div>
-      <div className={`fixed scrollbar-hidden animate-pop-in top-1/2 left-1/2 opacity-0 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none max-h-full overflow-y-auto ${isOpen ? 'opacity-100 pointer-events-auto' : ''}`}>
-        {children}
+      <div className={`fixed inset-0 bg-black transition-opacity pointer-events-none ${isOpen ? 'opacity-80 pointer-events-auto' : 'opacity-0'}`} onClick={handleOutsideClick}></div>
+      <div className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scrollbar-hidden overflow-y-auto max-h-full pointer-events-none ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 invisible'}`}>
+        <div className="animate-pop-in ">
+          {children}
+        </div>
       </div>
     </React.Fragment>
   );

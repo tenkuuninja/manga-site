@@ -39,9 +39,9 @@ const sortSelect = [
 ]
 
 const icons = [
-  { name: '', className: 'border border-transparent' },
+  { name: '', className: 'border border-transparent rounded-full' },
   { name: 'akar-icons:plus', className: 'border border-green-500 text-green-500 rounded-full' },
-  { name: 'akar-icons:minus', className: 'border border-primary-500 text-primary-500 rounded-full' },
+  { name: 'akar-icons:minus', className: 'border border-red-500 text-red-500 rounded-full' },
 ]
 
 const FilterForm = () => {
@@ -105,7 +105,10 @@ const FilterForm = () => {
   return (
     <div className="my-6">
       <div className="mx-auto text-white text-center font-semibold " >
-        <span className="inline-block mx-auto py-2 px-4 rounded bg-red-500 hover:bg-red-600 transition cursor-pointer" onClick={() => setOpen(v => !v)}>
+        <span 
+          className={`inline-block mx-auto py-2 px-4 ${isOpen ? "bg-red-500 hover:bg-red-600" : "bg-primary-500 hover:bg-primary-600"} transition cursor-pointer`}
+          onClick={() => setOpen(v => !v)}
+        >
           {isOpen ? 'Ẩn' : 'Hiện'} form tìm kiếm
         </span>
       </div>
@@ -161,7 +164,7 @@ const FilterForm = () => {
           </div>
         </div>
         <div className="mx-auto text-white text-center font-semibold " >
-          <span className="inline-block mx-auto py-2 px-4 rounded bg-primary-500 hover:bg-green-600 transition cursor-pointer" onClick={handleSearch}>
+          <span className="inline-block mx-auto py-2 px-6 bg-primary-500 hover:bg-primary-600 transition cursor-pointer" onClick={handleSearch}>
             Tìm kiếm
           </span>
         </div>

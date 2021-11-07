@@ -3,7 +3,8 @@ import { IAppState, IManga } from 'interfaces';
 import { useSelector } from 'react-redux';
 import Carousel from 'views/components/Carousel';
 import { MangaCardVertical } from 'views/components/MangaCard';
-import { CarouselMangaSkeleton } from './Skeleton';
+import { CarouselGenreSkeleton, CarouselMangaSkeleton } from './Skeleton';
+import { Link } from 'react-router-dom';
 
 interface CommonMangaCardCarouselProps {
   title: string;
@@ -85,3 +86,39 @@ export const TopMangaCardCarousel = (props: TopMangaCardCarouselProps) => {
     </section>
   );
 }
+
+
+export const GenreCardCarousel = (props: { cols: number }) => {
+  const { genres } = useSelector((store: IAppState) => store);
+
+  if (genres.isLoading || genres.isError) {
+    return <CarouselGenreSkeleton />
+  }
+
+  return(
+    <section className="container max-w-335 px-4 mx-auto">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold my-4">
+        Các thể loại
+      </h2>
+      <Carousel columnsPerSlide={props.cols} columnsPerScroll={props.cols} columnSpacing={8} >
+        {Array.from({length: Math.floor(genres.data.length/2)}, (_, i) => i*2).map((i) => 
+          <div className="text-center font-bold space-y-2" key={i}>
+            <Link 
+              to={`/the-loai-${genres.data[i]?.id}-${genres.data[i]?.titleSlug}.html`}
+              className="block px-2 py-3 border border-gray-200"
+            >
+              {genres.data[i]?.title}
+            </Link>
+            <Link 
+              to={`/the-loai-${genres.data[i+1]?.id}-${genres.data[i+1]?.titleSlug}.html`}
+              className="block px-2 py-3 border border-gray-200"
+            >
+              {genres.data[i+1]?.title}
+            </Link>
+          </div>
+        )}
+      </Carousel>
+    </section> 
+  );
+}
+

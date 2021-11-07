@@ -178,9 +178,11 @@ const ListPage = () => {
   let overlayCard = (manga: IManga) => {
     switch (match.path) {
       case '/truyen-dang-theo-doi.html':
-        return <div className="p-2 flex justify-between">
-          <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">{getRelativeTimeFromNow(manga.updatedAt||'')}</span>
-          <span className="text-2xl">
+        return <div className="p-1">
+          <span className="inline-block text-sm font-semibold leading-4 bg-red-500 text-white px-2 py-1 rounded-full">
+            {getRelativeTimeFromNow(manga.updatedAt||'')}
+          </span>
+          <span className="text-2xl float-right">
             <Icon 
               icon="ri:close-circle-line" 
               className="rounded-full bg-white"
@@ -194,12 +196,16 @@ const ListPage = () => {
         </div>
       case '/lich-su-doc-truyen.html':
         let date: string | undefined = manga?.reads?.length  ? manga?.reads[0].updatedAt : '';
-        return <div className="p-2">
-          <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">{getRelativeTimeFromNow(date||'')}</span>
+        return <div className="p-1">
+          <span className="inline-block text-sm font-semibold leading-4 bg-red-500 text-white px-2 py-1 rounded-full">
+            {getRelativeTimeFromNow(date||'')}
+          </span>
         </div>
-      default:
-        return <div className="p-2">
-          <span className="inline-block text-sm font-semibold leading-4 bg-blue-400 text-white p-1 rounded">{getRelativeTimeFromNow(manga.updatedAt||'')}</span>
+      default: 
+        return <div className="p-1">
+          <span className="inline-block text-sm font-semibold leading-4 bg-red-500 text-white px-2 py-1 rounded-full">
+            {getRelativeTimeFromNow(manga.updatedAt||'')}
+          </span>
         </div>
     }
   }

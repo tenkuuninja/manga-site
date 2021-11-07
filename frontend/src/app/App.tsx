@@ -13,7 +13,7 @@ import Footer from 'views/components/Footer';
 import 'assets/tailwind-build.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'assets/style.css';
-import ScrollToTop from './routes/ScrollToTop';
+import ScrollToTop from './ScrollToTop';
 import Loading from 'views/components/Loading';
 
 function App() {

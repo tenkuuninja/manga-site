@@ -35,23 +35,23 @@ const Footer = () => {
     <div className="border-t border-dashed border-black border-opacity-20">
       <div className={`${st.wrapper} grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-335 mx-auto p-4`}>
         <div>
-          <h3 className="text-2xl leading-6 font-semibold mb-4">Giới thiệu</h3>
+          <h3 className="text-2xl leading-6 font-semibold text-primary-500 mb-4">Giới thiệu</h3>
           <p className="text-justify">{str}</p>
         </div>
         <div>
-          <h3 className="text-2xl leading-6 font-semibold mb-4">Danh mục</h3>
+          <h3 className="text-2xl leading-6 font-semibold text-primary-500 mb-4">Danh mục</h3>
           {categories.map((item, i) => <Link className="block mt-1 hover:underline" to={item.url} key={i} >
             {item.text}
           </Link> )}
         </div>
         <div className="hidden sm:block">
-          <h3 className="text-2xl leading-6 font-semibold mb-4">Thể loại</h3>
+          <h3 className="text-2xl leading-6 font-semibold text-primary-500 mb-4">Thể loại</h3>
           {genreRan.map((item, i) => i<4 && <Link className="block mt-1 hover:underline" to={`/the-loai-${item.id}-${item.titleSlug}.html`} key={i} >
             {item.title}
           </Link> )}
         </div>
         <div>
-          <h3 className="text-2xl leading-6 font-semibold mb-4">Liên hệ</h3>
+          <h3 className="text-2xl leading-6 font-semibold text-primary-500 mb-4">Liên hệ</h3>
           {follow.map((item, i) => <p className="flex items-center mt-1 hover:underline cursor-pointer" key={i} >
             {item.text}
           </p> )}
