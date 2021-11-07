@@ -23,11 +23,11 @@ export const MangaCardHorizontal = function(props: MangaCardHorizontalProps) {
           <p className='truncate-lines font-semibold text-base leading-5'>{title}</p>
           <div className='absolute bottom-0'>
             {props.viewType && <p className=' '>{props.manga[props.viewType]}</p>}
-            <p className='text-red-500 hover:text-red-600'>
+            <p className='text-primary-500 hover:text-primary-600'>
               <span>{countryType[country || 'jp'].title}</span>&nbsp;
               {genres !== undefined && <span>{genres[0]?.title}</span>}
             </p>
-            {!props.viewType && <p className='hover:text-blue-400 font-semibold'>Xem chi tiết</p>}
+            {!props.viewType && <p className='hover:text-blue-300 font-semibold'>Xem chi tiết</p>}
           </div>
         </div>
       </div>

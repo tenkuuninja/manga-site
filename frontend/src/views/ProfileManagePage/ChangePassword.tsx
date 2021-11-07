@@ -119,7 +119,7 @@ const ChangePassword = function() {
       </div>
       <div className="mt-8 text-center lg:w-4/5">
         <div 
-          className="inline-block text-white font-semibold px-6 py-2 mx-auto bg-black opacity-80 hover:opacity-100 cursor-pointer"
+          className="inline-block text-white font-semibold px-6 py-2 mx-auto bg-primary-500 hover:bg-primary-600 transition cursor-pointer"
           onClick={handleSubmit}
         >
           Đổi mật khẩu

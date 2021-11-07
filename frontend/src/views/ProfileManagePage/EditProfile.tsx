@@ -120,7 +120,7 @@ const EditProfile = function() {
             <input id='upload-avatar' type='file' className="hidden" onChange={onSelectFile} />
             <img src={user?.avatar} className="w-24" alt=" " />
             <label 
-              className="inline-block px-3 py-1 mt-1 rounded-md text-white bg-red-500 hover:bg-red-600 transition-colors cursor-pointer" 
+              className="inline-block px-3 py-1 mt-1 rounded-md text-white bg-primary-500 hover:bg-primary-600 transition-colors cursor-pointer" 
               htmlFor="upload-avatar"
             >
               Chọn Ảnh

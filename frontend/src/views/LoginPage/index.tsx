@@ -37,7 +37,7 @@ const LoginPage = function() {
 
   return(
     <div className="w-96 mx-auto mt-4">
-      <div className="p-6 border-b border-black border-opacity-20 font-semibold text-lg">Đăng nhập</div>
+      <div className="p-6 border-b border-gray-200 font-semibold text-lg">Đăng nhập</div>
       <form className="p-6" onSubmit={onRegister}>
         <TextField 
           variant="outlined" 
@@ -60,10 +60,10 @@ const LoginPage = function() {
           }}
         />
         
-        <Button type="submit" variant="contained" color="primary" fullWidth className="rounded-none shadow-none text-semibold text-lg py-3 mt-6">
+        <Button type="submit" variant="contained" fullWidth className="rounded-none text-white bg-primary-500 hover:bg-primary-600 shadow-none text-semibold text-lg py-3 mt-6 transition">
           Đăng nhập
         </Button>
-        <div className="border-b border-black border-opacity-20 text-center text-sm py-4">
+        <div className="border-b border-gray-200 text-center text-sm py-4">
           <Link to="reset-password.html">
             Quên mật khẩu?
           </Link>
@@ -71,7 +71,7 @@ const LoginPage = function() {
       </form>
       <div className="text-center">
         Bạn chưa có tài khoản? 
-        <Link to="/dang-ky-tai-khoan.html" className="font-semibold text-blue-500 ml-2">
+        <Link to="/dang-ky-tai-khoan.html" className="font-semibold text-primary-500 hover:text-primary-600 transition ml-2">
           Đăng ký ngay
         </Link>
       </div>

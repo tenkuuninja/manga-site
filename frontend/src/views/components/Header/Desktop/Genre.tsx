@@ -23,14 +23,14 @@ const Genre = function() {
     content = <div className="grid w-180 mt-1 divide-x" style={{gridTemplateColumns: '100px auto'}}>
       <ul>
         {countries.map(country => <li key={country.id}>
-          <Link to={`/quoc-gia-${country.slug}.html`} className="block px-4 py-2 text-center hover:text-blue-700 transition duration-100">
+          <Link to={`/quoc-gia-${country.slug}.html`} className="block px-4 py-2 text-center hover:text-primary-600 transition duration-100">
             {country.title}
           </Link>
         </li>)}
       </ul>
       <ul className="grid grid-flow-col grid-rows-6 my-2">
         {genres.data.map(item => <li key={item.id}>
-          <Link to={`/the-loai-${item.id}-${item.titleSlug}.html`} className="block px-4 py-2 text-center hover:text-blue-700 transition duration-100">
+          <Link to={`/the-loai-${item.id}-${item.titleSlug}.html`} className="block px-4 py-2 text-center hover:text-primary-600 transition duration-100">
             {item.title}
           </Link>
         </li>)}
@@ -41,10 +41,10 @@ const Genre = function() {
   return(
     <Dropdown
       placement="bottom-left"
-      overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >{content}</div>}
+      overlay={<div className="animate-pop-in bg-white border border-gray-200 mt-1 text-sm" >{content}</div>}
     >
       <div className="h-18 select-none">
-        <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
+        <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-primary-600 transition duration-100">
           <span>Thể loại</span>
         </div>
       </div>

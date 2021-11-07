@@ -66,11 +66,11 @@ const Detail = (props: IDetailProps) => {
             <Icon icon="bi:grid-3x3-gap-fill" className="mr-1 text-base" />
             Danh sách
           </Link>
-          <p className="truncate cursor-pointer text-gray-600">
+          <p className="truncate cursor-pointer text-grey-600">
             {title}
           </p>
         </Breadcrumbs>
-          <h1 className='text-4xl font-black py-1'>{title}</h1>
+          <h1 className='text-4xl font-black py-1 text-grey-800'>{title}</h1>
           {titleSynonym?.length ? <p className='text-xl font-light'>{titleSynonym.join(', ')}</p> : null}
           <div className='flex items-center space-x-2'>
             <Rating readOnly value={rate?.all || 5} />
@@ -92,7 +92,7 @@ const Detail = (props: IDetailProps) => {
                 {countryType[country as keyof typeof countryType || 'jp'].title}
               </Link>
             </li>
-            {genres?.map(genre => <li className='inline-block py-2 px-1 text-blue-500 hover:text-blue-600' key={genre.id}>
+            {genres?.map(genre => <li className='inline-block py-2 px-1 text-primary-500 hover:text-primary-600' key={genre.id}>
               <Link className='block' to={`/the-loai-${genre.id}-${genre.titleSlug}.html`}>
                 {genre.title}
               </Link>

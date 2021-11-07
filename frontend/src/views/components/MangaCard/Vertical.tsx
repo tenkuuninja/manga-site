@@ -79,7 +79,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
       <div className={`hidden lg:block animate-pop-in z-20`}>
         <div className='overflow-hidden rounded-lg bg-white shadow-lg border border-gray-200 w-96 p-4'>
           <h3 className='font-semibold text-lg'>{title}</h3>
-          <p className='text-xs text-green-500'>Cập nhật từ <span className='text-sm text-green-600 font-semibold'>{getRelativeTimeFromNow(updatedAt)}</span></p>
+          <p className='text-xs text-primary-500'>Cập nhật từ <span className='text-sm text-primary-600 font-semibold'>{getRelativeTimeFromNow(updatedAt)}</span></p>
           <p className=' text-sm'>{chapter} chương &bull; {isFinish ? 'Đã hoàn thành' : 'Đang cập nhật'}</p>
           <p className="text-sm space-x-8">
             <span ><Icon icon="bi:eye" /> {convertNumberToHumanRead(view||0)}</span>
@@ -93,7 +93,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
               </Link>
             </li>
             {genres?.map((genre: IGenre) => 
-            <li className='inline-block px-2 py-0.5 border border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 rounded-2xl transition mr-1 mt-1' key={genre.id}>
+            <li className='inline-block px-2 py-0.5 border border-primary-500 text-primary-500 hover:text-white hover:bg-primary-500 rounded-2xl transition mr-1 mt-1' key={genre.id}>
               <Link className='block' to={`/the-loai-${genre.id}-${genre.titleSlug}.html`}>
                 {genre.title}
               </Link>
@@ -102,7 +102,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
           <p className='truncate-lines line-clamp-10 leading-5 text-sm mt-1'>{description}</p>
           <div className='flex items-center text-lg mt-2'>
             <Link 
-              className='flex-grow block text-white text-center font-bold rounded py-1 bg-blue-500 opacity-90 hover:opacity-100 transition' 
+              className='flex-grow block text-white text-center font-bold rounded py-1 bg-primary-400 hover:bg-primary-500 transition' 
               to={`/truyen-tranh-${id}-${titleSlug}.html`}
             >
               Thông tin truyện
@@ -115,7 +115,7 @@ export const MangaCardVertical = function(props: MangaCardVerticalProps) {
     >
       <Link to={`/truyen-tranh-${id}-${titleSlug}.html`}>
         <div className='rounded-md overflow-hidden bg-white border-gray-200'>
-          <div className='overflow-hidden relative bg-no-repeat bg-center bg-cover border border-black border-opacity-20' style={{ paddingTop: '133%', backgroundImage: `url(https://img.idesign.vn/2018/10/23/id-loading-1.gif)` }}>
+          <div className='overflow-hidden relative bg-no-repeat bg-center bg-cover border border-gray-200' style={{ paddingTop: '133%', backgroundImage: `url(https://img.idesign.vn/2018/10/23/id-loading-1.gif)` }}>
             <img className='absolute top-0 object-cover w-full h-full' src={imageUrl} alt=" " />
             <div className="absolute inset-0">{props.overlay}</div>
             {/* <div className='absolute h-5 w-full bottom-0 bg-gray-800 opacity-60'></div> */}

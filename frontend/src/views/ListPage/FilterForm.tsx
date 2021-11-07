@@ -41,7 +41,7 @@ const sortSelect = [
 const icons = [
   { name: '', className: 'border border-transparent' },
   { name: 'akar-icons:plus', className: 'border border-green-500 text-green-500 rounded-full' },
-  { name: 'akar-icons:minus', className: 'border border-red-500 text-red-500 rounded-full' },
+  { name: 'akar-icons:minus', className: 'border border-primary-500 text-primary-500 rounded-full' },
 ]
 
 const FilterForm = () => {
@@ -159,7 +159,7 @@ const FilterForm = () => {
           </div>
         </div>
         <div className="mx-auto text-white text-center font-semibold " >
-          <span className="inline-block mx-auto py-2 px-4 rounded bg-green-500 hover:bg-green-600 transition cursor-pointer" onClick={handleSearch}>
+          <span className="inline-block mx-auto py-2 px-4 rounded bg-primary-500 hover:bg-green-600 transition cursor-pointer" onClick={handleSearch}>
             Tìm kiếm
           </span>
         </div>

@@ -26,7 +26,7 @@ const MangaDetailPage = () => {
         <li key={i} className={`${(amountItemShowPreview<i && !showAllChapter) && 'hidden'}`}>
           <Link 
             to={`/doc-truyen-${chapter.mangaId}-${chapter.id}-${titleSlug}-chap-${(''+chapter.number).replace('.', '-')}.html`} 
-            className='block overflow-hidden hover:bg-gray-50 p-4 transition-colors duration-100'
+            className='block overflow-hidden hover:bg-gry-50 hover:text-primary-500 p-4 transition-colors duration-100'
           >
             <div className='float-left'>
               <span>Chapter {chapter.number}{chapter.title? ': ' + chapter.title : ''}</span>
@@ -42,7 +42,7 @@ const MangaDetailPage = () => {
       </ul>
       <div className={`px-1 py-2 text-sm ${(amountItemShowPreview >= (chapters?.length||0) || showAllChapter) && 'hidden'}`}>
         <span 
-          className='inline-block w-full border border-blue-400 rounded text-center text-blue-400 hover:text-blue-500 hover:border-blue-500 py-2 cursor-pointer' 
+          className='inline-block w-full border border-primary-400 rounded text-center text-primary-400 hover:text-primary-500 hover:border-primary-500 py-2 cursor-pointer' 
           onClick={() => setShowAllChapter(true)}
         >
           Xem tất cả ({chapters?.length})

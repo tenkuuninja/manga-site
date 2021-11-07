@@ -39,7 +39,7 @@ const Personal = function() {
     return(
       <React.Fragment>
         <div className="ml-2 text-sm font-bold">
-          <Link to="/dang-nhap.html" className="inline-flex items-center h-10 px-3 border border-black hover:bg-gray-100 transition duration-100">
+          <Link to="/dang-nhap.html" className="inline-flex items-center h-10 px-3 border border-black hover:bg-gray-100 transition">
             Đăng nhập
           </Link>
         </div>
@@ -55,7 +55,7 @@ const Personal = function() {
   return(
     <Dropdown
       placement="bottom-right"
-      overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >
+      overlay={<div className="animate-pop-in bg-white border border-gray-200 mt-1 text-sm" >
         <div className="w-60 shadow divide-y z-30 select-none">
           <Link to="/tai-khoan/quan-ly-ho-so.html" className="flex items-center p-4">
             <Avatar size="lg" src={auth.user?.avatar || ''} alt={auth.user?.username} />
@@ -70,19 +70,19 @@ const Personal = function() {
           </Link>
           {menu.map((typeItem, i) => <ul key={i} className="py-2">
             {typeItem.map((item, j) => <li key={j} >
-              <Link to={item.url} className="block px-4 py-2 hover:text-blue-700 transition duration-100">
+              <Link to={item.url} className="block px-4 py-2 hover:text-primary-600 transition duration-100">
                 {item.title}
               </Link>
             </li>)}
           </ul>)}
-          <div className="block p-4 cursor-pointer hover:text-blue-700 transition duration-100" onClick={() => dispatch(logout())}>
+          <div className="block p-4 cursor-pointer hover:text-primary-600 transition" onClick={() => dispatch(logout())}>
             Đăng xuất
           </div>
         </div>
       </div>}
     >
       <div className="h-18 select-none">
-        <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
+        <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-primary-600 transition">
           <Avatar src={auth.user?.avatar || ''} alt={auth.user?.username} />
         </div>
       </div>

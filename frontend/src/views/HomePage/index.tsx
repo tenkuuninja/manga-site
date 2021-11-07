@@ -93,13 +93,13 @@ const HomePage = function() {
           <div className="text-center font-bold space-y-2" key={i}>
             <Link 
               to={`/the-loai-${genres.data[i]?.id}-${genres.data[i]?.titleSlug}.html`}
-              className="block px-2 py-3 border border-black border-opacity-20"
+              className="block px-2 py-3 border border-gray-200"
             >
               {genres.data[i]?.title}
             </Link>
             <Link 
               to={`/the-loai-${genres.data[i+1]?.id}-${genres.data[i+1]?.titleSlug}.html`}
-              className="block px-2 py-3 border border-black border-opacity-20"
+              className="block px-2 py-3 border border-gray-200"
             >
               {genres.data[i+1]?.title}
             </Link>

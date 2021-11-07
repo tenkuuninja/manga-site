@@ -55,7 +55,7 @@ const Search = function() {
               <p className='truncate ... font-semibold text-base leading-5'>{item.title}</p>
               <p className='absolute bottom-0 text-sm opacity-80'>
                 <span className="text-red-600">{countryType[item.country || 'jp'].title}</span>&nbsp;&nbsp;
-                {item.genres !== undefined && <span className="text-blue-600">
+                {item.genres !== undefined && <span className="text-primary-600">
                   {item.genres[0]?.title || ''}  {item.genres[1]?.title || ''}
                 </span>}
               </p>

@@ -227,10 +227,10 @@ const RegisterPage = function() {
         />
         <div className="-mt-1">
           <div className="inline-block space-x-1">
-            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 0 ? "bg-black" : "bg-gray-300"}`}></span>
-            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 1 ? "bg-black" : "bg-gray-300"}`}></span>
-            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 2 ? "bg-black" : "bg-gray-300"}`}></span>
-            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 3 ? "bg-black" : "bg-gray-300"}`}></span>
+            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 0 ? "bg-primary-500" : "bg-gray-300"}`}></span>
+            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 1 ? "bg-primary-500" : "bg-gray-300"}`}></span>
+            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 2 ? "bg-primary-500" : "bg-gray-300"}`}></span>
+            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 3 ? "bg-primary-500" : "bg-gray-300"}`}></span>
           </div>
           <span className="inline-block text-xs pt-1 leading-none ml-2">{strengthMessage[passwordStrength]}</span>
         </div>
@@ -249,14 +249,14 @@ const RegisterPage = function() {
           helperText={passwordConfirm.message}
         />
         
-        <Button type="submit" variant="contained" color="primary" fullWidth className="rounded-none shadow-none text-semibold text-lg py-3 mt-6">
+        <Button type="submit" variant="contained" fullWidth className="rounded-none shadow-none text-semibold text-lg text-white bg-primary-500 hover:bg-primary-600 py-3 mt-6">
           Đăng ký
         </Button>
         <div className="border-b border-black border-opacity-20 text-center text-sm py-4"> </div>
       </form>
       <div className="text-center">
         Bạn đã có tài khoản? 
-        <Link to="/dang-nhap.html" className="font-semibold text-blue-500 ml-2">
+        <Link to="/dang-nhap.html" className="font-semibold text-primary-500 hover:text-primary-600 ml-2">
           Đăng nhập ngay
         </Link>
       </div>

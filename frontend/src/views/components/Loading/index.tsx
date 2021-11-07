@@ -3,7 +3,7 @@ import st from './loading.module.css';
 
 const Loading = () => {
   return <div className={st.wrapper}>
-    <div className={`${st['lds-roller']}`}>
+    <div className={`${st['lds-roller']} text-primary-500`}>
       <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
     </div>
   </div>

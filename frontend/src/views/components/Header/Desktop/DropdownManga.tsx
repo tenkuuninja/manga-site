@@ -36,13 +36,13 @@ const DropdownManga = function(props: DropdownMangaProps) {
   return(
     <Dropdown
       placement="bottom-right"
-      overlay={<div className="animate-pop-in bg-white border border-black border-opacity-10 mt-1 text-sm" >
+      overlay={<div className="animate-pop-in bg-white border border-gray-200 mt-1 text-sm" >
         {content}
       </div>}
     >
     <div className="h-18 select-none">
       <Link to={props.url}>
-        <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-blue-700 transition duration-100">
+        <div className="inline-flex justify-center items-center cursor-pointer h-12 my-3 px-3 hover:text-primary-600 transition duration-100">
           <span>{props.title}</span>
         </div>
       </Link>

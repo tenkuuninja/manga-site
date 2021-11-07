@@ -39,7 +39,7 @@ const ProfileManagePage = function() {
           {user?.username}
         </p>
         <ul className="mt-4 md:h-64">
-          {menu.map((item, i) => <li key={i} className={pathname === (path+item.url) ? 'text-blue-500' : ''}>
+          {menu.map((item, i) => <li key={i} className={pathname === (path+item.url) ? 'text-primary-500' : ''}>
             <Link to={path+item.url} className="flex items-center px-4 py-2">
               <Icon icon={item.icon} className="mr-1 text-lg" />
               {item.title}
