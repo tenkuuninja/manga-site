@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, InputAdornment, IconButton } from '@mui/material';
+import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { login } from 'stores/auth/actions';
 import { IAppState } from 'interfaces';
@@ -38,7 +38,7 @@ const LoginPage = function() {
   return(
     <div className="w-96 mx-auto mt-4">
       <div className="p-6 border-b border-gray-200 font-semibold text-lg">Đăng nhập</div>
-      <form className="p-6" onSubmit={onRegister}>
+      <form className="p-6 space-y-4" onSubmit={onRegister}>
         <TextField 
           variant="outlined" 
           size="small" 
@@ -60,16 +60,16 @@ const LoginPage = function() {
           }}
         />
         
-        <Button type="submit" variant="contained" fullWidth className="rounded-none text-white bg-primary-500 hover:bg-primary-600 shadow-none text-semibold text-lg py-3 mt-6 transition">
+        <button type="submit" className="text-semibold text-lg text-white bg-primary-500 hover:bg-primary-600 transition-colors w-full py-2 mt-6">
           Đăng nhập
-        </Button>
-        <div className="border-b border-gray-200 text-center text-sm py-4">
+        </button>
+        <div className="border-b border-gray-200 text-center text-sm pb-4">
           <Link to="reset-password.html">
             Quên mật khẩu?
           </Link>
         </div>
       </form>
-      <div className="text-center">
+      <div className="text-center mb-4">
         Bạn chưa có tài khoản? 
         <Link to="/dang-ky-tai-khoan.html" className="font-semibold text-primary-500 hover:text-primary-600 transition ml-2">
           Đăng ký ngay

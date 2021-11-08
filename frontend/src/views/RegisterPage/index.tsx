@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, InputAdornment, IconButton } from '@mui/material';
+import { TextField, InputAdornment, IconButton } from '@mui/material';
 import { Icon } from '@iconify/react';
 import { UserApi } from 'apis';
 import { register } from 'stores/auth/actions';
@@ -188,71 +188,78 @@ const RegisterPage = function() {
     </InputAdornment>
 
   return(
-    <div className="w-96 mx-auto mt-4">
+    <div className="w-96 mx-auto my-4">
       <div className="p-6 border-b border-black border-opacity-20 font-semibold text-lg">Đăng ký</div>
-      <form className="p-6" onSubmit={onRegister}>
-        <TextField 
-          variant="outlined" 
-          size="small" 
-          label="Tên đăng nhập" 
-          error={username.error} 
-          value={username.data} 
-          onChange={e => setUsername({...username, data: e.target.value})}
-          className="w-full mt-4" 
-          helperText={username.message}
-        />
-        <TextField 
-          variant="outlined" 
-          size="small" 
-          label="Email" 
-          error={email.error}
-          value={email.data} 
-          onChange={e => setEmail({...email, data: e.target.value})}
-          className="w-full mt-4"
-          helperText={email.message}
-        />
-        <TextField 
-          variant="outlined" 
-          size="small" 
-          type={passwordIsMasked ? "password" : "text"}
-          label="Mật khẩu"
-          error={password.error}
-          value={password.data} 
-          onChange={e => setPassword({...password, data: e.target.value})}
-          className="w-full mt-4" 
-          InputProps={{
-            endAdornment: passwordMaskedIcon
-          }}
-          helperText={password.message}
-        />
-        <div className="-mt-1">
-          <div className="inline-block space-x-1">
-            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 0 ? "bg-primary-500" : "bg-gray-300"}`}></span>
-            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 1 ? "bg-primary-500" : "bg-gray-300"}`}></span>
-            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 2 ? "bg-primary-500" : "bg-gray-300"}`}></span>
-            <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 3 ? "bg-primary-500" : "bg-gray-300"}`}></span>
-          </div>
-          <span className="inline-block text-xs pt-1 leading-none ml-2">{strengthMessage[passwordStrength]}</span>
+      <form className="p-6 space-y-4" onSubmit={onRegister}>
+        <div>
+          <TextField 
+            variant="outlined" 
+            size="small" 
+            label="Tên đăng nhập" 
+            error={username.error} 
+            value={username.data} 
+            onChange={e => setUsername({...username, data: e.target.value})}
+            className="w-full" 
+            helperText={username.message}
+          />
         </div>
-        <TextField 
-          variant="outlined" 
-          size="small" 
-          type={passwordConfirmIsMasked ? "password" : "text"}
-          label="Xác nhận mật khẩu" 
-          error={passwordConfirm.error}
-          value={passwordConfirm.data} 
-          onChange={e => setPasswordConfirm({...passwordConfirm, data: e.target.value})}
-          className="w-full mt-4" 
-          InputProps={{
-            endAdornment: passwordConfirmMaskedIcon
-          }}
-          helperText={passwordConfirm.message}
-        />
-        
-        <Button type="submit" variant="contained" fullWidth className="rounded-none shadow-none text-semibold text-lg text-white bg-primary-500 hover:bg-primary-600 py-3 mt-6">
+        <div>
+          <TextField 
+            variant="outlined" 
+            size="small" 
+            label="Email" 
+            error={email.error}
+            value={email.data} 
+            onChange={e => setEmail({...email, data: e.target.value})}
+            className="w-full"
+            helperText={email.message}
+          />
+        </div>
+        <div>
+          <TextField 
+            variant="outlined" 
+            size="small" 
+            type={passwordIsMasked ? "password" : "text"}
+            label="Mật khẩu"
+            error={password.error}
+            value={password.data} 
+            onChange={e => setPassword({...password, data: e.target.value})}
+            className="w-full" 
+            InputProps={{
+              endAdornment: passwordMaskedIcon
+            }}
+            helperText={password.message}
+          />
+          <div className="-mt-1">
+            <div className="inline-block space-x-1">
+              <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 0 ? "bg-primary-500" : "bg-gray-300"}`}></span>
+              <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 1 ? "bg-primary-500" : "bg-gray-300"}`}></span>
+              <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 2 ? "bg-primary-500" : "bg-gray-300"}`}></span>
+              <span className={`inline-block w-10 h-1 rounded-full ${passwordStrength > 3 ? "bg-primary-500" : "bg-gray-300"}`}></span>
+            </div>
+            <span className="inline-block text-xs pt-1 leading-none ml-2">{strengthMessage[passwordStrength]}</span>
+          </div>
+        </div>
+        <div>
+          <TextField 
+            variant="outlined" 
+            size="small" 
+            type={passwordConfirmIsMasked ? "password" : "text"}
+            label="Xác nhận mật khẩu" 
+            error={passwordConfirm.error}
+            value={passwordConfirm.data} 
+            onChange={e => setPasswordConfirm({...passwordConfirm, data: e.target.value})}
+            className="w-full" 
+            InputProps={{
+              endAdornment: passwordConfirmMaskedIcon
+            }}
+            helperText={passwordConfirm.message}
+          />
+        </div>
+        <button type="submit" className="text-semibold text-lg text-white bg-primary-500 hover:bg-primary-600 transition-colors w-full py-2 mt-6">
           Đăng ký
-        </Button>
-        <div className="border-b border-black border-opacity-20 text-center text-sm py-4"> </div>
+        </button>
+        <div className="border-b border-black border-opacity-20 text-center text-sm pt-4"> </div>
       </form>
       <div className="text-center">
         Bạn đã có tài khoản? 
