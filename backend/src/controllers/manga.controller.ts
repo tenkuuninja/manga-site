@@ -69,6 +69,9 @@ class MangaController {
 
   fetchTop = async (req: Request, res: Response) => {
     let scope: any[] = ['includeGenre', 'hideSrcLeech', { method: ['paging', this.pageDefault, this.pageSizeDefault] }];
+    if (req.user instanceof User) {
+      scope.push({ method: ['showIsFollowingById', +req.user.id] })
+    }
     try {
       let [all, day, week, month] = await Promise.all([
         Manga.scope([...scope, { method: ['sortQuery', '-view'] }]).findAll(),
