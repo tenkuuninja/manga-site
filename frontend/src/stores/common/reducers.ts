@@ -95,6 +95,7 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
         },
         top: {
           ...state.top,
+          all: state.top.all.map(handleFollow),
           day: state.top.day.map(handleFollow),
           week: state.top.week.map(handleFollow),
           month: state.top.month.map(handleFollow),
@@ -113,6 +114,7 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
         },
         top: {
           ...state.top,
+          all: state.top.all.map(handleUnfollow),
           day: state.top.day.map(handleUnfollow),
           week: state.top.week.map(handleUnfollow),
           month: state.top.month.map(handleUnfollow),

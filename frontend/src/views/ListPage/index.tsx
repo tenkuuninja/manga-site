@@ -19,6 +19,7 @@ import { Icon } from '@iconify/react';
 import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
 import FilterForm from './FilterForm';
+import { toast } from 'react-toastify';
 
 interface IParams {
   [index: string]: string
@@ -37,12 +38,14 @@ const ListPage = () => {
 
   function handleFollow(manga: IManga) {
     if (!auth.isLoggedIn) {
+      toast.error('Bạn cần đăng nhập để theo dõi');
       return;
     }
     if (manga?.isFollowing === 0) {
       dispatch(followMangaInList(manga.id||0));
       dispatch(addFollowMangaInCommon(manga));
       MeApi.followManga(manga.id||0);
+      toast.success('Đã theo dõi truyện '+manga.title);
     } else if (manga?.isFollowing === 1) {
       dispatch(removeFollowMangaInCommon(manga.id||0));
       if (match.path === '/truyen-dang-theo-doi.html') {
@@ -51,6 +54,7 @@ const ListPage = () => {
         dispatch(unfollowMangaInList(manga.id||0));
         MeApi.unfollowManga(manga.id||0);
       }
+      toast.success('Đã hủy theo dõi truyện '+manga.title);
     }
   }
 

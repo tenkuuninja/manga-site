@@ -12,6 +12,7 @@ import { MeApi } from 'apis';
 import { fetchManga } from 'stores/manga/actions';
 import { MangaReadSkeleton } from './Skeleton';
 import Error from 'views/components/Error';
+import { toast } from 'react-toastify';
 
 interface IParams {
   mangaId: string;
@@ -40,16 +41,19 @@ const MangaChapterPage = () => {
 
   function handleFollow() {
     if (!auth.isLoggedIn) {
+      toast.error('Bạn cần đăng nhập để theo dõi');
       return;
     }
     if (manga.data?.isFollowing === 0) {
       dispatch(followMangaInChapter());
       dispatch(addFollowMangaInCommon(manga.data));
       MeApi.followManga(+mangaId);
+      toast.success('Đã theo dõi truyện '+manga.data.title);
     } else if (manga.data?.isFollowing === 1) {
       dispatch(unfollowMangaInChapter());
       dispatch(removeFollowMangaInCommon(+mangaId));
       MeApi.unfollowManga(+mangaId);
+      toast.success('Đã hủy theo dõi truyện '+manga.data.title);
     }
   }
 

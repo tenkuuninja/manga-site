@@ -8,6 +8,7 @@ import { MeApi } from 'apis';
 import { addFollowMangaInCommon, followMangaInCommon, removeFollowMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
 import SlideShow from './SlideShow';
 import { CommonMangaCardCarousel, GenreCardCarousel, TopMangaCardCarousel } from './MangaCardCarousel';
+import { toast } from 'react-toastify';
 
 const HomePage = function() {
   const { auth, common, home } = useSelector((store: IAppState) => store);
@@ -22,6 +23,7 @@ const HomePage = function() {
 
   const handleFollow = (manga: IManga) => {
     if (!auth.isLoggedIn) {
+      toast.error('Bạn cần đăng nhập để theo dõi');
       return;
     }
     if (manga?.isFollowing === 0) {
@@ -29,11 +31,13 @@ const HomePage = function() {
       dispatch(followMangaInCommon(manga.id||0));
       dispatch(followMangaInHome(manga.id||0));
       MeApi.followManga(manga.id||0);
+      toast.success('Đã theo dõi truyện '+manga.title);
     } else if (manga?.isFollowing === 1) {
       dispatch(removeFollowMangaInCommon(manga.id||0));
       dispatch(unfollowMangaInCommon(manga.id||0));
       dispatch(unfollowMangaInHome(manga.id||0));
       MeApi.unfollowManga(manga.id||0);
+      toast.success('Đã hủy theo dõi truyện '+manga.title);
     }
   }
 

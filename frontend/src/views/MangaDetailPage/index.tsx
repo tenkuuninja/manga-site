@@ -10,6 +10,7 @@ import AsideSticky from './AsideSticky';
 import { IAppState } from 'interfaces';
 import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
+import { toast } from 'react-toastify';
 import Error from 'views/components/Error';
 
 interface IParams {
@@ -25,16 +26,19 @@ const MangaDetailPage = () => {
 
   function handleFollow() {
     if (!auth.isLoggedIn) {
+      toast.error('Bạn cần đăng nhập để theo dõi');
       return;
     }
     if (manga.data.isFollowing === 0) {
       dispatch(followMangaInDetail());
       dispatch(addFollowMangaInCommon(manga.data));
       MeApi.followManga(mangaId);
+      toast.success('Đã theo dõi truyện '+manga.data.title);
     } else if (manga.data.isFollowing === 1) {
       dispatch(unfollowMangaInDetail());
       dispatch(removeFollowMangaInCommon(+mangaId));
       MeApi.unfollowManga(mangaId);
+      toast.success('Đã hủy theo dõi truyện '+manga.data.title);
     }
   }
 
