@@ -16,8 +16,6 @@ export enum ActionTypes  {
   AddReaded                   = 'common_AddReaded',
   AddFollowManga              = 'common_AddFollowManga',
   RemoveFollowManga           = 'common_RemoveFollowManga',
-  FollowManga                 = 'common_FollowManga',
-  UnfollowManga               = 'common_UnfollowManga',
   SyncWithLocalstorage        = 'common_SyncWithLocalstorage',
   SetLocalName                = 'common_SetLocalName',
   SetLocalEmail               = 'common_SetLocalEmail',

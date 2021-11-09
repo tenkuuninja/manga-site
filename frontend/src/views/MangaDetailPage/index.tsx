@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
-import { fetchManga, followMangaInDetail, increaseFavorite, unfollowMangaInDetail } from 'stores/manga/actions';
+import { fetchManga, increaseFavorite } from 'stores/manga/actions';
 import st from './detail.module.css';
 import Detail from './Detail';
 import ChapterList from './ChapterList';
@@ -12,6 +12,7 @@ import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common
 import { MeApi } from 'apis';
 import { toast } from 'react-toastify';
 import Error from 'views/components/Error';
+import { followManga, unfollowManga } from 'stores/all/actions';
 
 interface IParams {
   mangaId: string;
@@ -30,12 +31,12 @@ const MangaDetailPage = () => {
       return;
     }
     if (manga.data.isFollowing === 0) {
-      dispatch(followMangaInDetail());
+      dispatch(followManga(mangaId));
       dispatch(addFollowMangaInCommon(manga.data));
       MeApi.followManga(mangaId);
       toast.success('Đã theo dõi truyện '+manga.data.title);
     } else if (manga.data.isFollowing === 1) {
-      dispatch(unfollowMangaInDetail());
+      dispatch(unfollowManga(mangaId));
       dispatch(removeFollowMangaInCommon(+mangaId));
       MeApi.unfollowManga(mangaId);
       toast.success('Đã hủy theo dõi truyện '+manga.data.title);

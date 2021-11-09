@@ -7,9 +7,8 @@ import {
   fetchListMangaFollowAfterUnfolowWithoutStatus, 
   fetchListMangaFollow, 
   fetchListMangaReaded, 
-  followMangaInList,
-  unfollowMangaInList
 } from 'stores/mangas/actions';
+import { followManga, unfollowManga } from 'stores/all/actions';
 import { IAppState, IGenre, IManga, ISearchObject } from 'interfaces';
 import { MangaCardVertical } from 'views/components/MangaCard';
 import { Pagination } from '@mui/material';
@@ -42,7 +41,7 @@ const ListPage = () => {
       return;
     }
     if (manga?.isFollowing === 0) {
-      dispatch(followMangaInList(manga.id||0));
+      dispatch(followManga(manga.id||0));
       dispatch(addFollowMangaInCommon(manga));
       MeApi.followManga(manga.id||0);
       toast.success('Đã theo dõi truyện '+manga.title);
@@ -51,7 +50,7 @@ const ListPage = () => {
       if (match.path === '/truyen-dang-theo-doi.html') {
         dispatch(fetchListMangaFollowAfterUnfolowWithoutStatus(manga.id||0));
       } else {
-        dispatch(unfollowMangaInList(manga.id||0));
+        dispatch(unfollowManga(manga.id||0));
         MeApi.unfollowManga(manga.id||0);
       }
       toast.success('Đã hủy theo dõi truyện '+manga.title);

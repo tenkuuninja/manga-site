@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import { IAppState, IManga } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCols } from 'hooks';
-import { fetchLastestUpdateManga, fetchNewestManga, followMangaInHome, unfollowMangaInHome } from 'stores/home/actions';
+import { fetchLastestUpdateManga, fetchNewestManga } from 'stores/home/actions';
 import { getRelativeTimeFromNow } from 'utils/helper';
 import { MeApi } from 'apis';
-import { addFollowMangaInCommon, followMangaInCommon, removeFollowMangaInCommon, unfollowMangaInCommon } from 'stores/common/actions';
+import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import SlideShow from './SlideShow';
 import { CommonMangaCardCarousel, GenreCardCarousel, TopMangaCardCarousel } from './MangaCardCarousel';
 import { toast } from 'react-toastify';
+import { followManga, unfollowManga } from 'stores/all/actions';
 
 const HomePage = function() {
   const { auth, common, home } = useSelector((store: IAppState) => store);
@@ -28,14 +29,12 @@ const HomePage = function() {
     }
     if (manga?.isFollowing === 0) {
       dispatch(addFollowMangaInCommon(manga));
-      dispatch(followMangaInCommon(manga.id||0));
-      dispatch(followMangaInHome(manga.id||0));
+      dispatch(followManga(manga.id||0));
       MeApi.followManga(manga.id||0);
       toast.success('Đã theo dõi truyện '+manga.title);
     } else if (manga?.isFollowing === 1) {
       dispatch(removeFollowMangaInCommon(manga.id||0));
-      dispatch(unfollowMangaInCommon(manga.id||0));
-      dispatch(unfollowMangaInHome(manga.id||0));
+      dispatch(unfollowManga(manga.id||0));
       MeApi.unfollowManga(manga.id||0);
       toast.success('Đã hủy theo dõi truyện '+manga.title);
     }

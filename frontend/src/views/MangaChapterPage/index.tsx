@@ -5,7 +5,7 @@ import { IAppState, IChapter } from 'interfaces';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
-import { fetchChapter, followMangaInChapter, unfollowMangaInChapter } from 'stores/chapter/actions';
+import { fetchChapter } from 'stores/chapter/actions';
 import Comment from 'views/components/Comment';
 import { addFollowMangaInCommon, removeFollowMangaInCommon } from 'stores/common/actions';
 import { MeApi } from 'apis';
@@ -13,6 +13,7 @@ import { fetchManga } from 'stores/manga/actions';
 import { MangaReadSkeleton } from './Skeleton';
 import Error from 'views/components/Error';
 import { toast } from 'react-toastify';
+import { followManga, unfollowManga } from 'stores/all/actions';
 
 interface IParams {
   mangaId: string;
@@ -45,12 +46,12 @@ const MangaChapterPage = () => {
       return;
     }
     if (manga.data?.isFollowing === 0) {
-      dispatch(followMangaInChapter());
+      dispatch(followManga(+mangaId));
       dispatch(addFollowMangaInCommon(manga.data));
       MeApi.followManga(+mangaId);
       toast.success('Đã theo dõi truyện '+manga.data.title);
     } else if (manga.data?.isFollowing === 1) {
-      dispatch(unfollowMangaInChapter());
+      dispatch(unfollowManga(+mangaId));
       dispatch(removeFollowMangaInCommon(+mangaId));
       MeApi.unfollowManga(+mangaId);
       toast.success('Đã hủy theo dõi truyện '+manga.data.title);

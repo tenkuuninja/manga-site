@@ -32,6 +32,3 @@ export const fetchFinishManga = () => async (dispatch: Dispatch) => {
   }
 }
 
-export const followMangaInHome = (id: number) => ({ type: ActionTypes.FollowManga, payload: { id } });
-export const unfollowMangaInHome = (id: number) => ({ type: ActionTypes.UnfollowManga, payload: { id } });
-

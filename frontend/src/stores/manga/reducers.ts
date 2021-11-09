@@ -1,6 +1,7 @@
 import { IAction, IDataStore, IManga } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
+import { ActionTypes as AllActionType } from '../all/types';
 
 let initialState: IDataStore<IManga> = {
   data: {},
@@ -28,7 +29,7 @@ const authReducer: Reducer = (state: IDataStore<IManga> = initialState, action: 
         isLoading: false, 
         isError: true
       }
-    case ActionTypes.FollowManga:
+    case AllActionType.FollowManga:
       return {
         ...state,
         data: {
@@ -36,7 +37,7 @@ const authReducer: Reducer = (state: IDataStore<IManga> = initialState, action: 
           isFollowing: 1
         }
       }
-    case ActionTypes.UnfollowManga:
+    case AllActionType.UnfollowManga:
       return {
         ...state,
         data: {

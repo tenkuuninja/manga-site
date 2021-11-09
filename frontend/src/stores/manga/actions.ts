@@ -17,9 +17,6 @@ export const fetchManga = (id: number) => async (dispatch: Dispatch) => {
   }
 }
 
-export const followMangaInDetail = () => ({ type: ActionTypes.FollowManga });
-export const unfollowMangaInDetail = () => ({ type: ActionTypes.UnfollowManga });
-
 export const increaseFavorite = (id: number) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: ActionTypes.IncreaseFavorite });

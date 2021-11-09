@@ -1,6 +1,7 @@
 import { IAction, ICommonStore, IManga } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
+import { ActionTypes as AllActionType } from '../all/types';
 
 let initialState: ICommonStore = {
   // config: {},
@@ -82,7 +83,7 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
           data: state.follow.data.filter(item => item.id !== action.payload.id)
         }
       };
-    case ActionTypes.FollowManga:
+    case AllActionType.FollowManga:
       let handleFollow = (item: IManga) => {
         if (action.payload.id === item.id) item.isFollowing = 1;
         return item;
@@ -101,7 +102,7 @@ const commonReducer: Reducer = (state: ICommonStore = initialState, action: IAct
           month: state.top.month.map(handleFollow),
         }
       }
-    case ActionTypes.UnfollowManga:
+    case AllActionType.UnfollowManga:
       let handleUnfollow = (item: IManga) => {
         if (action.payload.id === item.id) item.isFollowing = 0;
         return item;

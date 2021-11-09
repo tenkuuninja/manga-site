@@ -44,9 +44,6 @@ export const fetchListMangaFollow = (filter?: ISearchObject) => async (dispatch:
   }
 }
 
-export const followMangaInList = (id: number) => ({ type: ActionTypes.FollowManga, payload: { id } });
-export const unfollowMangaInList = (id: number) => ({ type: ActionTypes.UnfollowManga, payload: { id } });
-
 export const fetchListMangaReaded = (filter?: ISearchObject) => async (dispatch: Dispatch) => {
   if (cancelTokenSource !== undefined) cancelTokenSource.cancel();
   cancelTokenSource = axios.CancelToken.source();

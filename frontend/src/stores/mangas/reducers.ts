@@ -1,6 +1,7 @@
 import { IAction, IListMangaStore } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
+import { ActionTypes as AllActionType } from '../all/types';
 
 let initialState: IListMangaStore = {
   data: [],
@@ -32,7 +33,7 @@ const authReducer: Reducer = (state: IListMangaStore = initialState, action: IAc
         isLoading: false, 
         isError: true
       }
-    case ActionTypes.FollowManga:
+    case AllActionType.FollowManga:
       return {
         ...state,
         data: state.data.map(item => {
@@ -40,7 +41,7 @@ const authReducer: Reducer = (state: IListMangaStore = initialState, action: IAc
           return item;
         })
       }
-    case ActionTypes.UnfollowManga:
+    case AllActionType.UnfollowManga:
       return {
         ...state,
         data: state.data.map(item => {

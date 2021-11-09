@@ -27,6 +27,3 @@ export const fetchChapter = (id: number) => async (dispatch: Dispatch, getState:
   }
 }
 
-export const followMangaInChapter = () => ({ type: ActionTypes.FollowManga });
-export const unfollowMangaInChapter = () => ({ type: ActionTypes.UnfollowManga });
-
