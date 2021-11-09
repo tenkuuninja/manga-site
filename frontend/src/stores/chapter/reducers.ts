@@ -1,7 +1,7 @@
 import { IAction, IChapter, IDataStore } from 'interfaces';
 import { Reducer } from 'redux';
 import { ActionTypes } from './types';
-import { ActionTypes as AllActionType } from '../all/types';
+// import { ActionTypes as AllActionType } from '../all/types';
 
 let initialState: IDataStore<IChapter> = {
   data: { mangaId: 0, number: 0, content: [] },
@@ -29,28 +29,28 @@ const authReducer: Reducer = (state: IDataStore<IChapter> = initialState, action
         isLoading: false, 
         isError: true
       }
-    case AllActionType.FollowManga:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          manga: {
-            ...state.data.manga,
-            isFollowing: 1
-          }
-        }
-      }
-    case AllActionType.UnfollowManga:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          manga: {
-            ...state.data.manga,
-            isFollowing: 0
-          }
-        }
-      }
+    // case AllActionType.FollowManga:
+    //   return {
+    //     ...state,
+    //     data: {
+    //       ...state.data,
+    //       manga: {
+    //         ...state.data.manga,
+    //         isFollowing: 1
+    //       }
+    //     }
+    //   }
+    // case AllActionType.UnfollowManga:
+    //   return {
+    //     ...state,
+    //     data: {
+    //       ...state.data,
+    //       manga: {
+    //         ...state.data.manga,
+    //         isFollowing: 0
+    //       }
+    //     }
+    //   }
     default:
       return state;
   }
