@@ -7,11 +7,27 @@ import { Link } from 'react-router-dom';
 
 const sliderContent = [
   {
+    title: 'Naruto',
+    description: 'Naruto là câu chuyện về Uzumaki Naruto, một cậu bé mồ côi trẻ với ước mơ trở thành Hokage, người lãnh đạo của làng Lá để tìm kiếm sự công nhận từ mọi người.',
+    background: 'https://i.imgur.com/1tvBZ7L.jpg',
+    url: '/truyen-tranh-7050-naruto-full-color.html',
+    className: 'sfh-is-left',
+    color: '#000'
+  },
+  {
     title: 'Demon Slayer',
     description: 'Tanjirou là con cả của gia đình vừa mất cha. Một ngày nọ, Tanjirou đến thăm thị trấn khác để bán than, khi đêm về cậu ở nghỉ tại nhà người khác thay vì về nhà vì lời đồn thổi về ác quỷ luôn rình mò gần núi vào buổi tối. Khi cậu về nhà vào ngày hôm sau, bị kịch đang đợi chờ cậu…',
-    background: 'https://images.anime-pictures.net/d76/d76869ecc9312dac90dc471121e78327.jpg?if=ANIME-PICTURES.NET_-_689299-1616x1174-kimetsu+no+yaiba-ufotable-kamado+nezuko-kamado+tanjirou-xuefei+%28snowdrop%29-looking+at+viewer.jpg',
-    url: '',
-    className: 'sfh-left',
+    background: 'https://i.imgur.com/wQ5INSq.jpeg',
+    url: '/truyen-tranh-2708-thanh-guom-diet-quy.html',
+    className: 'sfh-is-left',
+    color: '#000'
+  },
+  {
+    title: 'One Piece',
+    description: 'One Piece kể về cuộc hành trình của Monkey D. Luffy - thuyền trưởng của băng hải tặc Mũ Rơm và các đồng đội của cậu. Luffy tìm kiếm vùng biển bí ẩn nơi cất giữ kho báu lớn nhất thế giới One Piece, với mục tiêu trở thành Tân Vua Hải Tặc.',
+    background: 'https://i.imgur.com/s29Zffi.png',
+    url: '/truyen-tranh-7131-dao-hai-tac.html',
+    className: 'sfh-is-right',
     color: '#000'
   },
 ]
@@ -60,8 +76,6 @@ const Slider = () => {
           </div>
         </div>
       )}
-      <div className="overflow-hidden w-full bg-blue-600 auto-height"></div>
-      <div className="overflow-hidden w-full bg-red-600 auto-height"></div>
     </section>
   );
 }

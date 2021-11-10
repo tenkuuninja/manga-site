@@ -70,7 +70,7 @@ const Search = function() {
   } else {
     autoCompleteContent = <ul className="p-2 h-96 overflow-y-auto">
       {autoComplete.data.map((item: IManga, i) => <li key={i}>
-        <Link to={``} className="block">
+        <Link to={`/truyen-tranh-${item.id}-${item.titleSlug}.html`} className="block">
           <div className='flex overflow-hidden space-x-2 p-2'>
             <div className='flex-shrink-0 overflow-hidden rounded-lg w-12 h-12'>
               <img className='w-full' src={item.imageUrl} alt='' />
