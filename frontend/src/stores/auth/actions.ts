@@ -7,7 +7,7 @@ export const register = (body : IUser) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionTypes.LoginRequest });
   try {
     let result = await AuthApi.register(body);
-    localStorage.setItem('token', 'Bearer '+result.data.accessToken);
+    localStorage.setItem('token', result.data.accessToken || '');
     dispatch({ type: ActionTypes.LoginSuccess, payload: {
       token: result.data.accessToken,
       user: result.data.user

@@ -48,6 +48,10 @@ const RegisterPage = function() {
 
   const onRegister = (e: React.FormEvent) => {
     e.preventDefault();
+    if (password.data !== passwordConfirm.data) {
+      console.log('not match password')
+      return;
+    }
     if (reUsername.test(username.data) && reEmail.test(email.data) && rePassword.test(password.data)) {
       Promise.all([
         UserApi.isExist({ username: username.data }),
