@@ -77,7 +77,14 @@ class UserController {
         { method: ['sortQuery', '-updatedAt'] }
       ];
       const result = await Manga.scope(scope).findAll({
-        where: Sequelize.literal("EXISTS ( SELECT * FROM `manga_user` WHERE `manga_user`.`user_id` = "+(+req.user.id)+" AND `manga_user`.`manga_id` = `manga`.`id`)")
+        where: Sequelize.literal(
+          "EXISTS ( " +
+            "SELECT * FROM `manga_user` "+
+            "WHERE "+
+              "`manga_user`.`user_id` = "+(+req.user.id)+" AND "+
+              "`manga_user`.`manga_id` = `Manga`.`id`"+
+          ")"
+        )
       })
       const count = await req.user.countMangas();
       res.status(200).json({
@@ -88,6 +95,7 @@ class UserController {
         totalPage: Math.ceil(count/+size)
       });
     } catch (error) {
+      console.log('me controller fetch manga error >>', error)
       res.status(500).json({});
     }
   }
